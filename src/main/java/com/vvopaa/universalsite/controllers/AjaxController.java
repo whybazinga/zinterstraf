@@ -1,0 +1,50 @@
+package com.vvopaa.universalsite.controllers;
+
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.vvopaa.universalsite.model.UserEntity;
+import com.vvopaa.universalsite.model.json.JsonMessage;
+import com.vvopaa.universalsite.service.UserService;
+import com.vvopaa.universalsite.service.converters.jackson.JsonMessageCreator;
+import com.vvopaa.universalsite.util.StringUtil;
+
+
+@RestController
+public class AjaxController {
+	private static final String EMAIL_PARAM = "email";
+	private static final String PASS_PARAM = "pass";
+	
+	//@Qualifier("userServiceImpl")
+	@Autowired 
+	private UserService userService;
+	
+	@Autowired
+	private MessageSource msg;
+	
+	@RequestMapping(value = "/register-ajax", produces={"application/json"})
+	public JsonMessage getSearchResultViaAjax(HttpServletRequest req) {
+		String email = StringUtil.getProperString(req.getParameter(EMAIL_PARAM));
+		String pass = req.getParameter(PASS_PARAM);
+		String message = msg.getMessage("user.save.invalid", null, Locale.getDefault());
+		if(StringUtil.isStringEmail(email) && StringUtil.isStringProperUserPass(pass)) {
+			UserEntity user = userService.saveUser(email, pass);
+			if(user == null) {
+				message = String.format(msg.getMessage("user.save.emailexists", null, Locale.getDefault()), email);
+			} else {
+				message = String.format(msg.getMessage("user.save.success", null, Locale.getDefault()), email);
+			}
+		}
+		
+		JsonMessage jsonReponse = JsonMessageCreator.createSimpleJsonMessage(message);
+		return jsonReponse;
+
+	}
+	
+}

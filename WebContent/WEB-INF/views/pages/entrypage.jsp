@@ -45,7 +45,7 @@
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">Login to system</h5>
+	        <h5 class="modal-title" id="exampleModalLabel"></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -67,12 +67,17 @@
 			    <small class="form-text text-muted">Pay attention to the password words case.</small>
 			  </div>
 			  <div class="form-group appendedRegister">
+				  <div class="input-group">
+				  	<span class="input-group-addon">&nbsp;*&nbsp;</span>
+				  	<input type="password" class="form-control" placeholder="Repeat password" name="passconfirm">
+				  </div>
+				  <small class="form-text text-muted">This password should be idential to the given above.</small>
 			  </div>
 			</form>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary btn-submit-action" value="" data-dismiss="modal" data-toggle="modal" data-target="#resultModal">Login</button>
+	        <button type="button" class="btn btn-primary btn-submit-action" value="" data-dismiss="modal" data-toggle="modal" data-target="#resultModal"></button>
 	      </div>
 	    </div>
 	  </div>
@@ -83,16 +88,16 @@
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="resultModalLabel">NEW MODAL SMTH HAPPENED</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	        <h5 class="modal-title" id="resultModalLabel">Information</h5>
+	        <button type="button" class="close responseModalClose" data-dismiss="modal" aria-label="Close" value="close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
 	      <div class="modal-body resultModalBody">
-	        HEY YO CAPTAIN JACK)))
+	      	Wait a little bit...
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-secondary responseModalClose" data-dismiss="modal" value="close">Close</button>
 	      </div>
 	    </div>
 	  </div>

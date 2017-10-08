@@ -10,97 +10,131 @@ const LOGIN = {
 	buttonSubmit: 'loginSubmit'
 };
 
+const AJAX = {
+	postMethod: 'POST',
+	getMethod: 'GET',
+	contentJson: 'application/json; charset=UTF-8'
+};
 
-//btn-submit-action
+const ENTRY_ELEMENTS = {
+	inputEmail: '[name="email"]',
+	inputPass: '[name="pass"]',
+	inputPassConf: '[name="passconfirm"]',
+	resultModalBody: '.resultModalBody',
+	mainModalLabel: '#exampleModalLabel',
+	mainModalBtn: '.btn-submit-action',
+	headerLoginBtn: '.btn-login-open',
+	headerRegistBtn: '.btn-register-open',
+	headerScrollBtn: '.scrolltop',
+	divPassConf: '.appendedRegister',
+	resultModalCloseBtn: '.responseModalClose'
+};
+
+
 function buttonManager(e) {
-	let elementVal = $(e.target).val();
+	let elementVal = getElementValue(e.target);
 	
 	switch(elementVal) {
-		case 'login':
+		case LOGIN.button.toLowerCase():
 			clickButtonModal(LOGIN);
 			break;
-		case 'register':
+		case REGISTER.button.toLowerCase():
 			clickButtonModal(REGISTER);
 			break;
 		case REGISTER.buttonSubmit:
-			
-			
+			ajaxRegister(e);
 			break;
 		case LOGIN.buttonSubmit:
-			
-			
+			ajaxLogin(e);
+			break;
+		case 'close':
+			setTagText(ENTRY_ELEMENTS.resultModalBody, "Wait a little bit...");
 			break;
 		default:
-			console.log("No such button")
+			console.log("No such button");
+			break;
 	}
 }
 
-function isReadyAjaxRegistration(e, passConf) {
-	let emailVal = isExistsString(getElementValueByName('email')) ? getElementValueByName('email') : '';
-	let passVal = isExistsString(getElementValueByName('pass')) ? getElementValueByName('pass') : '';
-	let passConfirmVal = isExistsString(getElementValueByName('passconfirm')) ? getElementValueByName('passconfirm') : '';
-	const url = basicUrl + "login/";
-	const method = 'POST';
-	const contenttype = 'application/x-www-form-urlencoded; charset=UTF-8';
-	const ajaxdata = {
-		email: emailVal,
-		pass: passVal
-	};
-	if(passConfirmVal) {
-		ajaxdata.passConfirm = passConfirmVal;
+function ajaxLogin(e) {
+	let emailVal = getElementValue(ENTRY_ELEMENTS.inputEmail);
+	let passVal = getElementValue(ENTRY_ELEMENTS.inputPass);
+	
+	if(emailVal && passVal && passConfVal === passVal) {
+		let url = basicUrl + "/login-ajax";
+		let ajaxdata = {
+			email: emailVal,
+			pass: passVal, 
+			confpass: passConfVal
+		};
+		setElementValue(ENTRY_ELEMENTS.inputEmail, '');
+		setElementValue(ENTRY_ELEMENTS.inputPass, '');
+		//ajax(url, AJAX.postMethod, AJAX.contentJson, ajaxdata, ajaxResponse);
 	}
+	setElementValue(ENTRY_ELEMENTS.inputEmail, '');
+	setElementValue(ENTRY_ELEMENTS.inputPass, '');
+	setElementValue(ENTRY_ELEMENTS.inputPassConf, '');
+}
+
+function ajaxRegister(e) {
+	let emailVal = getElementValue(ENTRY_ELEMENTS.inputEmail);
+	let passVal = getElementValue(ENTRY_ELEMENTS.inputPass);
+	let passConfVal = getElementValue(ENTRY_ELEMENTS.inputPassConf);
 	
-	ajax(url, method, contenttype, ajaxdata, clickButtonSubmitModal);
-	
+	if(emailVal && passVal && passConfVal === passVal) {
+		let url = basicUrl + "/register-ajax";
+		let ajaxdata = {
+			email: emailVal,
+			pass: passVal, 
+			confpass: passConfVal
+		};
+		setElementValue(ENTRY_ELEMENTS.inputEmail, '');
+		setElementValue(ENTRY_ELEMENTS.inputPass, '');
+		setElementValue(ENTRY_ELEMENTS.inputPassConf, ''); //???why
+		ajax(url, AJAX.postMethod, AJAX.contentJson, ajaxdata, ajaxResponse);
+	} else {
+		setElementValue(ENTRY_ELEMENTS.inputEmail, '');
+		setElementValue(ENTRY_ELEMENTS.inputPass, '');
+		setElementValue(ENTRY_ELEMENTS.inputPassConf, '');
+		setTagText(ENTRY_ELEMENTS.resultModalBody, "Invalid data for registration");
+	}
 	
 }
 
 
-function clickButtonSubmitModal(data) {
-	
-	getElementById('resultModalLabel').text(data.respHeader);
-	getElementByClass('resultModalBody').text(data.respBody);
-	
-	if(data.responseAnswer === 'true') {
-		
+function ajaxResponse(data) {
+	if(data.response) {
+		setTagText(ENTRY_ELEMENTS.resultModalBody, data.response);
+	} else {
+		setTagText(ENTRY_ELEMENTS.resultModalBody, data);
 	}
-	
 }
 
 
 
 function clickButtonModal(resources) {
-	let checkPassElement = getElementByClass('appendedRegister');
+	let checkPassElement = $(ENTRY_ELEMENTS.divPassConf);
 	
-	getElementById('exampleModalLabel').text(resources.header);
-	getElementByClass('btn-submit-action').text(resources.button);
-	getElementByClass('btn-submit-action').val(resources.buttonSubmit);
+	setTagText(ENTRY_ELEMENTS.mainModalLabel, resources.header);
+	setTagText(ENTRY_ELEMENTS.mainModalBtn, resources.button);
+	setElementValue(ENTRY_ELEMENTS.mainModalBtn, resources.buttonSubmit);
 	
-	if(resources.button === LOGIN.button) {
-		checkPassElement.empty();
-	} else {
-		if (isEmptyElement(checkPassElement)) {
-			checkPassElement.append(
-				$('<div>').attr('class', 'input-group').append(
-					$('<span>').attr('class', 'input-group-addon').append('&nbsp;*&nbsp;</span>'),
-					$('<input>').attr('type', 'password').attr('class', 'form-control').attr('placeholder', 'Repeat password').attr('name', 'passconfirm')
-				), 
-				$('<small>').attr('class', 'form-text text-muted').append('This password should be idential to the given above.')	
-			);
-		}
-	}	
+	checkPassElement.hide();
+	if(resources.button === REGISTER.button) {
+		checkPassElement.show();
+	}
 };
 
 
 $(document).ready(function() {
-	$('.scrolltop').click(function(){
+	$(ENTRY_ELEMENTS.headerScrollBtn).click(function(){
 		$("html, body").animate({ scrollTop: 0 }, 600);
 		return false;
 	});
-	
-	addEventHandler('.btn-login-open', 'click', buttonManager, '.header');
-	addEventHandler('.btn-register-open', 'click', buttonManager, '.header');
-	
+	$(ENTRY_ELEMENTS.headerLoginBtn).on('click', buttonManager);
+	$(ENTRY_ELEMENTS.headerRegistBtn).on('click', buttonManager);
+	$(ENTRY_ELEMENTS.mainModalBtn).on('click', buttonManager);
+	$(ENTRY_ELEMENTS.resultModalCloseBtn).on('click', buttonManager);
 });
 
 
