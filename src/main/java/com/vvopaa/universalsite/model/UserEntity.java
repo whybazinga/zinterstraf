@@ -18,51 +18,51 @@ public class UserEntity extends AbstractEntity {
 	@Column(name="password")
 	private String password;
 	
-	@Column(name="block_stat")
-	private int block_stat;
+	@Column(name="status")
+	private int accstatus;
 	
 	@Column(name="created")
 	private Date created;
 	
 	@Column(name="updated")
 	private Date updated;
-	
+
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
-	
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	public int getBlock_stat() {
-		return block_stat;
+
+	public int getAccstatus() {
+		return accstatus;
 	}
 
-	public void setBlock_stat(int block_stat) {
-		this.block_stat = block_stat;
+	public void setAccstatus(int accstatus) {
+		this.accstatus = accstatus;
 	}
-	
+
 	public Date getCreated() {
 		return created;
 	}
-	
+
 	public void setCreated(Date created) {
 		this.created = created;
 	}
-	
+
 	public Date getUpdated() {
 		return updated;
 	}
-	
+
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
@@ -71,10 +71,9 @@ public class UserEntity extends AbstractEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + block_stat;
+		result = prime * result + accstatus;
 		result = prime * result + ((created == null) ? 0 : created.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((updated == null) ? 0 : updated.hashCode());
 		return result;
 	}
@@ -88,7 +87,7 @@ public class UserEntity extends AbstractEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		UserEntity other = (UserEntity) obj;
-		if (block_stat != other.block_stat)
+		if (accstatus != other.accstatus)
 			return false;
 		if (created == null) {
 			if (other.created != null)
@@ -100,11 +99,6 @@ public class UserEntity extends AbstractEntity {
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
 		if (updated == null) {
 			if (other.updated != null)
 				return false;
@@ -112,7 +106,5 @@ public class UserEntity extends AbstractEntity {
 			return false;
 		return true;
 	}
-	
-	
 	
 }

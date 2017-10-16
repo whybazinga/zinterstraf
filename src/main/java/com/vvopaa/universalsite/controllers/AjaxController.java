@@ -2,11 +2,11 @@ package com.vvopaa.universalsite.controllers;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vvopaa.universalsite.model.UserEntity;
@@ -28,10 +28,9 @@ public class AjaxController {
 	@Autowired
 	private MessageSource msg;
 	
-	@RequestMapping(value = "/register-ajax", produces={"application/json"})
-	public JsonMessage getSearchResultViaAjax(HttpServletRequest req) {
-		String email = StringUtil.getProperString(req.getParameter(EMAIL_PARAM));
-		String pass = req.getParameter(PASS_PARAM);
+	@RequestMapping(value = "/register-ajax", produces={"application/json"}, method= {RequestMethod.POST})
+	public JsonMessage registerUser(@RequestParam(EMAIL_PARAM) String email, @RequestParam(PASS_PARAM) String pass) {
+		email = StringUtil.getProperString(email);
 		String message = msg.getMessage("user.save.invalid", null, Locale.getDefault());
 		if(StringUtil.isStringEmail(email) && StringUtil.isStringProperUserPass(pass)) {
 			UserEntity user = userService.saveUser(email, pass);
@@ -44,7 +43,20 @@ public class AjaxController {
 		
 		JsonMessage jsonReponse = JsonMessageCreator.createSimpleJsonMessage(message);
 		return jsonReponse;
-
 	}
 	
+	@RequestMapping(value = "/login-ajax", produces={"application/json"}, method= {RequestMethod.POST})
+	public JsonMessage loginUser(@RequestParam(EMAIL_PARAM) String email, @RequestParam(PASS_PARAM) String pass) {
+		email = StringUtil.getProperString(email);
+		String message = msg.getMessage("user.save.invalid", null, Locale.getDefault());
+		if(StringUtil.isStringEmail(email) && StringUtil.isStringProperUserPass(pass)) {
+			UserEntity user = userService.loginUser(email, pass);
+			if(user != null) {
+				message = String.format(msg.getMessage("user.login.success", null, Locale.getDefault()), email);
+			}
+		}
+		
+		JsonMessage jsonReponse = JsonMessageCreator.createSimpleJsonMessage(message);
+		return jsonReponse;
+	}
 }

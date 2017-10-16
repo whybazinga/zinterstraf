@@ -64,14 +64,14 @@
 			    	<span class="input-group-addon">&nbsp;*&nbsp;</span>
 			    	<input type="password" class="form-control" name="pass" placeholder="Password">
 			    </div>
-			    <small class="form-text text-muted">Pay attention to the password words case.</small>
+			    <small class="form-text text-muted">A password must be in the range of 5-32 symbols.</small>
 			  </div>
 			  <div class="form-group appendedRegister">
 				  <div class="input-group">
 				  	<span class="input-group-addon">&nbsp;*&nbsp;</span>
 				  	<input type="password" class="form-control" placeholder="Repeat password" name="passconfirm">
 				  </div>
-				  <small class="form-text text-muted">This password should be idential to the given above.</small>
+				  <small class="form-text text-muted">This password must be idential to the given above.</small>
 			  </div>
 			</form>
 	      </div>

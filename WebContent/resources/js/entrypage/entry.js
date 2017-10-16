@@ -60,20 +60,16 @@ function ajaxLogin(e) {
 	let emailVal = getElementValue(ENTRY_ELEMENTS.inputEmail);
 	let passVal = getElementValue(ENTRY_ELEMENTS.inputPass);
 	
-	if(emailVal && passVal && passConfVal === passVal) {
+	if(emailVal && passVal) {
 		let url = basicUrl + "/login-ajax";
 		let ajaxdata = {
 			email: emailVal,
-			pass: passVal, 
-			confpass: passConfVal
+			pass: passVal
 		};
-		setElementValue(ENTRY_ELEMENTS.inputEmail, '');
-		setElementValue(ENTRY_ELEMENTS.inputPass, '');
-		//ajax(url, AJAX.postMethod, AJAX.contentJson, ajaxdata, ajaxResponse);
+		ajax(url, AJAX.postMethod, AJAX.contentJson, ajaxdata, ajaxResponse);
 	}
 	setElementValue(ENTRY_ELEMENTS.inputEmail, '');
 	setElementValue(ENTRY_ELEMENTS.inputPass, '');
-	setElementValue(ENTRY_ELEMENTS.inputPassConf, '');
 }
 
 function ajaxRegister(e) {
@@ -85,26 +81,24 @@ function ajaxRegister(e) {
 		let url = basicUrl + "/register-ajax";
 		let ajaxdata = {
 			email: emailVal,
-			pass: passVal, 
-			confpass: passConfVal
+			pass: passVal
 		};
-		setElementValue(ENTRY_ELEMENTS.inputEmail, '');
-		setElementValue(ENTRY_ELEMENTS.inputPass, '');
-		setElementValue(ENTRY_ELEMENTS.inputPassConf, ''); //???why
 		ajax(url, AJAX.postMethod, AJAX.contentJson, ajaxdata, ajaxResponse);
 	} else {
-		setElementValue(ENTRY_ELEMENTS.inputEmail, '');
-		setElementValue(ENTRY_ELEMENTS.inputPass, '');
-		setElementValue(ENTRY_ELEMENTS.inputPassConf, '');
 		setTagText(ENTRY_ELEMENTS.resultModalBody, "Invalid data for registration");
 	}
-	
+	setElementValue(ENTRY_ELEMENTS.inputEmail, '');
+	setElementValue(ENTRY_ELEMENTS.inputPass, '');
+	setElementValue(ENTRY_ELEMENTS.inputPassConf, '');
 }
 
 
 function ajaxResponse(data) {
 	if(data.response) {
 		setTagText(ENTRY_ELEMENTS.resultModalBody, data.response);
+		if((data.response).indexOf("logged in") >= 0) {
+			window.location.href = basicUrl + "/welcome";
+		}
 	} else {
 		setTagText(ENTRY_ELEMENTS.resultModalBody, data);
 	}
@@ -127,7 +121,7 @@ function clickButtonModal(resources) {
 
 
 $(document).ready(function() {
-	$(ENTRY_ELEMENTS.headerScrollBtn).click(function(){
+	$(ENTRY_ELEMENTS.headerScrollBtn).click(() => {
 		$("html, body").animate({ scrollTop: 0 }, 600);
 		return false;
 	});

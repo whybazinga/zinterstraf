@@ -9,12 +9,12 @@ CREATE TABLE users (
 	id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(48) NOT NULL UNIQUE,
     password VARCHAR(48) NOT NULL,
-    block_stat BIT(1) NOT NULL DEFAULT 0,
+    status TINYINT(1) NOT NULL DEFAULT 0,
     created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-INSERT INTO u_site_vvopaa.users (email, password, block_stat) VALUES ('test@test.test', '1234', 0);
+INSERT INTO u_site_vvopaa.users (email, password, status) VALUES ('test@test.test', '12345', 1);
 
 CREATE TABLE roles (
 	id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

@@ -1,5 +1,5 @@
 /**
- * Common Jquery functions for project
+ * Common Jquery functions for the project
  */
 
 const types = {
@@ -17,8 +17,8 @@ function ajax(url, method, datatype, ajaxdata, func) {
 			ContentType: datatype,
 			data: ajaxdata,
 		});
-		request.done(data => { func(data); });
-	    request.fail(jqXHR, textStatus, errorThrown => { func("Problem with connection on the client side."); });
+		request.done(data => func(data));
+	    request.fail(textStatus => func("Problem with connection on the client side."));
 	}
 }
 

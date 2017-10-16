@@ -19,7 +19,7 @@ public class ViewController {
 		return "login";
 	}
 	
-	@RequestMapping(value="/welcome", method=RequestMethod.POST)
+	@RequestMapping(value="/welcome", method=RequestMethod.GET)
 	public ModelAndView handleLoginRequest(HttpServletRequest req, HttpServletResponse res, ModelMap model) {
 		
 		return new ModelAndView("welcome", model);

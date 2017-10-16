@@ -4,10 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Start page</title>
+<title>Error page</title>
 </head>
 <body>
-	<b>Hello Ladies and GentleMen!</b>
-	<a href="login">GO to login page</a>
+	<b>Error page!</b>
 </body>
 </html>
