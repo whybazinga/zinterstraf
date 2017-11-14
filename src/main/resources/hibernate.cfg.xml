@@ -9,7 +9,7 @@
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">root</property> <!-- useSSL=false -->
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/u_site_vvopaa?useSSL=false</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/u_site_vvopaa?useSSL=false&amp;serverTimezone=UTC</property>
         <property name="hibernate.c3p0.min_size">4</property>
         <property name="hibernate.c3p0.max_size">20</property>
         <property name="hibernate.c3p0.acquire_increment">1</property>

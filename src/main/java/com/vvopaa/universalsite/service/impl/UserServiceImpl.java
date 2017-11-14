@@ -1,20 +1,25 @@
 package com.vvopaa.universalsite.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.vvopaa.universalsite.model.UserEntity;
 import com.vvopaa.universalsite.repository.UserDao;
+import com.vvopaa.universalsite.repository.UserRoleDao;
 import com.vvopaa.universalsite.service.UserService;
 
-@Service
+@Service("userServiceImpl")
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
-	//@Qualifier("mysqlUserDao") 
+	@Qualifier("mysqlUserDao") 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private UserRoleDao userRole;
 	
 	@Autowired
     private PasswordEncoder passwordEncoder;
@@ -25,6 +30,7 @@ public class UserServiceImpl implements UserService {
 		
 		pass = passwordEncoder.encode(pass);
 		UserEntity savedUser = userDao.saveUser(login, pass);
+		
 		
 		return savedUser;
 	}
@@ -41,6 +47,12 @@ public class UserServiceImpl implements UserService {
 		UserEntity loggedUser = userDao.loginUser(login, pass);
 		
 		return loggedUser;
+	}
+
+	@Override
+	public UserEntity getUserByEmail(String email) {
+		UserEntity user = userDao.getUserByEmail(email);
+		return user;
 	}
 
 }

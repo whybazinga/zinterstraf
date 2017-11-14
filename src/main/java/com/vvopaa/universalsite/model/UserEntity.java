@@ -1,11 +1,16 @@
 package com.vvopaa.universalsite.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
+import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name="users")
@@ -26,7 +31,15 @@ public class UserEntity extends AbstractEntity {
 	
 	@Column(name="updated")
 	private Date updated;
-
+	
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+		name = "link_users_roles", 
+		joinColumns = { @JoinColumn(name = "id_user") }, 
+		inverseJoinColumns = { @JoinColumn(name = "id_role") }
+    )
+    private Set<UserRole> userRoles = new HashSet<UserRole>();
+	
 	public String getEmail() {
 		return email;
 	}
@@ -66,6 +79,14 @@ public class UserEntity extends AbstractEntity {
 	public void setUpdated(Date updated) {
 		this.updated = updated;
 	}
+	
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
+	}
+
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
+	}
 
 	@Override
 	public int hashCode() {
@@ -75,6 +96,7 @@ public class UserEntity extends AbstractEntity {
 		result = prime * result + ((created == null) ? 0 : created.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((updated == null) ? 0 : updated.hashCode());
+		result = prime * result + ((userRoles == null) ? 0 : userRoles.hashCode());
 		return result;
 	}
 
@@ -103,6 +125,11 @@ public class UserEntity extends AbstractEntity {
 			if (other.updated != null)
 				return false;
 		} else if (!updated.equals(other.updated))
+			return false;
+		if (userRoles == null) {
+			if (other.userRoles != null)
+				return false;
+		} else if (!userRoles.equals(other.userRoles))
 			return false;
 		return true;
 	}

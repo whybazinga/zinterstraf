@@ -2,9 +2,9 @@ package com.vvopaa.universalsite.model.enums;
 
 import java.io.Serializable;
 
-public enum UserProfileTypes implements Serializable{
+public enum UserRoleTypes implements Serializable{
     USER,
-    DBA,
+    MODERATOR,
     ADMIN;
      
 	String userProfileType;

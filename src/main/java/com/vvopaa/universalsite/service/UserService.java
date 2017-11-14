@@ -9,4 +9,6 @@ public interface UserService {
 	public UserEntity getUserById(int id);
 	
 	public UserEntity loginUser(String login, String pass);
+	
+	public UserEntity getUserByEmail(String email);
 }

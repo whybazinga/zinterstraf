@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
+	
 	@Autowired
     @Qualifier("customUserDetailsService")
     UserDetailsService userDetailsService;
@@ -36,14 +36,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/", "/list")
-                .access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
-                .antMatchers("/newuser/**", "/delete-user-*").access("hasRole('ADMIN')").antMatchers("/edit-user-*")
-                .access("hasRole('ADMIN') or hasRole('DBA')").and().formLogin().loginPage("/login")
-                .loginProcessingUrl("/login").usernameParameter("ssoId").passwordParameter("password").and()
+        http.authorizeRequests()
+        	.antMatchers("/", "/register-ajax", "login-ajax").permitAll()
+        	.antMatchers("/welcome").access("hasRole('USER') or hasRole('ADMIN') or hasRole('MODERATOR')")
+            .antMatchers("/newuser/**", "/delete-user-*").access("hasRole('ADMIN')")
+            .antMatchers("/edit-user-*").access("hasRole('ADMIN') or hasRole('MODERATOR')").and().formLogin().loginPage("/")
+                .usernameParameter("email").passwordParameter("password").and()
                 .rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
-                .tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
-    }
+                .tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/access_denied");
+    } //.loginProcessingUrl("/login-ajax")
  
     @Bean
     public PasswordEncoder passwordEncoder() {

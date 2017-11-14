@@ -11,7 +11,9 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.vvopaa.universalsite.model.PersistentLogin;
 import com.vvopaa.universalsite.model.UserEntity;
+import com.vvopaa.universalsite.model.UserRole;
 
 @Configuration
 @EnableTransactionManagement
@@ -30,7 +32,7 @@ public class AppConfig {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         factoryBean.setConfigLocation(context.getResource("classpath:hibernate.cfg.xml"));
         
-        factoryBean.setAnnotatedClasses(UserEntity.class);
+        factoryBean.setAnnotatedClasses(UserEntity.class, UserRole.class, PersistentLogin.class);
         return factoryBean;
     }
  
