@@ -1,6 +1,6 @@
 
 require('../template/commonJquery');
-
+// need smth
 const REGISTER = {
     header: 'Register in the system',
     button: 'Register',
