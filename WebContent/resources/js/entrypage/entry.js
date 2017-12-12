@@ -117,7 +117,7 @@ function clickButtonModal(resources) {
 	if(resources.button === REGISTER.button) {
 		checkPassElement.show();
 	}
-};
+}
 
 
 $(document).ready(function() {

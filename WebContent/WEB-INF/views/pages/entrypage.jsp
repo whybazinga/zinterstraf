@@ -7,14 +7,10 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="icon" href="<c:url value="/static/images/favicon.ico" />">
-	<link rel="stylesheet" href="<c:url value="/static/extlibs/bootstrap-4.0.0/bootstrap.min.css" />">
+
 	<link rel="stylesheet" href="<c:url value="/static/css/entrypage/entry.css" />">
-	<script src="<c:url value="/static/extlibs/jquery-slim3.2.1.min.js" />"></script>
-	<script src="<c:url value="/static/extlibs/popper.min.js" />"></script> 
-	<script src="<c:url value="/static/extlibs/bootstrap-4.0.0/bootstrap.min.js" />"></script>
-	<script src="<c:url value="/static/extlibs/jquery-3.2.1.min.js" />"></script>
-	<script src="<c:url value="/static/js/commonJquery.js" />"></script>
-	<script src="<c:url value="/static/js/entrypage/entry.js" />"></script>
+
+	<script src="<c:url value="/static/js/dest/entry.js" />"></script>
 	<script type="text/javascript">
 		const basicUrl = "${requestScope.basicUrl}";
 	</script>
@@ -191,7 +187,7 @@
 	</div>
 	<script>
 		function myMap() {
-			const myCenter = new google.maps.LatLng(53.896094, 27.539808);
+			let myCenter = new google.maps.LatLng(53.896094, 27.539808);
 			let mapProp = {center:myCenter, zoom:12, scrollwheel:true, draggable:true, mapTypeId:google.maps.MapTypeId.ROADMAP};
 			let map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 			let marker = new google.maps.Marker({position:myCenter});
