@@ -1,0 +1,133 @@
+.header {
+	min-height: 50px;
+}
+
+
+@media(min-width: 1024px) {
+	html, body {
+		height: 100%;
+	}
+	
+}
+
+@media(max-width: 1024px) {
+	.padding-map {
+		padding-bottom: 10px;
+	}
+}
+
+.rounded-element {
+	border-radius: 20px;
+}
+
+.ft-1 { 
+    background-color: #474e5d;
+    color: black;
+}
+
+.ft-contact {
+	background-color: #e6ecf0;
+    color: #f2f2f2;
+}
+
+.ft-video {
+	background-color: #fff;
+}
+
+.div-video {
+	width: 50%;
+}
+
+.content {
+	background-color: #f6f6f6;
+	flex: 1;
+	padding-top: 70px;
+	/*min-height: -1px;*/
+}
+
+@media (min-width: 767px) {
+	.ft-2 {
+		padding-top: 5px;
+	}
+}
+
+@media (max-width: 767px) {
+	.div-video {
+		width: 75%;
+		height: 75%;	
+	}
+	.rounded-element {
+		width: 70%;
+	}
+}
+
+.spec-font-rules {
+	font-family: Helvetica Neue LT,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-size: .9975rem;
+    line-height: 1.5rem;
+    letter-spacing: .025rem;
+    color: #657786;
+}
+
+.color-nat-black {
+	color: black;
+}
+
+#googleMap {
+	height:450px;
+	width:100%;
+}
+
+
+
+
+/* LOADER CSS */
+#loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 1s;
+  animation-name: animatebottom;
+  animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 } 
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom { 
+  from{ bottom:-100px; opacity:0 } 
+  to{ bottom:0; opacity:1 }
+}
+
+/* END LOADER CSS */
+
+
