@@ -10,7 +10,7 @@
 
 	<link rel="stylesheet" href="<c:url value="/static/css/entrypage/entry.css" />">
 
-	<script src="<c:url value="/static/js/dest/entry.js" />"></script>
+	<script src="<c:url value="/static/js/dist/entry.js" />"></script>
 	<script type="text/javascript">
 		const basicUrl = "${requestScope.basicUrl}";
 	</script>

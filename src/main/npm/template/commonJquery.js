@@ -8,8 +8,9 @@ const types = {
 	num: 'number'
 };
 
+module.exports = types;
 
-function ajax(url, method, datatype, ajaxdata, func) {
+module.exports = function ajax(url, method, datatype, ajaxdata, func) {
 	if(isElementFunc(func)) {
 		let request = $.ajax({
 			url: url, 
@@ -23,7 +24,7 @@ function ajax(url, method, datatype, ajaxdata, func) {
 }
 
 
-function isElementFunc(func) {
+module.exports = function isElementFunc(func) {
 	if(typeof func === types.fun) {
 		return true;
 	} else {
@@ -32,19 +33,19 @@ function isElementFunc(func) {
 	}
 }
 
-function getElementValue(element) {
+module.exports = function getElementValue(element) {
 	return ($(element).val()).trim();
 }
 
-function setElementValue(element, value) {
+module.exports = function setElementValue(element, value) {
 	$(element).val(value);
 }
 
-function setTagText(element, value) {
+module.exports = function setTagText(element, value) {
 	$(element).text(value);
 }
 
-function isEmptyElement(element) {
+module.exports = function isEmptyElement(element) {
 	return element.is(':empty');
 }
 

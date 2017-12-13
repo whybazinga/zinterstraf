@@ -1,12 +1,12 @@
 let path = require('path');
 let webpack = require('webpack');
 
-module.exports = {
+const config = {
     entry: {
         'entry':'./src/entry.js'
     },
     output: {
-        path: path.resolve(__dirname, 'dest'),
+        path: path.resolve(__dirname, '../webapp/resources/js/dist'),
         filename: "[name].js"
     },
     plugins: [
@@ -37,3 +37,5 @@ module.exports = {
         ]
     }
 };
+
+module.exports = config;

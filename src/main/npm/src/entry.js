@@ -1,5 +1,6 @@
-
+require('bootstrap/dist/css/bootstrap.min.css')
 require('../template/commonJquery');
+
 // need smth
 const REGISTER = {
     header: 'Register in the system',
