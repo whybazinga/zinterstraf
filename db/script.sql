@@ -37,8 +37,9 @@ CREATE TABLE link_users_roles (
     ON UPDATE cascade
 );
 
-INSERT INTO u_site_vvopaa.link_users_roles (id_user, id_role) VALUES (1, 1);
-INSERT INTO u_site_vvopaa.link_users_roles (id_user, id_role) VALUES (1, 2);
-INSERT INTO u_site_vvopaa.link_users_roles (id_user, id_role) VALUES (1, 3);
+INSERT INTO u_site_vvopaa.link_users_roles (id_user, id_role)(
+  select users.id, roles.id from users, roles
+  where users.id = 1
+);
 
 

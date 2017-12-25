@@ -1,5 +1,5 @@
 package com.vvopaa.universalsite.spring;
-
+/*
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -36,14 +36,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.csrf().disable().authorizeRequests()
         	.antMatchers("/", "/register-ajax", "/login-ajax").permitAll()
         	.antMatchers("/welcome").access("hasRole('USER') or hasRole('ADMIN') or hasRole('MODERATOR')")
             .antMatchers("/newuser/**", "/delete-user-*").access("hasRole('ADMIN')")
             .antMatchers("/edit-user-*").access("hasRole('ADMIN') or hasRole('MODERATOR')")
             .and().formLogin().loginPage("/").usernameParameter("email").passwordParameter("password")
             .and().rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository).tokenValiditySeconds(86400)
-            .and().csrf()
             .and().exceptionHandling().accessDeniedPage("/access_denied");
     } //.loginProcessingUrl("/login-ajax")
  
@@ -71,3 +70,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 	
 }
+*/

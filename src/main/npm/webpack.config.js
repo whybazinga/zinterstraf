@@ -1,7 +1,7 @@
 let path = require('path');
 let webpack = require('webpack');
 
-const config = {
+let config = {
     entry: {
         'entry':'./src/entry.js'
     },
@@ -9,13 +9,20 @@ const config = {
         path: path.resolve(__dirname, '../webapp/resources/js/dist'),
         filename: "[name].js"
     },
+    resolve: {
+        extensions: ['.js'],
+        alias: {
+            'commonProject': path.resolve(__dirname, './template/commonJquery')
+        }
+    },
     plugins: [
         new webpack.ProvidePlugin({
-            $: "jQuery",
-            jQuery: "jQuery",
-            "window.jQuery": 'jQuery',
+            $: "jquery",
+            jQuery: "jquery",
+            "window.jQuery": 'jquery',
             Popper: ['popper.js', 'default'],
-            "window.Popper": ['popper.js', 'default']
+            "window.Popper": ['popper.js', 'default'],
+            commonProject: "commonProject"
         })
     ],
     module: {
