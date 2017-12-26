@@ -1,5 +1,9 @@
-require('bootstrap/dist/css/bootstrap.min.css')
-require('../template/commonJquery');
+require('bootstrap/dist/js/bootstrap.min');
+require('bootstrap/dist/css/bootstrap.min.css');
+//require('commonProject');
+
+//require('bootstrap/dist/js/bootstrap.min');
+//require('../template/commonJquery');
 
 // need smth
 const REGISTER = {
@@ -36,7 +40,7 @@ const ENTRY_ELEMENTS = {
 
 
 function buttonManager(e) {
-    let elementVal = getElementValue(e.target);
+    let elementVal = commonProject.getElementValue(e.target);
 
     switch(elementVal) {
         case LOGIN.button.toLowerCase():
@@ -52,7 +56,7 @@ function buttonManager(e) {
             ajaxLogin(e);
             break;
         case 'close':
-            setTagText(ENTRY_ELEMENTS.resultModalBody, "Wait a little bit...");
+            commonProject.setTagText(ENTRY_ELEMENTS.resultModalBody, "Wait a little bit...");
             break;
         default:
             console.log("No such button");
@@ -61,8 +65,8 @@ function buttonManager(e) {
 }
 
 function ajaxLogin(e) {
-    let emailVal = getElementValue(ENTRY_ELEMENTS.inputEmail);
-    let passVal = getElementValue(ENTRY_ELEMENTS.inputPass);
+    let emailVal = commonProject.getElementValue(ENTRY_ELEMENTS.inputEmail);
+    let passVal = commonProject.getElementValue(ENTRY_ELEMENTS.inputPass);
 
     if(emailVal && passVal) {
         let url = basicUrl + "/login-ajax";
@@ -70,16 +74,16 @@ function ajaxLogin(e) {
             email: emailVal,
             pass: passVal
         };
-        ajax(url, AJAX.postMethod, AJAX.contentJson, ajaxdata, ajaxResponse);
+        commonProject.ajax(url, AJAX.postMethod, AJAX.contentJson, ajaxdata, ajaxResponse);
     }
-    setElementValue(ENTRY_ELEMENTS.inputEmail, '');
-    setElementValue(ENTRY_ELEMENTS.inputPass, '');
+    commonProject.setElementValue(ENTRY_ELEMENTS.inputEmail, '');
+    commonProject.setElementValue(ENTRY_ELEMENTS.inputPass, '');
 }
 
 function ajaxRegister(e) {
-    let emailVal = getElementValue(ENTRY_ELEMENTS.inputEmail);
-    let passVal = getElementValue(ENTRY_ELEMENTS.inputPass);
-    let passConfVal = getElementValue(ENTRY_ELEMENTS.inputPassConf);
+    let emailVal = commonProject.getElementValue(ENTRY_ELEMENTS.inputEmail);
+    let passVal = commonProject.getElementValue(ENTRY_ELEMENTS.inputPass);
+    let passConfVal = commonProject.getElementValue(ENTRY_ELEMENTS.inputPassConf);
 
     if(emailVal && passVal && passConfVal === passVal) {
         let url = basicUrl + "/register-ajax";
@@ -87,24 +91,24 @@ function ajaxRegister(e) {
             email: emailVal,
             pass: passVal
         };
-        ajax(url, AJAX.postMethod, AJAX.contentJson, ajaxdata, ajaxResponse);
+        commonProject.ajax(url, AJAX.postMethod, AJAX.contentJson, ajaxdata, ajaxResponse);
     } else {
-        setTagText(ENTRY_ELEMENTS.resultModalBody, "Invalid data for registration");
+        commonProject.setTagText(ENTRY_ELEMENTS.resultModalBody, "Invalid data for registration");
     }
-    setElementValue(ENTRY_ELEMENTS.inputEmail, '');
-    setElementValue(ENTRY_ELEMENTS.inputPass, '');
-    setElementValue(ENTRY_ELEMENTS.inputPassConf, '');
+    commonProject.setElementValue(ENTRY_ELEMENTS.inputEmail, '');
+    commonProject.setElementValue(ENTRY_ELEMENTS.inputPass, '');
+    commonProject.setElementValue(ENTRY_ELEMENTS.inputPassConf, '');
 }
 
 
 function ajaxResponse(data) {
     if(data.response) {
-        setTagText(ENTRY_ELEMENTS.resultModalBody, data.response);
+        commonProject.setTagText(ENTRY_ELEMENTS.resultModalBody, data.response);
         if((data.response).indexOf("logged in") >= 0) {
             window.location.href = basicUrl + "/welcome";
         }
     } else {
-        setTagText(ENTRY_ELEMENTS.resultModalBody, data);
+        commonProject.setTagText(ENTRY_ELEMENTS.resultModalBody, data);
     }
 }
 
@@ -113,9 +117,9 @@ function ajaxResponse(data) {
 function clickButtonModal(resources) {
     let checkPassElement = $(ENTRY_ELEMENTS.divPassConf);
 
-    setTagText(ENTRY_ELEMENTS.mainModalLabel, resources.header);
-    setTagText(ENTRY_ELEMENTS.mainModalBtn, resources.button);
-    setElementValue(ENTRY_ELEMENTS.mainModalBtn, resources.buttonSubmit);
+    commonProject.setTagText(ENTRY_ELEMENTS.mainModalLabel, resources.header);
+    commonProject.setTagText(ENTRY_ELEMENTS.mainModalBtn, resources.button);
+    commonProject.setElementValue(ENTRY_ELEMENTS.mainModalBtn, resources.buttonSubmit);
 
     checkPassElement.hide();
     if(resources.button === REGISTER.button) {
@@ -123,8 +127,8 @@ function clickButtonModal(resources) {
     }
 }
 
-
 $(document).ready(function() {
+    commonProject.testFunction();
     $(ENTRY_ELEMENTS.headerScrollBtn).click(() => {
         $("html, body").animate({ scrollTop: 0 }, 600);
         return false;

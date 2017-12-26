@@ -20,15 +20,15 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRoleDao userRole;
-	
+	/*
 	@Autowired
     private PasswordEncoder passwordEncoder;
-	
+	*/
 	@Override
 	@Transactional
 	public UserEntity saveUser(String login, String pass) {
 		
-		pass = passwordEncoder.encode(pass);
+		//pass = passwordEncoder.encode(pass);
 		UserEntity savedUser = userDao.saveUser(login, pass);
 		
 		
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserEntity loginUser(String login, String pass) {
-		pass = passwordEncoder.encode(pass);
+		//pass = passwordEncoder.encode(pass);
 		UserEntity loggedUser = userDao.loginUser(login, pass);
 		
 		return loggedUser;

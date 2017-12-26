@@ -6,11 +6,11 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="icon" href="<c:url value="/static/images/favicon.ico" />">
+	<script src="<c:url value="/static/js/dist/entry.js" />"></script>
 
+	<link rel="icon" href="<c:url value="/static/images/favicon.ico" />">
 	<link rel="stylesheet" href="<c:url value="/static/css/entrypage/entry.css" />">
 
-	<script src="<c:url value="/static/js/dist/entry.js" />"></script>
 	<script type="text/javascript">
 		const basicUrl = "${requestScope.basicUrl}";
 	</script>
@@ -79,7 +79,7 @@
 	  </div>
 	</div>	
 
-	
+	<!--
 	<div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
@@ -98,9 +98,8 @@
 	    </div>
 	  </div>
 	</div>
+    -->
 
-
-	
 	<div class="container-fluid content">
 		<div class="row align-items-center">
 		    <div class="col-lg-3 text-center">
