@@ -31,8 +31,7 @@ public class AppConfig {
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         factoryBean.setConfigLocation(context.getResource("classpath:hibernate.cfg.xml"));
-        
-        factoryBean.setAnnotatedClasses(UserEntity.class, UserRole.class, PersistentLogin.class);
+        factoryBean.setAnnotatedClasses(UserEntity.class, UserRole.class);
         return factoryBean;
     }
  

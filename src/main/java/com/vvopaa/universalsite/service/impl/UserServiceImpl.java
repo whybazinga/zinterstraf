@@ -2,6 +2,9 @@ package com.vvopaa.universalsite.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,9 +15,8 @@ import com.vvopaa.universalsite.repository.UserRoleDao;
 import com.vvopaa.universalsite.service.UserService;
 
 @Service("userServiceImpl")
-@Transactional(readOnly = true)
-public class UserServiceImpl implements UserService {
-	@Qualifier("mysqlUserDao") 
+public class UserServiceImpl implements UserService, UserDetailsService {
+	@Qualifier("mysqlUserDao")
 	@Autowired
 	private UserDao userDao;
 	
@@ -24,6 +26,13 @@ public class UserServiceImpl implements UserService {
 	@Autowired
     private PasswordEncoder passwordEncoder;
 	*/
+
+	@Override
+	@Transactional
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		return userDao.getUserByEmail(username);
+	}
+
 	@Override
 	@Transactional
 	public UserEntity saveUser(String login, String pass) {

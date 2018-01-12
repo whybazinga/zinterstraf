@@ -49,4 +49,4 @@ let commonProject = function () {
     return me;
 }
 
-module.exports = commonProject;
+module.exports = commonProject();

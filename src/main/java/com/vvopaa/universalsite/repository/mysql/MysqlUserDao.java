@@ -23,10 +23,10 @@ public class MysqlUserDao extends AbstractMysqlDao<Integer, UserEntity> implemen
 				"INSERT INTO link_users_ s.stock_code from stock s where s.stock_code = :stockCode")
 				.setParameter("stockCode", "7277");
 				List result = query.list();
-				*/
+		*/
         if(existingUser == null) {
         	UserEntity user = new UserEntity();
-    		user.setEmail(email);
+    		user.setUsername(email);
     		user.setPassword(pass);
     		save(user);
     		return user;
@@ -49,8 +49,7 @@ public class MysqlUserDao extends AbstractMysqlDao<Integer, UserEntity> implemen
         Query<UserEntity> q = getSession().createQuery(query);
         List<UserEntity> existingListUsers = q.getResultList();
         if (!existingListUsers.isEmpty()) {
-        	UserEntity existingUser = existingListUsers.get(0);
-        	return existingUser; 
+			return existingListUsers.get(0);
         }
 		return null;
 	}
