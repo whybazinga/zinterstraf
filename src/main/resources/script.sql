@@ -40,6 +40,40 @@ INSERT INTO u_site_vvopaa.link_users_roles (id_user, id_role)(
   where users.id = 1
 );
 
-CREATE TABLE persist_login (
-  id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT
+#SPRING SECURITY TEST ???
+create table oauth_client_token (
+  token_id VARCHAR(256),
+  token LONGVARBINARY,
+  authentication_id VARCHAR(256) PRIMARY KEY,
+  user_name VARCHAR(256),
+  client_id VARCHAR(256)
+);
+
+create table oauth_access_token (
+  token_id VARCHAR(256),
+  token LONGVARBINARY,
+  authentication_id VARCHAR(256) PRIMARY KEY,
+  user_name VARCHAR(256),
+  client_id VARCHAR(256),
+  authentication LONGVARBINARY,
+  refresh_token VARCHAR(256)
+);
+
+create table oauth_refresh_token (
+  token_id VARCHAR(256),
+  token LONGVARBINARY,
+  authentication LONGVARBINARY
+);
+
+create table oauth_code (
+  code VARCHAR(256), authentication LONGVARBINARY
+);
+
+create table oauth_approvals (
+	userId VARCHAR(256),
+	clientId VARCHAR(256),
+	scope VARCHAR(256),
+	status VARCHAR(10),
+	expiresAt TIMESTAMP,
+	lastModifiedAt TIMESTAMP
 );

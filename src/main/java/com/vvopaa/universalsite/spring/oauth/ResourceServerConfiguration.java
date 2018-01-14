@@ -1,6 +1,6 @@
 package com.vvopaa.universalsite.spring.oauth;
 
-
+/*
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -25,3 +25,4 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
             .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
 }
+*/

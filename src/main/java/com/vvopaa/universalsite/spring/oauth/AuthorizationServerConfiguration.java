@@ -3,6 +3,7 @@ package com.vvopaa.universalsite.spring.oauth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -23,11 +24,15 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     private static String REALM = "MY_OAUTH_REALM";
 
-    @Autowired
-    private TokenStore tokenStore;
+    private final HibernateTransactionManager transactionManager;
 
     @Autowired
-    private UserApprovalHandler userApprovalHandler;
+    public AuthorizationServerConfiguration(HibernateTransactionManager transactionManager) {
+        this.transactionManager = transactionManager;
+    }
+
+    @Autowired
+    private TokenStore tokenStore;
 
     @Autowired
     @Qualifier("authenticationManagerBean")
@@ -35,25 +40,40 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()
-                .withClient("my-trusted-client")
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
-                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
-                .scopes("read", "write", "trust")
+        clients.jdbc(this.transactionManager.getDataSource())
+                .withClient("clientIdPassword")
                 .secret("secret")
+                .authorizedGrantTypes("password", "refresh_token")
+                .scopes("read");
+                /*
+                .and()
+                .withClient("sampleClientId")
+                .authorizedGrantTypes("implicit")
+                .scopes("read")
+                .autoApprove(true)
+                //
                 .accessTokenValiditySeconds(120).//Access token is only valid for 2 minutes.
                 refreshTokenValiditySeconds(600);//Refresh token is only valid for 10 minutes.
+                */
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(tokenStore).userApprovalHandler(userApprovalHandler)
-                .authenticationManager(authenticationManager);
+        endpoints
+            .tokenStore(tokenStore) // Persist tokens to database
+            .authenticationManager(authenticationManager);
+            /*
+            .approvalStoreDisabled()
+            .userDetailsService(customUserDetailService);
+            */
     }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-        oauthServer.realm(REALM+"/client");
+        oauthServer
+            .tokenKeyAccess("permitAll()")
+            .checkTokenAccess("isAuthenticated()");
+        /*Don't allow tokens to be delivered from token access point as well as for tokens to be validated from this point*/
     }
 
 }
