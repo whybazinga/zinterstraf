@@ -72,7 +72,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
         oauthServer
             .tokenKeyAccess("permitAll()")
-            .checkTokenAccess("isAuthenticated()");
+            .checkTokenAccess("permitAll()");
         /*Don't allow tokens to be delivered from token access point as well as for tokens to be validated from this point*/
     }
 

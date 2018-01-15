@@ -69,12 +69,28 @@ function ajaxLogin(e) {
     let passVal = commonProject.getElementValue(ENTRY_ELEMENTS.inputPass);
 
     if(emailVal && passVal) {
-        let url = basicUrl + "/login-ajax";
+        let url = basicUrl + "/oauth/token";
         let ajaxdata = {
             email: emailVal,
             pass: passVal
         };
-        commonProject.ajax(url, AJAX.postMethod, AJAX.contentJson, ajaxdata, ajaxResponse);
+        $.ajax({
+            headers: {
+                "Authorization": "Basic " + btoa(emailVal + ":" + passVal)
+            },
+            type: 'POST',
+            url: url,
+            async: false,
+            data: { ajaxdata }
+            //OR
+            //beforeSend: function(xhr) {
+            //  xhr.setRequestHeader("My-First-Header", "first value");
+            //  xhr.setRequestHeader("My-Second-Header", "second value");
+            //}
+        }).done(function(data) {
+            alert(data);
+        });
+        //commonProject.ajax(url, AJAX.postMethod, AJAX.contentJson, ajaxdata, ajaxResponse);
     }
     commonProject.setElementValue(ENTRY_ELEMENTS.inputEmail, '');
     commonProject.setElementValue(ENTRY_ELEMENTS.inputPass, '');
