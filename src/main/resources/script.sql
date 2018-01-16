@@ -43,7 +43,7 @@ INSERT INTO u_site_vvopaa.link_users_roles (id_user, id_role)(
 #SPRING SECURITY TEST ???
 create table oauth_client_token (
   token_id VARCHAR(256),
-  token LONGVARBINARY,
+  token VARBINARY(256),
   authentication_id VARCHAR(256) PRIMARY KEY,
   user_name VARCHAR(256),
   client_id VARCHAR(256)
@@ -51,22 +51,22 @@ create table oauth_client_token (
 
 create table oauth_access_token (
   token_id VARCHAR(256),
-  token LONGVARBINARY,
+  token VARBINARY(256),
   authentication_id VARCHAR(256) PRIMARY KEY,
   user_name VARCHAR(256),
   client_id VARCHAR(256),
-  authentication LONGVARBINARY,
+  authentication VARBINARY(256),
   refresh_token VARCHAR(256)
 );
 
 create table oauth_refresh_token (
   token_id VARCHAR(256),
-  token LONGVARBINARY,
-  authentication LONGVARBINARY
+  token LONG,
+  authentication LONG
 );
 
 create table oauth_code (
-  code VARCHAR(256), authentication LONGVARBINARY
+  code VARCHAR(256), authentication VARBINARY(256)
 );
 
 create table oauth_approvals (
