@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
+
 
 @Controller
 public class ViewController {
@@ -24,8 +26,8 @@ public class ViewController {
 	}
 	
 	@RequestMapping(value="/main", method=RequestMethod.GET)
-	public ModelAndView handleLoginRequest(HttpServletRequest req, HttpServletResponse res, ModelMap model) {
-		
+	public ModelAndView handleLoginRequest(HttpServletRequest req, HttpServletResponse res, ModelMap model, Principal principle) {
+		String tempVar = principle.getName();
 		return new ModelAndView("welcome", model);
 	}
 	

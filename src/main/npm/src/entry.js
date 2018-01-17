@@ -67,28 +67,31 @@ function buttonManager(e) {
 function ajaxLogin(e) {
     let emailVal = commonProject.getElementValue(ENTRY_ELEMENTS.inputEmail);
     let passVal = commonProject.getElementValue(ENTRY_ELEMENTS.inputPass);
+    passVal = '$2b$10$OYfHj.JjcH/o4oO3so.NweA/5Pleyuu0vnFlowo1O4KLO8mWuXbma'
+    let clientId = 'clientIdPassword';
+    let clientSecret = 'secret';
 
     if(emailVal && passVal) {
         let url = basicUrl + "/oauth/token";
         let ajaxdata = {
-            grant_type: 'password',
-            email: emailVal,
-            pass: passVal
+            grant_type: "password",
+            username: emailVal,
+            password: passVal,
+            client_id: clientId,
+            client_secret: clientSecret
         };
         $.ajax({
             headers: {
-                "Authorization": "Basic " + btoa(emailVal + ":" + passVal)
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": "Basic " + btoa(clientId + ":" + clientSecret)
             },
-            type: 'POST',
+            method: "POST",
             url: url,
-            async: false,
-            data: { ajaxdata }
-            //OR
-            //beforeSend: function(xhr) {
-            //  xhr.setRequestHeader("My-First-Header", "first value");
-            //  xhr.setRequestHeader("My-Second-Header", "second value");
-            //}
+            data: ajaxdata
+
         }).done(function(data) {
+            alert(data);
+        }).fail(function(data) {
             alert(data);
         });
         //commonProject.ajax(url, AJAX.postMethod, AJAX.contentJson, ajaxdata, ajaxResponse);

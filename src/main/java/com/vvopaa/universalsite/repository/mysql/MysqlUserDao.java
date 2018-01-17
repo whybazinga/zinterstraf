@@ -45,7 +45,7 @@ public class MysqlUserDao extends AbstractMysqlDao<Integer, UserEntity> implemen
 		CriteriaBuilder builder = getBuilder();
 		CriteriaQuery<UserEntity> query = builder.createQuery(UserEntity.class);
         Root<UserEntity> root = query.from(UserEntity.class);
-        query.select(root).where(builder.equal(root.get("email"), email));
+        query.select(root).where(builder.equal(root.get("username"), email));
         Query<UserEntity> q = getSession().createQuery(query);
         List<UserEntity> existingListUsers = q.getResultList();
         if (!existingListUsers.isEmpty()) {

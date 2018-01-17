@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -22,13 +23,14 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 @EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-    private static String REALM = "MY_OAUTH_REALM";
-
     private final HibernateTransactionManager transactionManager;
 
+    private final UserDetailsService userDetailsService;
+
     @Autowired
-    public AuthorizationServerConfiguration(HibernateTransactionManager transactionManager) {
+    public AuthorizationServerConfiguration(HibernateTransactionManager transactionManager, UserDetailsService userDetailsService) {
         this.transactionManager = transactionManager;
+        this.userDetailsService = userDetailsService;
     }
 
     @Autowired
@@ -40,11 +42,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.jdbc(this.transactionManager.getDataSource())
+        clients.inMemory()
                 .withClient("clientIdPassword")
                 .secret("secret")
                 .authorizedGrantTypes("password", "refresh_token")
-                .scopes("read");
+                .scopes("read", "write");
                 /*
                 .and()
                 .withClient("sampleClientId")
@@ -61,7 +63,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
             .tokenStore(tokenStore) // Persist tokens to database
-            .authenticationManager(authenticationManager);
+            .authenticationManager(authenticationManager)
+                .userDetailsService(userDetailsService);
             /*
             .approvalStoreDisabled()
             .userDetailsService(customUserDetailService);
