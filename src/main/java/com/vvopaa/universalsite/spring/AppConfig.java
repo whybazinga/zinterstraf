@@ -11,7 +11,6 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.vvopaa.universalsite.model.PersistentLogin;
 import com.vvopaa.universalsite.model.UserEntity;
 import com.vvopaa.universalsite.model.UserRole;
 

@@ -71,6 +71,7 @@ function ajaxLogin(e) {
     if(emailVal && passVal) {
         let url = basicUrl + "/oauth/token";
         let ajaxdata = {
+            grant_type: 'password',
             email: emailVal,
             pass: passVal
         };
