@@ -1,15 +1,14 @@
 package com.vvopaa.universalsite.service.impl;
 
+import com.vvopaa.universalsite.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.vvopaa.universalsite.model.UserEntity;
 import com.vvopaa.universalsite.repository.UserDao;
 import com.vvopaa.universalsite.repository.UserRoleDao;
 import com.vvopaa.universalsite.service.UserService;
@@ -35,32 +34,32 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Override
 	@Transactional
-	public UserEntity saveUser(String login, String pass) {
+	public User saveUser(String login, String pass) {
 		
 		//pass = passwordEncoder.encode(pass);
-		UserEntity savedUser = userDao.saveUser(login, pass);
+		User savedUser = userDao.saveUser(login, pass);
 		
 		
 		return savedUser;
 	}
 
 	@Override
-	public UserEntity getUserById(int id) {
+	public User getUserById(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public UserEntity loginUser(String login, String pass) {
+	public User loginUser(String login, String pass) {
 		//pass = passwordEncoder.encode(pass);
-		UserEntity loggedUser = userDao.loginUser(login, pass);
+		User loggedUser = userDao.loginUser(login, pass);
 		
 		return loggedUser;
 	}
 
 	@Override
-	public UserEntity getUserByEmail(String email) {
-		UserEntity user = userDao.getUserByEmail(email);
+	public User getUserByEmail(String email) {
+		User user = userDao.getUserByEmail(email);
 		return user;
 	}
 

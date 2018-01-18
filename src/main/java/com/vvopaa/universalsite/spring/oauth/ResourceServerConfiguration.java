@@ -11,14 +11,14 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
-    /*
-    private static final String RESOURCE_ID = "localhost:8080/main";
+
+    static final String RESOURCE_ID = "main";
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
-        resources.resourceId(RESOURCE_ID).stateless(false);
+        resources.resourceId(RESOURCE_ID);
     }
-    */
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.

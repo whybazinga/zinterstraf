@@ -67,7 +67,7 @@ function buttonManager(e) {
 function ajaxLogin(e) {
     let emailVal = commonProject.getElementValue(ENTRY_ELEMENTS.inputEmail);
     let passVal = commonProject.getElementValue(ENTRY_ELEMENTS.inputPass);
-    passVal = '$2b$10$OYfHj.JjcH/o4oO3so.NweA/5Pleyuu0vnFlowo1O4KLO8mWuXbma'
+    //passVal = '$2b$10$OYfHj.JjcH/o4oO3so.NweA/5Pleyuu0vnFlowo1O4KLO8mWuXbma'
     let clientId = 'clientIdPassword';
     let clientSecret = 'secret';
 

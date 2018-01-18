@@ -1,14 +1,14 @@
 package com.vvopaa.universalsite.repository;
 
-import com.vvopaa.universalsite.model.UserEntity;
+import com.vvopaa.universalsite.model.User;
 
 public interface UserDao {
 
-	public UserEntity saveUser(String email, String pass);
+	public User saveUser(String email, String pass);
 	
-	public UserEntity getUserById(int id);
+	public User getUserById(int id);
 	
-	public UserEntity getUserByEmail(String email);
+	public User getUserByEmail(String email);
 	
-	public UserEntity loginUser(String email, String pass);
+	public User loginUser(String email, String pass);
 }

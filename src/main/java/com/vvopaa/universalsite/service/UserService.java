@@ -1,14 +1,14 @@
 package com.vvopaa.universalsite.service;
 
-import com.vvopaa.universalsite.model.UserEntity;
+import com.vvopaa.universalsite.model.User;
 
 public interface UserService {
 	
-	public UserEntity saveUser(String login, String pass);
+	public User saveUser(String login, String pass);
 	
-	public UserEntity getUserById(int id);
+	public User getUserById(int id);
 	
-	public UserEntity loginUser(String login, String pass);
+	public User loginUser(String login, String pass);
 	
-	public UserEntity getUserByEmail(String email);
+	public User getUserByEmail(String email);
 }

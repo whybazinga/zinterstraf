@@ -6,18 +6,18 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import com.vvopaa.universalsite.model.User;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import com.vvopaa.universalsite.model.UserEntity;
 import com.vvopaa.universalsite.repository.UserDao;
 
 @Repository("mysqlUserDao")
-public class MysqlUserDao extends AbstractMysqlDao<Integer, UserEntity> implements UserDao {
+public class MysqlUserDao extends AbstractMysqlDao<Integer, User> implements UserDao {
 	
 	@Override
-	public UserEntity saveUser(String email, String pass) {
-		UserEntity existingUser = this.getUserByEmail(email);
+	public User saveUser(String email, String pass) {
+		User existingUser = this.getUserByEmail(email);
 		/*
 		getSession().createQuery(
 				"INSERT INTO link_users_ s.stock_code from stock s where s.stock_code = :stockCode")
@@ -25,7 +25,7 @@ public class MysqlUserDao extends AbstractMysqlDao<Integer, UserEntity> implemen
 				List result = query.list();
 		*/
         if(existingUser == null) {
-        	UserEntity user = new UserEntity();
+        	User user = new User();
     		user.setUsername(email);
     		user.setPassword(pass);
     		save(user);
@@ -35,19 +35,19 @@ public class MysqlUserDao extends AbstractMysqlDao<Integer, UserEntity> implemen
 	}
 
 	@Override
-	public UserEntity getUserById(int id) {
-		UserEntity user = getByKey(id);
+	public User getUserById(int id) {
+		User user = getByKey(id);
 		return user;
 	}
 
 	@Override
-	public UserEntity getUserByEmail(String email) {
+	public User getUserByEmail(String email) {
 		CriteriaBuilder builder = getBuilder();
-		CriteriaQuery<UserEntity> query = builder.createQuery(UserEntity.class);
-        Root<UserEntity> root = query.from(UserEntity.class);
+		CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
         query.select(root).where(builder.equal(root.get("username"), email));
-        Query<UserEntity> q = getSession().createQuery(query);
-        List<UserEntity> existingListUsers = q.getResultList();
+        Query<User> q = getSession().createQuery(query);
+        List<User> existingListUsers = q.getResultList();
         if (!existingListUsers.isEmpty()) {
 			return existingListUsers.get(0);
         }
@@ -55,16 +55,16 @@ public class MysqlUserDao extends AbstractMysqlDao<Integer, UserEntity> implemen
 	}
 
 	@Override
-	public UserEntity loginUser(String email, String pass) {
+	public User loginUser(String email, String pass) {
 		CriteriaBuilder builder = getBuilder();
-		CriteriaQuery<UserEntity> query = builder.createQuery(UserEntity.class);
-        Root<UserEntity> root = query.from(UserEntity.class);
+		CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
         //query.select(root).where(Restrictions.eq("ssoId", sso));
         query.select(root).where(builder.equal(root.get("email"), email), builder.equal(root.get("password"), pass));
-        Query<UserEntity> q = getSession().createQuery(query);
-        List<UserEntity> existingListUsers = q.getResultList();
+        Query<User> q = getSession().createQuery(query);
+        List<User> existingListUsers = q.getResultList();
         if (!existingListUsers.isEmpty()) {
-        	UserEntity existingUser = existingListUsers.get(0);
+        	User existingUser = existingListUsers.get(0);
         	return existingUser; 
         }
 		return null;

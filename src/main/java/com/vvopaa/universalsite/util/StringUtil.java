@@ -7,10 +7,9 @@ public class StringUtil {
 	
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"  
 			   + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";  
-	
-	
+
 	public static boolean isNotEmptyString(String str) {
-		return str != null && !str.trim().isEmpty() ? true : false;
+		return str != null && !str.trim().isEmpty();
 	}
 	
 	public static boolean isStringEmail(String str) {

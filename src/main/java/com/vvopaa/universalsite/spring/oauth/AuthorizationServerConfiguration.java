@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -42,21 +43,13 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()
+        clients.  inMemory() //withClientDetails()
                 .withClient("clientIdPassword")
                 .secret("secret")
+                .resourceIds(ResourceServerConfiguration.RESOURCE_ID)
                 .authorizedGrantTypes("password", "refresh_token")
                 .scopes("read", "write");
-                /*
-                .and()
-                .withClient("sampleClientId")
-                .authorizedGrantTypes("implicit")
-                .scopes("read")
-                .autoApprove(true)
-                //
-                .accessTokenValiditySeconds(120).//Access token is only valid for 2 minutes.
-                refreshTokenValiditySeconds(600);//Refresh token is only valid for 10 minutes.
-                */
+
     }
 
     @Override
