@@ -2,12 +2,12 @@ package com.vvopaa.universalsite.service;
 
 import java.util.List;
 
-import com.vvopaa.universalsite.model.UserRole;
+import com.vvopaa.universalsite.model.UserRoles;
 
 public interface RoleService {
-	UserRole findById(int id);
+	UserRoles findById(int id);
 	 
-    UserRole findByRole(String role);
+    UserRoles findByRole(String role);
      
-    List<UserRole> findAll();
+    List<UserRoles> findAll();
 }

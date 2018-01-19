@@ -2,12 +2,12 @@ package com.vvopaa.universalsite.repository;
 
 import java.util.List;
 
-import com.vvopaa.universalsite.model.UserRole;
+import com.vvopaa.universalsite.model.UserRoles;
 
 public interface UserRoleDao {
-	List<UserRole> findAll();
+	List<UserRoles> findAll();
     
-    UserRole findByRole(String role);
+    UserRoles findByRole(String role);
      
-    UserRole findById(int id);
+    UserRoles findById(int id);
 }

@@ -4,8 +4,7 @@ public enum UserStatuses {
     DISABLED(0),
     ENABLED(1),
     LOCKED(2),
-    EXPIRED(3),
-    ;
+    EXPIRED(3);
 
     private final int status;
 

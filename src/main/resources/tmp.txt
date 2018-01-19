@@ -1,15 +1,11 @@
+INSERT INTO u_site_vvopaa.oauth_users (email, password, accStatus) VALUES ('test@test.test', '$2a$04$sJjk4.1ecL7I1NF3hFUZueq6LDBj2hIRLdo2U5GmYdoeA9XYpfREu', 1);
 
-INSERT IGNORE INTO u_site_vvopaa.oauth_users (email, password, accStatus)
-VALUES ('test@test.test', '$2a$04$sJjk4.1ecL7I1NF3hFUZueq6LDBj2hIRLdo2U5GmYdoeA9XYpfREu', 1);
+INSERT INTO u_site_vvopaa.user_roles (role) VALUES ('user'), ('moderator'), ('admin');
 
-INSERT IGNORE INTO u_site_vvopaa.user_roles (role) VALUES ('user'), ('moderator'), ('admin');
-
-INSERT IGNORE INTO u_site_vvopaa.link_users_roles (id_user, id_role)(
+INSERT INTO u_site_vvopaa.link_users_roles (id_user, id_role)(
   select oauth_users.id, user_roles.id from oauth_users, user_roles
   where oauth_users.id = 1
 );
-
-INSERT IGNORE INTO u_site_vvopaa.client_scopes (scope) VALUES ('read'), ('write'), ('trust');
 
 #SPRING SECURITY TEST
 create table oauth_client_token (
@@ -20,7 +16,6 @@ create table oauth_client_token (
   client_id VARCHAR(256)
 );
 
-/*
 #this one for AC and REF tokens JDBC
 create table oauth_access_token (
   token_id VARCHAR(256),
@@ -51,4 +46,3 @@ create table oauth_approvals (
   expiresAt TIMESTAMP,
   lastModifiedAt TIMESTAMP
 );
-*/

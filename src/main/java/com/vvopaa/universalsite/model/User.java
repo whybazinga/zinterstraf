@@ -19,7 +19,7 @@ import javax.persistence.JoinColumn;
 public class User extends AbstractEntity implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="email")
+	@Column(name="email", unique = true)
 	private String username;
 
 	@Column(name="password")
@@ -40,7 +40,7 @@ public class User extends AbstractEntity implements UserDetails {
 			joinColumns = { @JoinColumn(name = "id_user") },
 			inverseJoinColumns = { @JoinColumn(name = "id_role") }
 	)
-	private Set<UserRole> userRoles = new HashSet<UserRole>();
+	private Set<UserRoles> userRoles = new HashSet<UserRoles>();
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -109,11 +109,11 @@ public class User extends AbstractEntity implements UserDetails {
 		this.accStatus = accStatus;
 	}
 
-	public Set<UserRole> getUserRoles() {
+	public Set<UserRoles> getUserRoles() {
 		return userRoles;
 	}
 
-	public void setUserRoles(Set<UserRole> userRoles) {
+	public void setUserRoles(Set<UserRoles> userRoles) {
 		this.userRoles = userRoles;
 	}
 }

@@ -7,34 +7,39 @@ import org.springframework.security.oauth2.provider.ClientDetails;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
 @Entity
 @Table(name="oauth_clients")
-public class Client implements ClientDetails {
+public class Client implements ClientDetails, Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Id
     @Column(name="client_id")
     private String clientId;
 
     @Column(name="resource_ids")
-    private Set<String> resourceIds;
+    private String resourceIds;
 
     @Column(name="client_secret")
     private String clientSecret;
 
     @Column(name="scope")
-    private Set<String> scope;
+    private String scope;
 
     @Column(name="authorized_grant_types")
-    private Set<String> authorizedGrantTypes;
+    private String authorizedGrantTypes;
 
     @Column(name="server_redirect_uri")
-    private Set<String> registeredRedirectUri;
+    private String registeredRedirectUri;
 
     @Column(name="authorities")
-    private Collection<GrantedAuthority> authorities;
+    private String authorities;
 
     @Column(name="access_token_validity")
     private Integer accessTokenValiditySeconds;
@@ -46,7 +51,7 @@ public class Client implements ClientDetails {
     private Boolean autoApprove;
 
     @Column(name="additional_information")
-    private Map<String, Object> additionalInformation;
+    private String additionalInformation;
 
     @Override
     public String getClientId() {
@@ -55,7 +60,7 @@ public class Client implements ClientDetails {
 
     @Override
     public Set<String> getResourceIds() {
-        return resourceIds;
+        return null;
     }
 
     @Override
@@ -70,27 +75,27 @@ public class Client implements ClientDetails {
 
     @Override
     public boolean isScoped() {
-        return ArrayUtil.isNotEmptySet(scope);
+        return false;
     }
 
     @Override
     public Set<String> getScope() {
-        return scope;
+        return null;
     }
 
     @Override
     public Set<String> getAuthorizedGrantTypes() {
-        return authorizedGrantTypes;
+        return null;
     }
 
     @Override
     public Set<String> getRegisteredRedirectUri() {
-        return registeredRedirectUri;
+        return null;
     }
 
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
-        return authorities;
+        return null;
     }
 
     @Override
@@ -102,7 +107,7 @@ public class Client implements ClientDetails {
         this.clientId = clientId;
     }
 
-    public void setResourceIds(Set<String> resourceIds) {
+    public void setResourceIds(String resourceIds) {
         this.resourceIds = resourceIds;
     }
 
@@ -110,19 +115,19 @@ public class Client implements ClientDetails {
         this.clientSecret = clientSecret;
     }
 
-    public void setScope(Set<String> scope) {
+    public void setScope(String scope) {
         this.scope = scope;
     }
 
-    public void setAuthorizedGrantTypes(Set<String> authorizedGrantTypes) {
+    public void setAuthorizedGrantTypes(String authorizedGrantTypes) {
         this.authorizedGrantTypes = authorizedGrantTypes;
     }
 
-    public void setRegisteredRedirectUri(Set<String> registeredRedirectUri) {
+    public void setRegisteredRedirectUri(String registeredRedirectUri) {
         this.registeredRedirectUri = registeredRedirectUri;
     }
 
-    public void setAuthorities(Collection<GrantedAuthority> authorities) {
+    public void setAuthorities(String authorities) {
         this.authorities = authorities;
     }
 
@@ -138,7 +143,7 @@ public class Client implements ClientDetails {
         this.autoApprove = autoApprove;
     }
 
-    public void setAdditionalInformation(Map<String, Object> additionalInformation) {
+    public void setAdditionalInformation(String additionalInformation) {
         this.additionalInformation = additionalInformation;
     }
 
@@ -158,6 +163,6 @@ public class Client implements ClientDetails {
 
     @Override
     public Map<String, Object> getAdditionalInformation() {
-        return additionalInformation;
+        return null;
     }
 }
