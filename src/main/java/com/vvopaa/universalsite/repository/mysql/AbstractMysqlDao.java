@@ -22,35 +22,35 @@ public abstract class AbstractMysqlDao<PK extends Serializable, T> {
     @Autowired
     private SessionFactory sessionFactory;
  
-    protected Session getSession() {
+    Session getSession() {
         return this.sessionFactory.getCurrentSession();
     }
     
-    protected CriteriaBuilder getBuilder() {
+    CriteriaBuilder getBuilder() {
     	return getSession().getCriteriaBuilder();
     }
-    
-    public T getByKey(PK key) {
+
+    T getByKey(PK key) {
         return (T) getSession().get(persistentClass, key);
     }
  
-    public void persist(T entity) {
+    void persist(T entity) {
         getSession().persist(entity);
     }
-    
-    public void save(T entity) {
+
+    void save(T entity) {
     	getSession().save(entity);
     }
-    
-    public void update(T entity) {
+
+    void update(T entity) {
         getSession().update(entity);
     }
- 
-    public void delete(T entity) {
+
+    void delete(T entity) {
         getSession().delete(entity);
     }
      
-    protected CriteriaQuery<T> getQuery(){
+    CriteriaQuery<T> getQuery(){
         return getBuilder().createQuery(persistentClass);
     }
 	

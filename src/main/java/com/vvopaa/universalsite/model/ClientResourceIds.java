@@ -18,4 +18,5 @@ public class ClientResourceIds extends AbstractEntity {
     public void setResourceId(String resourceId) {
         this.resourceId = resourceId;
     }
+
 }

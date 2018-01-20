@@ -4,11 +4,11 @@ import com.vvopaa.universalsite.model.User;
 
 public interface UserService {
 	
-	public User saveUser(String login, String pass);
+	User saveUser(String login, String pass);
 	
-	public User getUserById(int id);
+	User getUserById(int id);
 	
-	public User loginUser(String login, String pass);
+	User loginUser(String login, String pass);
 	
-	public User getUserByEmail(String email);
+	User getUserByEmail(String email);
 }

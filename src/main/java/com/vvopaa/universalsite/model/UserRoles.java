@@ -10,13 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.vvopaa.universalsite.model.enums.UserRoleTypes;
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Table(name="user_roles")
-public class UserRoles extends AbstractEntity implements Serializable {
+public class UserRoles extends AbstractEntity implements GrantedAuthority, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	 
+
     @Column(name="role", unique = true)
     private String role;
 
@@ -28,4 +29,8 @@ public class UserRoles extends AbstractEntity implements Serializable {
 		this.role = role;
 	}
 
+	@Override
+	public String getAuthority() {
+		return role;
+	}
 }

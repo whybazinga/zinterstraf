@@ -35,7 +35,6 @@ public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
         this.userDetailsService = userDetailsService;
     }
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -47,14 +46,6 @@ public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     }
 
-    /*
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .userDetailsService(userDetailsService)
-            .passwordEncoder(new BCryptPasswordEncoder());
-    }
-    */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());

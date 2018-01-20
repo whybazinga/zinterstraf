@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="client_scopes")
+@Table(name="client_grant_types")
 public class ClientGrantTypes extends AbstractEntity {
 
     @Column(name = "grant_type", unique = true)

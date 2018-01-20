@@ -18,4 +18,5 @@ public class ClientScopes extends AbstractEntity {
     public void setScope(String scope) {
         this.scope = scope;
     }
+
 }

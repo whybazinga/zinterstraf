@@ -40,11 +40,11 @@ public class User extends AbstractEntity implements UserDetails {
 			joinColumns = { @JoinColumn(name = "id_user") },
 			inverseJoinColumns = { @JoinColumn(name = "id_role") }
 	)
-	private Set<UserRoles> userRoles = new HashSet<UserRoles>();
+	private Collection<UserRoles> userRoles = new ArrayList<>();
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return new ArrayList<GrantedAuthority>();
+		return userRoles;
 	}
 
 	@Override
@@ -109,11 +109,11 @@ public class User extends AbstractEntity implements UserDetails {
 		this.accStatus = accStatus;
 	}
 
-	public Set<UserRoles> getUserRoles() {
+	public Collection<UserRoles> getUserRoles() {
 		return userRoles;
 	}
 
-	public void setUserRoles(Set<UserRoles> userRoles) {
+	public void setUserRoles(Collection<UserRoles> userRoles) {
 		this.userRoles = userRoles;
 	}
 }

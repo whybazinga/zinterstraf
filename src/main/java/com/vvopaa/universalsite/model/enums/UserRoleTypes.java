@@ -3,9 +3,9 @@ package com.vvopaa.universalsite.model.enums;
 import java.io.Serializable;
 
 public enum UserRoleTypes implements Serializable{
-    USER("user"),
-    MODERATOR("moderator"),
-    ADMIN("admin");
+    USER("USER"),
+    MODERATOR("MODERATOR"),
+    ADMIN("ADMIN");
 
 	private final String userProfileType;
 

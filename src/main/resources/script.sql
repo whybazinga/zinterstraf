@@ -11,7 +11,24 @@ INSERT IGNORE INTO u_site_vvopaa.link_users_roles (id_user, id_role)(
 
 INSERT IGNORE INTO u_site_vvopaa.client_scopes (scope) VALUES ('read'), ('write'), ('trust');
 
-#SPRING SECURITY TEST
+INSERT IGNORE INTO u_site_vvopaa.oauth_clients (client_id, client_secret) VALUES ('clientIdPassword', 'secret');
+
+INSERT IGNORE INTO u_site_vvopaa.client_grant_types (grant_type) VALUES ('password'), ('refresh_token'), ('authorization_code'), ('implicit');
+
+INSERT IGNORE INTO u_site_vvopaa.link_client_grant_type (id_client, id_grant_type)(
+  select oauth_clients.id, grant_type.id from oauth_clients, client_grant_types
+  where oauth_clients.id = 1
+);
+
+INSERT IGNORE INTO u_site_vvopaa.client_resource_ids (resource_id) VALUES ('main');
+
+INSERT IGNORE INTO u_site_vvopaa.link_client_resource (id_client, id_resource)(
+  select oauth_clients.id, grant_type.id from oauth_clients, client_grant_types
+  where oauth_clients.id = 1
+);
+#ERROR
+#SPRING SECURITY TEST ???
+DROP table if exists oauth_client_token;
 create table oauth_client_token (
   token_id VARCHAR(256),
   token long varbinary,
@@ -20,7 +37,7 @@ create table oauth_client_token (
   client_id VARCHAR(256)
 );
 
-/*
+DROP table if exists oauth_access_token;
 #this one for AC and REF tokens JDBC
 create table oauth_access_token (
   token_id VARCHAR(256),
@@ -32,17 +49,20 @@ create table oauth_access_token (
   refresh_token VARCHAR(256)
 );
 
+DROP table if exists oauth_refresh_token;
 create table oauth_refresh_token (
   token_id VARCHAR(256),
-  token LONG,
-  authentication LONG
+  token long varbinary,
+  authentication long varbinary
 );
 
+DROP table if exists oauth_code;
 create table oauth_code (
   code VARCHAR(256),
   authentication long varbinary
 );
 
+DROP table if exists oauth_approvals;
 create table oauth_approvals (
   userId VARCHAR(256),
   clientId VARCHAR(256),
@@ -51,4 +71,3 @@ create table oauth_approvals (
   expiresAt TIMESTAMP,
   lastModifiedAt TIMESTAMP
 );
-*/

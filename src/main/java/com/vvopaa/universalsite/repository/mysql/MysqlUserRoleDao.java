@@ -13,7 +13,7 @@ import com.vvopaa.universalsite.model.UserRoles;
 import com.vvopaa.universalsite.repository.UserRoleDao;
 
 @Repository("userRoleDao")
-public class MysqlUserRoleDao extends AbstractMysqlDao<Integer, UserRoles>implements UserRoleDao {
+public class MysqlUserRoleDao extends AbstractMysqlDao<Integer, UserRoles> implements UserRoleDao {
 
 	@Override
 	public List<UserRoles> findAll() {
