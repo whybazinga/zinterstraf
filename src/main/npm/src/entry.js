@@ -70,7 +70,7 @@ function ajaxLogin(e) {
     //passVal = '$2b$10$OYfHj.JjcH/o4oO3so.NweA/5Pleyuu0vnFlowo1O4KLO8mWuXbma'
     let clientId = 'clientIdPassword';
     let clientSecret = 'secret';
-
+    //let scopes = 'read,write,trust'
     if(emailVal && passVal) {
         let url = basicUrl + "/oauth/token";
         let ajaxdata = {
@@ -79,6 +79,7 @@ function ajaxLogin(e) {
             password: passVal,
             client_id: clientId,
             client_secret: clientSecret
+            //scope: scopes
         };
         $.ajax({
             headers: {
@@ -90,7 +91,7 @@ function ajaxLogin(e) {
             data: ajaxdata
 
         }).done(function(data) {
-            alert(data);
+            alert("access token: " + data.access_token + ", refresh token: " + data.refresh_token);
         }).fail(function(data) {
             alert(data);
         });

@@ -7,10 +7,7 @@ import org.springframework.security.oauth2.provider.ClientDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name="oauth_clients")
@@ -20,7 +17,7 @@ public class Client extends AbstractEntity implements ClientDetails, Serializabl
     @Column(name="client_id", unique = true)
     private String clientId;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "link_client_resource",
             joinColumns = { @JoinColumn(name = "id_client") },
@@ -34,7 +31,7 @@ public class Client extends AbstractEntity implements ClientDetails, Serializabl
     @Column(name="client_secret")
     private String clientSecret;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "link_client_scope",
             joinColumns = { @JoinColumn(name = "id_client") },
@@ -45,7 +42,7 @@ public class Client extends AbstractEntity implements ClientDetails, Serializabl
     @Transient
     private Set<String> scopeSpring = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "link_client_grant_type",
             joinColumns = { @JoinColumn(name = "id_client") },
@@ -88,7 +85,7 @@ public class Client extends AbstractEntity implements ClientDetails, Serializabl
             }
             return resourceSpring;
         }
-        return null;
+        return new HashSet<>();
     }
 
     @Override
@@ -114,7 +111,7 @@ public class Client extends AbstractEntity implements ClientDetails, Serializabl
             }
             return resourceSpring;
         }
-        return null;
+        return new HashSet<>();
     }
 
     @Override
@@ -125,17 +122,17 @@ public class Client extends AbstractEntity implements ClientDetails, Serializabl
             }
             return resourceSpring;
         }
-        return null;
+        return new HashSet<>();
     }
 
     @Override
     public Set<String> getRegisteredRedirectUri() {
-        return null;
+        return new HashSet<>();
     }
 
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
@@ -155,7 +152,7 @@ public class Client extends AbstractEntity implements ClientDetails, Serializabl
 
     @Override
     public Map<String, Object> getAdditionalInformation() {
-        return null;
+        return new HashMap<>();
     }
 
     public Set<ClientGrantTypes> getAuthGrantTypes() {

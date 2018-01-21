@@ -34,7 +34,7 @@ public class User extends AbstractEntity implements UserDetails {
 	@Column(name="accStatus")
 	private int accStatus;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "link_users_roles",
 			joinColumns = { @JoinColumn(name = "id_user") },

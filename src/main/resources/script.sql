@@ -9,21 +9,27 @@ INSERT IGNORE INTO u_site_vvopaa.link_users_roles (id_user, id_role)(
   where oauth_users.id = 1
 );
 
+INSERT IGNORE INTO u_site_vvopaa.oauth_clients (client_id, client_secret) VALUES ('clientIdPassword', 'secret');
+
+
 INSERT IGNORE INTO u_site_vvopaa.client_scopes (scope) VALUES ('read'), ('write'), ('trust');
 
-INSERT IGNORE INTO u_site_vvopaa.oauth_clients (client_id, client_secret) VALUES ('clientIdPassword', 'secret');
+INSERT IGNORE INTO u_site_vvopaa.link_client_scope (id_client, id_scope)(
+  select oauth_clients.id, client_scopes.id from oauth_clients, client_scopes
+  where oauth_clients.id = 1
+);
 
 INSERT IGNORE INTO u_site_vvopaa.client_grant_types (grant_type) VALUES ('password'), ('refresh_token'), ('authorization_code'), ('implicit');
 
 INSERT IGNORE INTO u_site_vvopaa.link_client_grant_type (id_client, id_grant_type)(
-  select oauth_clients.id, grant_type.id from oauth_clients, client_grant_types
+  select oauth_clients.id, client_grant_types.id from oauth_clients, client_grant_types
   where oauth_clients.id = 1
 );
 
 INSERT IGNORE INTO u_site_vvopaa.client_resource_ids (resource_id) VALUES ('main');
 
 INSERT IGNORE INTO u_site_vvopaa.link_client_resource (id_client, id_resource)(
-  select oauth_clients.id, grant_type.id from oauth_clients, client_grant_types
+  select oauth_clients.id, client_resource_ids.id from oauth_clients, client_resource_ids
   where oauth_clients.id = 1
 );
 #ERROR
