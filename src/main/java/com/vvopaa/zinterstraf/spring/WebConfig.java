@@ -34,10 +34,14 @@ public class WebConfig implements WebMvcConfigurer {
 	    source.setDefaultEncoding("UTF-8");
 	    return source;
     }
- 	
+
+	/**
+	 * Hint: addResourceHandler changes pattern to any wanted dir name
+	 * @param registry - web options to be configured
+	 */
  	@Override
  	public void addResourceHandlers(ResourceHandlerRegistry registry) {
- 	        registry.addResourceHandler("/**")
+ 	        registry.addResourceHandler("/resources/**")
  	        .addResourceLocations("/resources/")
  	        .setCachePeriod(4600);
     }

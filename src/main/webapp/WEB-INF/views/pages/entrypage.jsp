@@ -6,10 +6,10 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<script src="<c:url value="/js/dist/entry.js" />"></script>
+	<script src="<c:url value="/resources/js/dist/entry.js" />"></script>
 
-	<link rel="icon" href="<c:url value="/images/global/favicon.ico" />">
-	<link rel="stylesheet" href="<c:url value="/css/entrypage/entry.css" />">
+	<link rel="icon" href="<c:url value="/resources/images/global/favicon.ico" />">
+	<link rel="stylesheet" href="<c:url value="/resources/css/entrypage/entry.css" />">
 
 	<script type="text/javascript">
 		const basicUrl = "${requestScope.basicUrl}";
@@ -18,7 +18,7 @@
 <body class="d-flex flex-column">
 	<!-- START header -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top header">
-	  <a class="navbar-brand ml-5 scrolltop" href=""><img src="<c:url value="/images/global/donat-home.png" />" class="rounded-circle" style="width:30px;height:30px;">Home</a>
+	  <a class="navbar-brand ml-5 scrolltop" href=""><img src="<c:url value="/resources/images/global/donat-home.png" />" class="rounded-circle" style="width:30px;height:30px;">Home</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
@@ -84,8 +84,8 @@
 	<div class="container-fluid content">
 		<div class="row align-items-center">
 		    <div class="col-lg-3 text-center">
-		      <img src="<c:url value="/images/global/virtucon.jpg" />" class="rounded-circle" style="width:200px;height:200px;">
-		      <img src="<c:url value="/images/global/gla.png" />" class="rounded-circle" style="width:200px;height:200px;">
+		      <img src="<c:url value="/resources/images/global/virtucon.jpg" />" class="rounded-circle" style="width:200px;height:200px;">
+		      <img src="<c:url value="/resources/images/global/gla.png" />" class="rounded-circle" style="width:200px;height:200px;">
 		    </div>
 		    <div class="col-lg-9 spec-font-rules py-3">
 		      <h2 class="color-nat-black text-capitalize">UniversalSite for all your needs</h2><br>
