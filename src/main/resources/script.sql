@@ -1,8 +1,8 @@
 
 INSERT IGNORE INTO u_site_vvopaa.oauth_users (email, password, accStatus)
-VALUES ('test@test.test', '$2a$04$sJjk4.1ecL7I1NF3hFUZueq6LDBj2hIRLdo2U5GmYdoeA9XYpfREu', 1);
+VALUES ('t@t.t', '$2a$04$sJjk4.1ecL7I1NF3hFUZueq6LDBj2hIRLdo2U5GmYdoeA9XYpfREu', 1);
 
-INSERT IGNORE INTO u_site_vvopaa.user_roles (role) VALUES ('user'), ('moderator'), ('admin');
+INSERT IGNORE INTO u_site_vvopaa.user_roles (role) VALUES ('ROLE_USER'), ('ROLE_MODERATOR'), ('ROLE_ADMIN');
 
 INSERT IGNORE INTO u_site_vvopaa.link_users_roles (id_user, id_role)(
   select oauth_users.id, user_roles.id from oauth_users, user_roles
@@ -23,7 +23,7 @@ INSERT IGNORE INTO u_site_vvopaa.client_grant_types (grant_type) VALUES ('passwo
 
 INSERT IGNORE INTO u_site_vvopaa.link_client_grant_type (id_client, id_grant_type)(
   select oauth_clients.id, client_grant_types.id from oauth_clients, client_grant_types
-  where oauth_clients.id = 1
+  where oauth_clients.id = 1 and grant_type IN ('password', 'refresh_token')
 );
 
 INSERT IGNORE INTO u_site_vvopaa.client_resource_ids (resource_id) VALUES ('main');

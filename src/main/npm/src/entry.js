@@ -67,10 +67,9 @@ function buttonManager(e) {
 function ajaxLogin(e) {
     let emailVal = commonProject.getElementValue(ENTRY_ELEMENTS.inputEmail);
     let passVal = commonProject.getElementValue(ENTRY_ELEMENTS.inputPass);
-    //passVal = '$2b$10$OYfHj.JjcH/o4oO3so.NweA/5Pleyuu0vnFlowo1O4KLO8mWuXbma'
     let clientId = 'clientIdPassword';
     let clientSecret = 'secret';
-    //let scopes = 'read,write,trust'
+    let scopes = 'read write trust'
     if(emailVal && passVal) {
         let url = basicUrl + "/oauth/token";
         let ajaxdata = {
@@ -78,8 +77,8 @@ function ajaxLogin(e) {
             username: emailVal,
             password: passVal,
             client_id: clientId,
-            client_secret: clientSecret
-            //scope: scopes
+            client_secret: clientSecret,
+            scope: scopes
         };
         $.ajax({
             headers: {
@@ -89,11 +88,22 @@ function ajaxLogin(e) {
             method: "POST",
             url: url,
             data: ajaxdata
-
         }).done(function(data) {
-            alert("access token: " + data.access_token + ", refresh token: " + data.refresh_token);
+            setCookie('access_token',  data.access_token, data.expires_in);
+            setCookie('refresh_token',  data.refresh_token);
+            alert(JSON.stringify(data));
+            setTimeout(function () {
+                $.ajax({
+                    method: "GET",
+                    url: basicUrl + "/main?access_token=" + getCookie("access_token")
+                }).done(function (data) {
+                    alert(JSON.stringify(data));
+                }).fail(function (data) {
+                    alert(JSON.stringify(data));
+                })
+            }, 5000);
         }).fail(function(data) {
-            alert(data);
+            alert(JSON.stringify(data));
         });
         //commonProject.ajax(url, AJAX.postMethod, AJAX.contentJson, ajaxdata, ajaxResponse);
     }
@@ -146,6 +156,27 @@ function clickButtonModal(resources) {
     if(resources.button === REGISTER.button) {
         checkPassElement.show();
     }
+}
+
+function setCookie(cname,cvalue,expireTime = '172800') {
+    var expires = "expires=" + expireTime;
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }
 
 $(document).ready(function() {

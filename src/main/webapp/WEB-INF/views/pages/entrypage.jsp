@@ -6,10 +6,10 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<script src="<c:url value="/static/js/dist/entry.js" />"></script>
+	<script src="<c:url value="/js/dist/entry.js" />"></script>
 
-	<link rel="icon" href="<c:url value="/static/images/favicon.ico" />">
-	<link rel="stylesheet" href="<c:url value="/static/css/entrypage/entry.css" />">
+	<link rel="icon" href="<c:url value="/images/global/favicon.ico" />">
+	<link rel="stylesheet" href="<c:url value="/css/entrypage/entry.css" />">
 
 	<script type="text/javascript">
 		const basicUrl = "${requestScope.basicUrl}";
@@ -18,7 +18,7 @@
 <body class="d-flex flex-column">
 	<!-- START header -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top header">
-	  <a class="navbar-brand ml-5 scrolltop" href=""><img src="<c:url value="/static/images/donat-home.png" />" class="rounded-circle" style="width:30px;height:30px;">Home</a>
+	  <a class="navbar-brand ml-5 scrolltop" href=""><img src="<c:url value="/images/global/donat-home.png" />" class="rounded-circle" style="width:30px;height:30px;">Home</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
@@ -79,32 +79,13 @@
 	  </div>
 	</div>	
 
-	<!--
-	<div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="resultModalLabel">Information</h5>
-	        <button type="button" class="close responseModalClose" data-dismiss="modal" aria-label="Close" value="close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body resultModalBody">
-	      	Wait a little bit...
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary responseModalClose" data-dismiss="modal" value="close">Close</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-    -->
+
 
 	<div class="container-fluid content">
 		<div class="row align-items-center">
 		    <div class="col-lg-3 text-center">
-		      <img src="<c:url value="/static/images/virtucon.jpg" />" class="rounded-circle" style="width:200px;height:200px;">
-		      <img src="<c:url value="/static/images/gla.png" />" class="rounded-circle" style="width:200px;height:200px;">
+		      <img src="<c:url value="/images/global/virtucon.jpg" />" class="rounded-circle" style="width:200px;height:200px;">
+		      <img src="<c:url value="/images/global/gla.png" />" class="rounded-circle" style="width:200px;height:200px;">
 		    </div>
 		    <div class="col-lg-9 spec-font-rules py-3">
 		      <h2 class="color-nat-black text-capitalize">UniversalSite for all your needs</h2><br>
@@ -153,24 +134,10 @@
 	  	<div class="row ft-contact spec-font-rules">
 	  		<div class="col-lg-6 p-3">
 	  			<h3 class="text-capitalize color-nat-black text-center">Contact Us</h3>
-	  			<p>Contact us and we'll get back to you within 24 hours.</p>
+	  			<p>Contact me and i will get back to you within 24 hours.</p>
 	  			<p>* Minsk, Belarus</p>
 	  			<p>* 8-029-202-03-27</p>
 	  			<p>* vvopaa@mail.com</p>
-	  			<form method="post">
-				  <div class="form-group">
-				    <input type="text" class="form-control" name="name" placeholder="Full name">
-				  </div>
-				  <div class="form-group">
-				    <input type="email" class="form-control" name="email" placeholder="Email">
-				  </div>
-				  <div class="form-group">
-				    <textarea class="form-control" id="comments" name="comment" placeholder="Comment" rows="5" style="resize: none"></textarea>
-				  </div>
-				  <div class="text-center">
-				  	<button type="submit" class="btn btn-primary btn-lg">Send</button>
-				  </div>
-				</form>
 	  		</div>
 	  		<div class="col-lg-6 pt-4 padding-map">
 	  			<div id="googleMap"></div>
