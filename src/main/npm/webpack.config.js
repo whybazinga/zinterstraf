@@ -3,7 +3,8 @@ let webpack = require('webpack');
 
 let config = {
     entry: {
-        'entry':'./src/entry.js'
+        'entry':'./src/entry.js',
+        'app':'./src/react/app.jsx'
     },
     output: {
         path: path.resolve(__dirname, '../webapp/resources/js/dist'),
@@ -28,12 +29,12 @@ let config = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.j(s|sx)$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['env']
+                        presets: ['env', 'react']
                     }
                 }
             },

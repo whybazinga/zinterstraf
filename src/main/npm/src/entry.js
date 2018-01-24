@@ -1,9 +1,7 @@
 require('bootstrap/dist/js/bootstrap.min');
 require('bootstrap/dist/css/bootstrap.min.css');
-//require('commonProject');
+import load from 'little-loader';
 
-//require('bootstrap/dist/js/bootstrap.min');
-//require('../template/commonJquery');
 
 // need smth
 const REGISTER = {
@@ -179,7 +177,20 @@ function getCookie(cname) {
     return "";
 }
 
+window.myMap = function() {
+    let myCenter = new google.maps.LatLng(53.896094, 27.539808);
+    let mapProp = {center:myCenter, zoom:12, scrollwheel:true, draggable:true, mapTypeId:google.maps.MapTypeId.ROADMAP};
+    let map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+    let marker = new google.maps.Marker({position:myCenter});
+    marker.setMap(map);
+}
+
+
+
 $(document).ready(function() {
+    load('https://maps.googleapis.com/maps/api/js?key=AIzaSyCKEnRn7tFszOtb2WC8swGoQ-DQbf41wiw&callback=myMap', function(err){
+        console.log(err);
+    });
     commonProject.testFunction();
     $(ENTRY_ELEMENTS.headerScrollBtn).click(() => {
         $("html, body").animate({ scrollTop: 0 }, 600);

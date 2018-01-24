@@ -37,7 +37,7 @@ public class ViewController {
         String basic_url = "http://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath();
         model.put("basicUrl", basic_url);
 			
-        return new ModelAndView("entrypage", model);
+        return new ModelAndView("entrypage", model); //startpage
 	}
 	
 	@RequestMapping(value = "/access_denied", method = RequestMethod.GET)

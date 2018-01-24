@@ -21,10 +21,18 @@
     "webpack": "^3.9.1"
   },
   "dependencies": {
+    "babel-preset-react": "^6.24.1",
     "bootstrap": "^4.0.0-beta.2",
     "exports-loader": "^0.6.4",
     "jquery": "^3.2.1",
+    "little-loader": "^0.2.0",
     "moment": "^2.19.3",
-    "popper.js": "^1.12.9"
+    "popper.js": "^1.12.9",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
   }
 }

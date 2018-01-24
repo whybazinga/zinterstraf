@@ -139,7 +139,7 @@
 	  			<p>* 8-029-202-03-27</p>
 	  			<p>* vvopaa@mail.com</p>
 	  		</div>
-	  		<div class="col-lg-6 pt-4 padding-map">
+	  		<div class="col-lg-6 p-3 padding-map">
 	  			<div id="googleMap"></div>
 	  		</div>
 		</div>
@@ -151,15 +151,7 @@
 	  		<p class="font-weight-bold">UniversalSite© Copyright 2017 Privacy Policy</p>
 		</div>
 	</div>
-	<script>
-		function myMap() {
-			let myCenter = new google.maps.LatLng(53.896094, 27.539808);
-			let mapProp = {center:myCenter, zoom:12, scrollwheel:true, draggable:true, mapTypeId:google.maps.MapTypeId.ROADMAP};
-			let map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-			let marker = new google.maps.Marker({position:myCenter});
-			marker.setMap(map);
-		}
-	</script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKEnRn7tFszOtb2WC8swGoQ-DQbf41wiw&callback=myMap"></script>
+
+
 </body>
 </html>
