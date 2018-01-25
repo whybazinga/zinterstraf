@@ -17,6 +17,6 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
-        return clientDao.getClientByClientId(clientId);
+        return clientDao.findByClientId(clientId);
     }
 }

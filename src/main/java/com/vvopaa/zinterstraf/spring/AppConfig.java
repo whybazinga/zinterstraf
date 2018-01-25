@@ -1,5 +1,5 @@
 package com.vvopaa.zinterstraf.spring;
-
+/*
 
 import com.vvopaa.zinterstraf.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,3 +41,5 @@ public class AppConfig {
     }
     
 }
+
+*/

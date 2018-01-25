@@ -32,7 +32,7 @@ public class ViewController {
 	}
 	
 	@RequestMapping(value="/")
-	public ModelAndView startPage(HttpServletRequest req, HttpServletResponse res, ModelMap model) {
+	public ModelAndView startPage(HttpServletRequest req, ModelMap model) {
 
         String basic_url = "http://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath();
         model.put("basicUrl", basic_url);

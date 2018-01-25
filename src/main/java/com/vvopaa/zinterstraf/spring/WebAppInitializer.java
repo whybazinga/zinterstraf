@@ -1,5 +1,5 @@
 package com.vvopaa.zinterstraf.spring;
-
+/*
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -20,3 +20,4 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 	}
 
 }
+*/

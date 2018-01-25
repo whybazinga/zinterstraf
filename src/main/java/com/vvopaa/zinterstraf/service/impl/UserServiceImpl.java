@@ -13,53 +13,28 @@ import com.vvopaa.zinterstraf.repository.UserDao;
 import com.vvopaa.zinterstraf.repository.UserRoleDao;
 import com.vvopaa.zinterstraf.service.UserService;
 
-@Service("userServiceImpl")
+@Service
 public class UserServiceImpl implements UserService, UserDetailsService {
-	@Qualifier("mysqlUserDao")
 	@Autowired
 	private UserDao userDao;
-	
-	@Autowired
-	private UserRoleDao userRole;
-	/*
-	@Autowired
-    private PasswordEncoder passwordEncoder;
-	*/
+
 
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return userDao.getUserByEmail(username);
+		return userDao.findByUsername(username);
 	}
 
 	@Override
 	@Transactional
 	public User saveUser(String login, String pass) {
-		
-		//pass = passwordEncoder.encode(pass);
-		User savedUser = userDao.saveUser(login, pass);
-		
-		
-		return savedUser;
-	}
-
-	@Override
-	public User getUserById(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public User loginUser(String login, String pass) {
-		//pass = passwordEncoder.encode(pass);
-		User loggedUser = userDao.loginUser(login, pass);
-		
-		return loggedUser;
-	}
-
-	@Override
-	public User getUserByEmail(String email) {
-		User user = userDao.getUserByEmail(email);
+		User user = userDao.findByUsername(login);
+		if(user == null) {
+			user = new User();
+			user.setUsername(login);
+			user.setPassword(pass);
+			userDao.save(user);
+		}
 		return user;
 	}
 

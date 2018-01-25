@@ -19,7 +19,7 @@ import javax.persistence.JoinColumn;
 public class User extends AbstractEntity implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="email", unique = true)
+	@Column(name="username", unique = true)
 	private String username;
 
 	@Column(name="password")

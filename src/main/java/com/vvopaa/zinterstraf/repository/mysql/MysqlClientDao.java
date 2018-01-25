@@ -1,5 +1,5 @@
 package com.vvopaa.zinterstraf.repository.mysql;
-
+/*
 import com.vvopaa.zinterstraf.model.Client;
 import com.vvopaa.zinterstraf.repository.ClientDao;
 import org.hibernate.query.Query;
@@ -22,3 +22,4 @@ public class MysqlClientDao extends AbstractMysqlDao<Integer, Client> implements
         return getObjectByParameters(map);
     }
 }
+*/

@@ -4,7 +4,7 @@ VALUES ('t@t.t', '$2a$04$sJjk4.1ecL7I1NF3hFUZueq6LDBj2hIRLdo2U5GmYdoeA9XYpfREu',
 
 INSERT IGNORE INTO u_site_vvopaa.user_roles (role) VALUES ('ROLE_USER'), ('ROLE_MODERATOR'), ('ROLE_ADMIN');
 
-INSERT IGNORE INTO u_site_vvopaa.link_users_roles (id_user, id_role)(
+INSERT IGNORE INTO u_site_vvopaa.link_user_roles (id_user, id_role)(
   select oauth_users.id, user_roles.id from oauth_users, user_roles
   where oauth_users.id = 1
 );

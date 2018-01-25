@@ -1,5 +1,5 @@
 package com.vvopaa.zinterstraf.repository.mysql;
-
+/*
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,3 +35,4 @@ public class MysqlUserRoleDao extends AbstractMysqlDao<Integer, UserRoles> imple
 	}
 
 }
+*/

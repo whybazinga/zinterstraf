@@ -1,8 +1,9 @@
 package com.vvopaa.zinterstraf.repository;
 
 import com.vvopaa.zinterstraf.model.Client;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ClientDao {
+public interface ClientDao extends JpaRepository<Client, Integer> {
 
-    Client getClientByClientId(String clientId);
+    Client findByClientId(String clientId);
 }
