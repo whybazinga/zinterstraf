@@ -15,9 +15,9 @@ import com.vvopaa.zinterstraf.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
+
 	@Autowired
 	private UserDao userDao;
-
 
 	@Override
 	@Transactional

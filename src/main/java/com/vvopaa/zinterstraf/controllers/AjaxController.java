@@ -21,11 +21,11 @@ import com.vvopaa.zinterstraf.util.StringUtil;
 public class AjaxController {
 	private static final String EMAIL_PARAM = "email";
 	private static final String PASS_PARAM = "pass";
-	
-	@Qualifier("userServiceImpl")
+
 	@Autowired 
 	private UserService userService;
-
+/*
+	@Qualifier("appMessages")
 	@Autowired
 	private MessageSource msg;
 
@@ -47,7 +47,7 @@ public class AjaxController {
 		JsonMessage jsonReponse = JsonMessageCreator.createSimpleJsonMessage(message);
 		return jsonReponse;
 	}
-	
+*/
 	@RequestMapping(value = "/main", produces={"application/json"}, method= {RequestMethod.GET})
 	public JsonMessage loginUser(@RequestParam("access_token") String data) {
 

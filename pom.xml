@@ -1,79 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.vvopaa</groupId>
-  <artifactId>zinterstraf</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
-  <build>
-    <plugins>
-        <!--
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.6.1</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-			<excludes>
-				<exclude>npm/**</exclude>
-			</excludes>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>3.0.0</version>
-        <configuration>
-          <warSourceDirectory>src/main/webapp</warSourceDirectory>
-        </configuration>
-      </plugin>
-      -->
-		<plugin>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-maven-plugin</artifactId>
-		</plugin>
-    </plugins>
-  </build>
-  
-	<properties>
-		<java.version>1.8</java.version>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.vvopaa</groupId>
+    <artifactId>zinterstraf</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <properties>
+        <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<org.springframework.version>5.0.2.RELEASE</org.springframework.version>
-		<springsecurity.version>4.2.3.RELEASE</springsecurity.version>
-		<org.hibernate.version>5.2.12.Final</org.hibernate.version>
-		<mysql.version>8.0.7-dmr</mysql.version>
-	</properties>
+        <hibernate.version>5.2.12.Final</hibernate.version>
+        <mysql.version>8.0.8-dmr</mysql.version>
+        <org.springframework.version>5.0.3.RELEASE</org.springframework.version>
+        <springsecurity.version>4.2.3.RELEASE</springsecurity.version>
+    </properties>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.9.RELEASE</version>
-		<!--<relativePath/> lookup parent from repository -->
-	</parent>
+    <!--
+        <tomcat.version>9.0.2</tomcat.version>
+        <org.springframework.version>5.0.2.RELEASE</org.springframework.version>
+        <springsecurity.version>5.0.1.RELEASE</springsecurity.version>
+    -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.9.RELEASE</version>
+        <relativePath/>
+    </parent>
 
-	<dependencies>
+    <dependencies>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<!--
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-		</dependency>
-		-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security.oauth</groupId>
+            <artifactId>spring-security-oauth2</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -87,35 +76,35 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         </dependency>
 
 
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<!-- spring
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-webmvc</artifactId>
-		    <version>${org.springframework.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-orm</artifactId>
-		    <version>${org.springframework.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-context-support</artifactId>
-		    <version>${org.springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>-->
-		<!-- endspring -->
-		
-		<!-- Spring Security
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- spring
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>-->
+        <!-- endspring -->
+
+        <!-- Spring Security
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
@@ -132,88 +121,54 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
             <version>${springsecurity.version}</version>
         </dependency>-->
 
-		<!-- oAuth2 -->
-		<dependency>
-			<groupId>org.springframework.security.oauth</groupId>
-			<artifactId>spring-security-oauth2</artifactId>
-			<version>2.2.1.RELEASE</version>
-		</dependency>
-		<!-- endSpringSecurity -->
+        <!-- oAuth2
+        <dependency>
+            <groupId>org.springframework.security.oauth</groupId>
+            <artifactId>spring-security-oauth2</artifactId>
+            <version>2.2.1.RELEASE</version>
+        </dependency>
+         -->
 
-		<!-- letting Tomcat to configure an XML -> Java object mapping module -->
-		<dependency>
-			<groupId>commons-digester</groupId>
-		    <artifactId>commons-digester</artifactId>
-		    <version>2.1</version>
-		</dependency>	
-		
-		<!-- https://mvnrepository.com/artifact/log4j/log4j 
-		<dependency>
-		    <groupId>log4j</groupId>
-		    <artifactId>log4j</artifactId>
-		    <version>1.2.17</version>
-		</dependency>
-		-->
-		<!-- https://mvnrepository.com/artifact/jstl/jstl -->
-		<dependency>
-		    <groupId>jstl</groupId>
-		    <artifactId>jstl</artifactId>
-		    <version>1.2</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java
-		<dependency>
-		    <groupId>mysql</groupId>
-		    <artifactId>mysql-connector-java</artifactId>
-		    <version>${mysql.version}</version>
-		</dependency>
-		-->
-		<!-- For connection pooling
+        <!-- letting Tomcat to configure an XML -> Java object mapping module
+        <dependency>
+            <groupId>commons-digester</groupId>
+            <artifactId>commons-digester</artifactId>
+            <version>2.1</version>
+        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/jstl/jstl -->
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <!-- For connection pooling
 
         <dependency>
-		    <groupId>com.mchange</groupId>
-		    <artifactId>c3p0</artifactId>
-		    <version>0.9.5.2</version>
-		</dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.5.2</version>
+        </dependency>
 
-		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-core</artifactId>
-		    <version>${org.hibernate.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-c3p0</artifactId>
-		    <version>${org.hibernate.version}</version>
-		</dependency>
-		-->
-		
-		<!-- https://mvnrepository.com/artifact/cglib/cglib -->
-		<dependency>
-		    <groupId>cglib</groupId>
-		    <artifactId>cglib</artifactId>
-		    <version>3.2.5</version>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
-		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-core</artifactId>
-		    <version>2.9.1</version>
-		</dependency>
-		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-databind</artifactId>
-		    <version>2.9.1</version>
-		</dependency>
-
-        <!-- ??? NEED ???
         <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-            <version>8.5.16</version>
-            <scope>provided</scope>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${org.hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-c3p0</artifactId>
+            <version>${org.hibernate.version}</version>
         </dependency>
         -->
-	</dependencies>
+
+        <!-- https://mvnrepository.com/artifact/cglib/cglib
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.2.5</version>
+        </dependency>
+        -->
+    </dependencies>
 </project>

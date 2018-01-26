@@ -42,14 +42,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.withClientDetails(clientDetailsService);
-                /*
-                .withClient("clientIdPassword")
-                .secret("secret")
-                .resourceIds(ResourceServerConfiguration.RESOURCE_ID)
-                .authorizedGrantTypes("password", "refresh_token")
-                .scopes("read", "write");
-                */
-
     }
 
     @Override

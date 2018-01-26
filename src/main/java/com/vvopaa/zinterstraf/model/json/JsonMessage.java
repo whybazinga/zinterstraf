@@ -5,7 +5,7 @@ import com.vvopaa.zinterstraf.service.converters.jackson.Views;
 
 public class JsonMessage {
 	@JsonView(Views.msgView.class)
-	String response;
+	private String response;
 
 	public String getResponse() {
 		return response;

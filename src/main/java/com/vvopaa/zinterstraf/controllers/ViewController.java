@@ -32,12 +32,12 @@ public class ViewController {
 	}
 	
 	@RequestMapping(value="/")
-	public ModelAndView startPage(HttpServletRequest req, ModelMap model) {
+	public String startPage(HttpServletRequest req, ModelMap model) {
 
-        String basic_url = "http://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath();
-        model.put("basicUrl", basic_url);
+        //String basic_url = "http://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath();
+        //model.put("basicUrl", basic_url);
 			
-        return new ModelAndView("entrypage", model); //startpage
+        return "/build/index.html";//new ModelAndView("entrypage", model); //startpage
 	}
 	
 	@RequestMapping(value = "/access_denied", method = RequestMethod.GET)

@@ -20,18 +20,21 @@ import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
+import javax.sql.DataSource;
+
 
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final HibernateTransactionManager transactionManager;
+    private final DataSource dataSource;
     private final UserDetailsService userDetailsService;
 
     @Autowired
-    public OAuth2SecurityConfiguration(@Qualifier("userServiceImpl") UserDetailsService userDetailsService, HibernateTransactionManager transactionManager) {
-        this.transactionManager = transactionManager;
+    public OAuth2SecurityConfiguration(
+            @Qualifier("userServiceImpl") UserDetailsService userDetailsService,
+            @Qualifier("prodDataSource") DataSource dataSource) {
+        this.dataSource = dataSource;
         this.userDetailsService = userDetailsService;
     }
 
@@ -39,7 +42,7 @@ public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests()
-                .antMatchers("/register", "/resources/**", "/", "/oauth/**").permitAll()
+                .antMatchers("/register", "/resources/**", "/static/**", "/", "/oauth/**").permitAll()
                 .anyRequest().authenticated();
             //.and().formLogin().loginPage("/").permitAll();
 
@@ -72,7 +75,7 @@ public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public TokenStore tokenStore() {
-        return new JdbcTokenStore(this.transactionManager.getDataSource());
+        return new JdbcTokenStore(this.dataSource);
     }
 
 }
