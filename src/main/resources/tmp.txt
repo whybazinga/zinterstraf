@@ -1,8 +1,0 @@
-DROP SCHEMA IF EXISTS u_site_vvopaa;
-
-CREATE SCHEMA IF NOT EXISTS u_site_vvopaa
-CHARACTER SET utf8;
-SET GLOBAL time_zone = '+3:00';
-USE u_site_vvopaa;
-
-http://www.baeldung.com/spring-security-oauth2-remember-me

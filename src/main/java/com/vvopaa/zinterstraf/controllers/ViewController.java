@@ -19,31 +19,11 @@ import java.security.Principal;
 
 @Controller
 public class ViewController {
-
-	@RequestMapping(value="/login", method = {RequestMethod.GET})
-	public String showLoginPage(HttpServletRequest request) {
-		return "login";
-	}
-	
-	@RequestMapping(value="/welcome", method=RequestMethod.GET)
-	public ModelAndView handleLoginRequest(HttpServletRequest req, HttpServletResponse res, ModelMap model, Principal principle) {
-		String tempVar = principle.getName();
-		return new ModelAndView("welcome", model);
-	}
 	
 	@RequestMapping(value="/")
-	public String startPage(HttpServletRequest req, ModelMap model) {
+	public String startPage() {
 
-        //String basic_url = "http://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath();
-        //model.put("basicUrl", basic_url);
-			
-        return "/build/index.html";//new ModelAndView("entrypage", model); //startpage
+        return "index.html";
 	}
-	
-	@RequestMapping(value = "/access_denied", method = RequestMethod.GET)
-    public String accessDeniedPage(ModelMap model) {
-        
-        return "errorpage";
-    }
 
 }

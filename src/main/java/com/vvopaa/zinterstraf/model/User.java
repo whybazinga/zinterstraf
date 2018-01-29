@@ -31,7 +31,7 @@ public class User extends AbstractEntity implements UserDetails {
 	@Column(name="updated")
 	private Date updated;
 
-	@Column(name="accStatus")
+	@Column(name="acc_status")
 	private int accStatus;
 
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -40,7 +40,7 @@ public class User extends AbstractEntity implements UserDetails {
 			joinColumns = { @JoinColumn(name = "id_user") },
 			inverseJoinColumns = { @JoinColumn(name = "id_role") }
 	)
-	private Collection<UserRoles> userRoles = new ArrayList<>();
+	private Set<UserRoles> userRoles = new HashSet<>();
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -109,11 +109,11 @@ public class User extends AbstractEntity implements UserDetails {
 		this.accStatus = accStatus;
 	}
 
-	public Collection<UserRoles> getUserRoles() {
+	public Set<UserRoles> getUserRoles() {
 		return userRoles;
 	}
 
-	public void setUserRoles(Collection<UserRoles> userRoles) {
+	public void setUserRoles(Set<UserRoles> userRoles) {
 		this.userRoles = userRoles;
 	}
 }
