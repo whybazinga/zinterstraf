@@ -24,17 +24,17 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     /**
 	 * Hint: addResourceHandler changes pattern to any wanted dir name
 	 * @param registry - web options to be configured
-	 *
-     *
- 	//@Override
+     */
+ 	@Override
  	public void addResourceHandlers(ResourceHandlerRegistry registry) {
- 	        registry.addResourceHandler("/resources/**")
- 	        .addResourceLocations("/resources/")
- 	        .setCachePeriod(4600);
- 	        registry.addResourceHandler("/")
-                    .addResourceLocations("/WEB-INF/veiws/pages/");
+        if (!registry.hasMappingForPattern("/global/**")) {
+            registry.addResourceHandler("/global/**")
+                .addResourceLocations("classpath:/global/")
+                .setCachePeriod(4600);
+        }
     }
-    */
+
+
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();

@@ -10,11 +10,11 @@ A) Make sure that you have already installed:
 B) Just do the following points step by step:
 1. Open the project via a preferable IDE with the installed maven-plugin
 2. Initialize the database with the following SQL script:
-    DROP SCHEMA IF EXISTS zinterdb;
-    CREATE SCHEMA IF NOT EXISTS zinterdb
-    CHARACTER SET utf8;
-    SET GLOBAL time_zone = '+3:00';
-    USE zinterdb;
+- DROP SCHEMA IF EXISTS zinterdb;
+  CREATE SCHEMA IF NOT EXISTS zinterdb
+  CHARACTER SET utf8;
+  SET GLOBAL time_zone = '+3:00';
+  USE zinterdb;
 3. Type the following for creation the react ready-to-use bundle:
 - cd src/main/frontend
 - npm install
