@@ -22,7 +22,7 @@ public class AjaxController {
 	private static final String EMAIL_PARAM = "email";
 	private static final String PASS_PARAM = "pass";
 
-	@Autowired 
+	@Autowired
 	private UserService userService;
 /*
 	@Qualifier("appMessages")
@@ -48,7 +48,7 @@ public class AjaxController {
 		return jsonReponse;
 	}
 */
-	@RequestMapping(value = "/main", produces={"application/json"}, method= {RequestMethod.GET})
+	@RequestMapping(value = "/main", produces={"application/json"}, method={RequestMethod.GET})
 	public JsonMessage loginUser(@RequestParam("access_token") String data) {
 
 		JsonMessage jsonReponse = JsonMessageCreator.createSimpleJsonMessage(data + " ez DONE");
