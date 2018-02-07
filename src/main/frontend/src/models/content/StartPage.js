@@ -6,7 +6,7 @@ export default class StartPage extends Component {
   render() {
     return (
       <section className="container-fluid content">
-        <h2 className="color-nat-black text-capitalize">UniversalSite for all your needs</h2><br />
+        <h2 className="color-nat-black text-capitalize">Hail to the legendary Zinterstraf</h2><br />
         <p>
           <strong>Our values:</strong> We believe in free expression and think every voice has the power to impact the world.
         </p><br />
