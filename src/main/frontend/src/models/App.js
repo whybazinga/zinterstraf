@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import './App.css';
 import Header from './header/Header';
 import Footer from './footer/Footer';
-import Content from './content/StartPage';
+import { Switch, Route } from 'react-router-dom'
+
+import StartPage from './startPage/StartPage';
+
 
 class App extends Component {
   render() {
@@ -17,3 +20,12 @@ class App extends Component {
 }
 
 export default App;
+
+const Content = () => (
+    <main>
+        <Switch>
+            <Route exact path='/' component={StartPage}/>
+            <Route path='/register' component={StartPage}/>
+        </Switch>
+    </main>
+)
