@@ -3,3 +3,7 @@
     flex: 1;
     /*min-height: -1px;*/
 }
+
+.rounded-element {
+    border-radius: 20px;.
+}

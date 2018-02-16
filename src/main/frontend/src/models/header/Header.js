@@ -25,7 +25,7 @@ export default class Header extends Component {
     return (
       <header>
         <Navbar color="faded" light expand="md">
-          <NavbarBrand href="/">reactstrap</NavbarBrand>
+          <NavbarBrand href="#"><img src={donutHome} className="rounded-circle" style="width:30px;height:30px;" /></NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
