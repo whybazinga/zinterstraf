@@ -28,4 +28,4 @@ const Content = () => (
             <Route path='/register' component={StartPage}/>
         </Switch>
     </main>
-)
+);

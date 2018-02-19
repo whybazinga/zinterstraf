@@ -78,3 +78,9 @@ export default class StartPage extends Component {
     );
   }
 }
+
+/*
+  load('https://maps.googleapis.com/maps/api/js?key=AIzaSyCKEnRn7tFszOtb2WC8swGoQ-DQbf41wiw&callback=myMap', function(err){
+      console.log(err);
+  });
+ */
