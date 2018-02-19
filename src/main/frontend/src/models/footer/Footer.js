@@ -11,9 +11,9 @@ export default class Footer extends Component {
   }
   render() {
     return (
-      <footer className="d-flex flex-column footer">
-        <div className="ft-1 text-center pt-1">
-          <p className="font-weight-bold">UniversalSite© Copyright {this.state.year} Privacy Policy</p>
+      <footer>
+        <div className="ft-1 text-center font-weight-bold p-3">
+          Zinterstraf© {this.state.year} Privacy Policy
         </div>
       </footer>
     );

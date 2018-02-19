@@ -33,8 +33,5 @@ target/
 
 # My git ignore
 */resources/public/
-node_modules/
 .idea/
 zinterstraf.iml
-src/main/webapp/resources/js/
-package-lock.json

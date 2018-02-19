@@ -1,8 +1,31 @@
+html, body, #root {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color: #f6f6f6;
+}
+
+footer {
+    background-color: #2f2f37;
+    color: #ffffff;
+}
+
 .app {
     text-align: center;
     height: 100%;
 }
 
+.rounded-circle {
+    border-radius: 20px;
+}
+
+.content {
+    flex: 1;
+}
 
 /*
 

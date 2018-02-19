@@ -12,8 +12,8 @@ class App extends Component {
     return (
       <div className="d-flex flex-column app">
         <Header />
-        <Content/>
-        <Footer/>
+        <Content />
+        <Footer />
       </div>
     );
   }

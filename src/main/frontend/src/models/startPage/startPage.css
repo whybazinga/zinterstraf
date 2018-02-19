@@ -1,9 +1,8 @@
-.content {
-    background-color: #f6f6f6;
-    flex: 1;
-    /*min-height: -1px;*/
+.rounded-element {
+    border-radius: 20px;
 }
 
-.rounded-element {
-    border-radius: 20px;.
+.start-video {
+    width: 50%;
+    display: inline-block;
 }

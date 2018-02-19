@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
 import './startPage.css';
-import { Container, Row, Col } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import glaImg from'./gla.png';
 import virtImg from'./virtucon.jpg';
 
 export default class StartPage extends Component {
 
+
   render() {
     return (
-      <section className="container-fluid content">
+      <section className="container content">
         <Row>
           <Col xl="3">
-            <img src={glaImg} className="rounded-circle" style="width:200px;height:200px;" />
-            <img src={virtImg} className="rounded-circle" style="width:200px;height:200px;" />
+            <img src={glaImg} className="rounded-circle" />
+            <img src={virtImg} className="rounded-circle" />
           </Col>
           <Col xl="9">
             <h2 className="color-nat-black text-capitalize">Hail to the legendary Zinterstraf</h2>
@@ -55,10 +56,12 @@ export default class StartPage extends Component {
         <Row>
           <Col>
             <div className="text-capitalize color-nat-black pb-2">In order to clarify everything watch this video</div>
-            <div className="embed-responsive embed-responsive-16by9 div-video align-self-center">
-              <iframe className="embed-responsive-item" src="https://www.youtube.com/embed/WrdnerqWtX4?rel=0">
-                Your browser doesn't support iFrames!
-              </iframe>
+            <div className="start-video">
+              <div className="embed-responsive embed-responsive-16by9 div-video">
+                <iframe className="embed-responsive-item" src="https://www.youtube.com/embed/WrdnerqWtX4?rel=0">
+                  Your browser doesn't support iFrames!
+                </iframe>
+              </div>
             </div>
           </Col>
         </Row>
@@ -80,7 +83,18 @@ export default class StartPage extends Component {
 }
 
 /*
-  load('https://maps.googleapis.com/maps/api/js?key=AIzaSyCKEnRn7tFszOtb2WC8swGoQ-DQbf41wiw&callback=myMap', function(err){
-      console.log(err);
-  });
- */
+export const myMap = () => {
+  let myCenter = new google.maps.LatLng(53.896094, 27.539808);
+  let mapProp = { center: myCenter, zoom: 12, scrollwheel: true, draggable: true, mapTypeId: google.maps.MapTypeId.ROADMAP };
+  let map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+  let marker = new google.maps.Marker({ position: myCenter });
+  marker.setMap(map);
+};
+
+<Script
+  url="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKEnRn7tFszOtb2WC8swGoQ-DQbf41wiw&callback=myMap"
+  onCreate={this.handleScriptCreate.bind(this)}
+  onError={this.handleScriptError.bind(this)}
+  onLoad={this.handleScriptLoad.bind(this)}
+/>
+*/
