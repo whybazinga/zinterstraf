@@ -33,7 +33,7 @@ target/
 
 # My git ignore
 */resources/public/
-*/node_modules
+node_modules/
 .idea/
 zinterstraf.iml
 src/main/webapp/resources/js/
