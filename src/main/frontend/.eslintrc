@@ -4,5 +4,6 @@
     "eqeqeq": "off",
     "curly": "error",
     "indent": ["error", 2]
-  }
+  },
+  "no-script-url": 0
 }

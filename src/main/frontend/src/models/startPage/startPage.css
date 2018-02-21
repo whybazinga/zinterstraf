@@ -6,3 +6,20 @@
     width: 50%;
     display: inline-block;
 }
+
+.box-shadow-element {
+    -webkit-box-shadow: 0px 0px 3px 3px rgba(181,181,199,1);
+    -moz-box-shadow: 0px 0px 3px 3px rgba(181,181,199,1);
+    box-shadow: 0px 0px 3px 3px rgba(181,181,199,1);
+    border-top: 3px solid navy;
+
+}
+
+.ega-league-header {
+    background-color: navy;
+    color: #fff;
+}
+
+.match-week-header {
+    border-bottom: 1px solid #edeef0;
+}

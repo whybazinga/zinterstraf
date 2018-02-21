@@ -1,28 +1,37 @@
-.header {
-    min-height: 50px;
-}
-
 .logo-home {
-    width:30px;
-    height:30px;
+    height:70px;
 }
 
 .navigation-fixed {
-    height: 60px;
+    height: 96px;
     position: fixed;
     width: 100%;
     z-index: 1;
-    background-color: #2f2f37;
+    background-color: #fff;
 }
 
 .navigation-empty {
-    height: 60px;
+    height: 96px;
 }
 
 .header-nav {
-    background-color: #2f2f37;
+    background-color: #fff;
 }
 
-.header-nav a {
-    color: khaki;
+.header-nav .header-links {
+    background-color: #4a76a8;
+}
+
+.header-links a {
+    font-weight: bold;
+    color: white !important;
+}
+
+@media (min-width:961px) {
+    header .register {
+        margin-left: auto;
+    }
+    header .navbar-nav {
+        width: 100%;
+    }
 }
