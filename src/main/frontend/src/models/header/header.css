@@ -19,12 +19,12 @@
 }
 
 .header-nav .header-links {
-    background-color: #4a76a8;
+    background-color: rgb(0,42,91);
 }
 
 .header-links a {
     font-weight: bold;
-    color: white !important;
+    color: rgb(164,176,190) !important;
 }
 
 @media (min-width:961px) {
