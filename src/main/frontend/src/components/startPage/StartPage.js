@@ -1,9 +1,19 @@
 import React, {Component} from 'react';
 import './startPage.css';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, ListGroup, ListGroupItem  } from 'reactstrap';
 import glaPng from './gla.png'
+import { connect } from "react-redux";
 
 export default class StartPage extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isOpen: false
+
+    };
+  }
 
 
   render() {
@@ -12,17 +22,17 @@ export default class StartPage extends Component {
         <Row>
           <Col xl="4">
             <div className="box-shadow-element m-lg-5">
-              <h4 className="color-nat-black text-capitalize text-center match-week-header">Matchweek 1</h4>
-              <ul>
-                <li>Monday - 3 games</li>
-                <li>Tuesday - 2 games</li>
-                <li>Wednesday - 3 games</li>
-                <li>Tuesday - 0 games</li>
-                <li>Thursday - 1 games</li>
-                <li>Friday -  6 games</li>
-                <li>Saturday - 7 games</li>
-                <li>Sunday - 0 games</li>
-              </ul>
+              <h4 className="color-nat-black text-capitalize text-center">Matchweek 1</h4>
+              <ListGroup>
+                <ListGroupItem>Monday - 3 games</ListGroupItem>
+                <ListGroupItem>Tuesday - 2 games</ListGroupItem>
+                <ListGroupItem>Wednesday - 3 games</ListGroupItem>
+                <ListGroupItem>Tuesday - 0 games</ListGroupItem>
+                <ListGroupItem>Thursday - 1 games</ListGroupItem>
+                <ListGroupItem>Friday -  6 games</ListGroupItem>
+                <ListGroupItem>Saturday - 7 games</ListGroupItem>
+                <ListGroupItem>Sunday - 0 games</ListGroupItem>
+              </ListGroup>
             </div>
             <div className="box-shadow-element m-lg-5">
               <div className="color-nat-black text-capitalize text-center ega-league-header">EGA LEAGUE</div>
@@ -86,6 +96,22 @@ export default class StartPage extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return { articles: state.articles };
+};
+const ConnectedList = ({ matches }) => (
+  <ListGroup>
+    {matches.map(el => (
+      <ListGroupItem className="justify-content-between">
+        {el.title} - {el.id}
+      </ListGroupItem>
+    ))}
+  </ListGroup>
+);
+const List = connect(mapStateToProps)(ConnectedList);
+
+
 
 /*
 export const myMap = () => {

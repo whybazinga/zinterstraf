@@ -2,9 +2,6 @@ import {ADD_MATCH} from "../constants/actionTypes";
 
 const initialState = {
   matches: [],
-  abc: [
-    'fds'
-  ]
 };
 
 const reducer = (state = initialState, action) => {
