@@ -3,16 +3,14 @@ import './startPage.css';
 import { Row, Col, ListGroup, ListGroupItem  } from 'reactstrap';
 import glaPng from './gla.png'
 import { connect } from "react-redux";
+import { addMatch } from "../../actions/matchActions";
+import uuidv1 from "uuid";
 
 export default class StartPage extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {
-      isOpen: false
-
-    };
   }
 
 
@@ -23,16 +21,8 @@ export default class StartPage extends Component {
           <Col xl="4">
             <div className="box-shadow-element m-lg-5">
               <h4 className="color-nat-black text-capitalize text-center">Matchweek 1</h4>
-              <ListGroup>
-                <ListGroupItem>Monday - 3 games</ListGroupItem>
-                <ListGroupItem>Tuesday - 2 games</ListGroupItem>
-                <ListGroupItem>Wednesday - 3 games</ListGroupItem>
-                <ListGroupItem>Tuesday - 0 games</ListGroupItem>
-                <ListGroupItem>Thursday - 1 games</ListGroupItem>
-                <ListGroupItem>Friday -  6 games</ListGroupItem>
-                <ListGroupItem>Saturday - 7 games</ListGroupItem>
-                <ListGroupItem>Sunday - 0 games</ListGroupItem>
-              </ListGroup>
+              <MatchList />
+              <Form />
             </div>
             <div className="box-shadow-element m-lg-5">
               <div className="color-nat-black text-capitalize text-center ega-league-header">EGA LEAGUE</div>
@@ -98,20 +88,72 @@ export default class StartPage extends Component {
 }
 
 const mapStateToProps = state => {
-  return { articles: state.articles };
+  return { matches: state.match.matches };
 };
 const ConnectedList = ({ matches }) => (
   <ListGroup>
-    {matches.map(el => (
-      <ListGroupItem className="justify-content-between">
-        {el.title} - {el.id}
+    {matches.map((el, key) => (
+      <ListGroupItem className="justify-content-between" key={el.id}>
+        {el.title} - {key}
       </ListGroupItem>
     ))}
   </ListGroup>
 );
-const List = connect(mapStateToProps)(ConnectedList);
+const MatchList = connect(mapStateToProps)(ConnectedList);
 
 
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addMatch: match => dispatch(addMatch(match))
+  };
+};
+
+class ConnectedForm extends Component {
+  constructor() {
+    super();
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {
+      title: ""
+    };
+  }
+
+  handleChange(event) {
+    this.setState({ [event.target.id]: event.target.value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const { title } = this.state;
+    const id = uuidv1();
+    this.props.addMatch({ title, id });
+    this.setState({ title: "" });
+  }
+
+  render() {
+    const { title } = this.state;
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="title">Title</label>
+          <input
+            type="text"
+            className="form-control"
+            id="title"
+            value={title}
+            onChange={this.handleChange}
+          />
+        </div>
+        <button type="submit" className="btn btn-success btn-lg">
+          SAVE
+        </button>
+      </form>
+    );
+  }
+}
+const Form = connect(null, mapDispatchToProps)(ConnectedForm);
 
 /*
 export const myMap = () => {
