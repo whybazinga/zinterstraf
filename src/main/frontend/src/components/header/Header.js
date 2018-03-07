@@ -39,8 +39,6 @@ export default class Header extends Component {
 
   render() {
     return (
-
-
       <header>
         <div className="navigation-fixed">
           <Navbar color="faded" expand="md" className="header-nav" light>
@@ -67,7 +65,7 @@ export default class Header extends Component {
                   <Link className="span nav-link" to='/'>Social</Link>
                 </NavItem>
                 <NavItem className="register">
-                  <Link className="span nav-link" to='/register'>Sign in</Link>
+                  <Link className="span nav-link" to='/sign-in'>Sign in</Link>
                 </NavItem>
               </Nav>
             </Collapse>
