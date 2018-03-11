@@ -18,6 +18,11 @@
     background-color: #fff;
 }
 
+.header-links {
+    border-radius: 10px;
+    text-align: center;
+}
+
 .header-nav .header-links {
     background-color: rgb(0,42,91);
 }

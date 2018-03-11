@@ -16,7 +16,7 @@ export default class StartPage extends Component {
 
   render() {
     return (
-      <section className="container content">
+      <section className="container">
         <Row>
           <Col xl="4">
             <div className="box-shadow-element m-lg-5">
@@ -90,7 +90,7 @@ export default class StartPage extends Component {
 const mapStateToProps = state => {
   return { matches: state.match.matches };
 };
-const ConnectedList = ({ matches }) => (
+const ConnectedList = ({matches}) => (
   <ListGroup>
     {matches.map((el, key) => (
       <ListGroupItem className="justify-content-between" key={el.id}>
@@ -101,7 +101,13 @@ const ConnectedList = ({ matches }) => (
 );
 const MatchList = connect(mapStateToProps)(ConnectedList);
 
-
+function addMatchWithTimeout(match) {
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(addMatch(match));
+    }, 3000)
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -126,9 +132,12 @@ class ConnectedForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    debugger;
     const { title } = this.state;
     const id = uuidv1();
-    this.props.addMatch({ title, id });
+
+    this.props.addMatchWithTimeout({ title, id });
+    //this.props.addMatch({ title, id });
     this.setState({ title: "" });
   }
 
@@ -153,7 +162,7 @@ class ConnectedForm extends Component {
     );
   }
 }
-const Form = connect(null, mapDispatchToProps)(ConnectedForm);
+const Form = connect(null, {addMatchWithTimeout})(ConnectedForm);
 
 /*
 export const myMap = () => {

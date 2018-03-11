@@ -10,6 +10,7 @@ export default class Header extends Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+    this.scrollTop = this.scrollTop.bind(this);
     this.state = {
       isOpen: false
     };
@@ -67,7 +68,7 @@ export default class Header extends Component {
                   <Link className="span nav-link" to='/'>Social</Link>
                 </NavItem>
                 <NavItem className="register">
-                  <Link className="span nav-link" to='/register'>Sign in</Link>
+                  <Link className="span nav-link" to='/sign-in'>Sign in</Link>
                 </NavItem>
               </Nav>
             </Collapse>
