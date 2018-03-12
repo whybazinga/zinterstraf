@@ -48,6 +48,7 @@ public class AjaxController {
 		return jsonReponse;
 	}
 */
+
 	@RequestMapping(value = "/main", produces={"application/json"}, method={RequestMethod.GET})
 	public JsonMessage loginUser(@RequestParam("access_token") String data) {
 

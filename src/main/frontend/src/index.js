@@ -6,7 +6,6 @@ import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from "./store/index";
-//import { addMatch } from "./actions/matchActions";
 
 ReactDOM.render(
   <Provider store={store}>
@@ -17,12 +16,3 @@ ReactDOM.render(
   document.getElementById('root')
 );
 registerServiceWorker();
-
-/*
-window.store = store;
-console.log(store.getState());
-store.subscribe(() => console.log('Look ma, Redux!!'));
-store.dispatch( addMatch({ name: 'EG vs VG', id: 1 }) );
-
-window.addMatch = addMatch;
-*/

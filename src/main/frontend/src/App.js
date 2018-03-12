@@ -13,7 +13,9 @@ import {
 import StartPage from './components/startPage/StartPage';
 import SignIn from './containers/signing/SignIn';
 
+
 class App extends Component {
+
   render() {
     return (
       <div className="d-flex flex-column app">
@@ -26,6 +28,7 @@ class App extends Component {
 }
 
 export default App;
+
 
 const Content = () => (
   <main className="content">
@@ -57,3 +60,4 @@ const PrivateRoute = ({component: Component, ...rest}) => (
       : <Redirect to='/sign-in'/>
   )}/>
 );
+

@@ -29,6 +29,12 @@ public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final DataSource dataSource;
     private final UserDetailsService userDetailsService;
+    private final String[] commonUrls = {
+            "/" ,"/register", "/*.{(js|ico)$}",
+            "/static/**", "/oauth/**", "/zinterstraf/**",
+            "/api/**", "/swagger-resources/**", "/swagger-resources",
+            "/webjars/**", "/webjars", "/**"
+    };
 
     @Autowired
     public OAuth2SecurityConfiguration(
@@ -42,7 +48,7 @@ public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests()
-                .antMatchers("/" ,"/register", "/*.{(js|ico)$}", "/static/**", "/oauth/**").permitAll()
+                .antMatchers(commonUrls).permitAll()
                 .anyRequest().authenticated();
             //.and().formLogin().loginPage("/").permitAll();
 

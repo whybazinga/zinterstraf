@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import {Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem} from 'reactstrap';
 import './header.css'
 import egaHome from'./ega.png';
-import { Link } from 'react-router-dom'
-
+import { Link, Redirect } from 'react-router-dom'
 
 export default class Header extends Component {
   constructor(props) {
@@ -15,6 +14,7 @@ export default class Header extends Component {
       isOpen: false
     };
   }
+
 
   scrollTop(e) {
     e.preventDefault();

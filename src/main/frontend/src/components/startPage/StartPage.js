@@ -101,19 +101,13 @@ const ConnectedList = ({matches}) => (
 );
 const MatchList = connect(mapStateToProps)(ConnectedList);
 
-function addMatchWithTimeout(match) {
+function mapDispatchToProps(match) {
   return (dispatch) => {
     setTimeout(() => {
       dispatch(addMatch(match));
-    }, 3000)
+    }, 1000)
   }
 }
-
-const mapDispatchToProps = dispatch => {
-  return {
-    addMatch: match => dispatch(addMatch(match))
-  };
-};
 
 class ConnectedForm extends Component {
   constructor() {
@@ -136,8 +130,7 @@ class ConnectedForm extends Component {
     const { title } = this.state;
     const id = uuidv1();
 
-    this.props.addMatchWithTimeout({ title, id });
-    //this.props.addMatch({ title, id });
+    this.props.mapDispatchToProps({ title, id });
     this.setState({ title: "" });
   }
 
@@ -162,7 +155,7 @@ class ConnectedForm extends Component {
     );
   }
 }
-const Form = connect(null, {addMatchWithTimeout})(ConnectedForm);
+const Form = connect(null, {mapDispatchToProps})(ConnectedForm);
 
 /*
 export const myMap = () => {
