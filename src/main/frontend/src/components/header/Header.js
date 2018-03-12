@@ -10,6 +10,7 @@ export default class Header extends Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+    this.scrollTop = this.scrollTop.bind(this);
     this.state = {
       isOpen: false
     };

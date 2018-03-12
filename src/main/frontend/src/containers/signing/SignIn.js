@@ -1,31 +1,48 @@
-import React from "react";
-import { Row, Col, Button, Form, FormGroup, Label, Input, FormFeedback, InputGroupAddon, InputGroup } from 'reactstrap';
-import './signIn.css';
+import React from 'react';
 import octicons from 'octicons';
+import {Row, Col, Form, FormGroup, InputGroup, InputGroupAddon, Input, Button, FormFeedback} from 'reactstrap';
 import {InnerFormSvg} from '../../components/innerHtml/InnerHtml'
 
+import './singIn.css'
+import steamPng from './steam.png';
+const steamStyle = {
+  width:'40px',
+  borderRadius:'20px'
+};
+
+fetch('fsdf').then();
+
 const SignIn = (props) => (
-  <section className="container content">
-    <Row className="justify-content-center">
-      <Col className="col-md-auto box-shadow-element-no-border m-5">
-        <Form className="m-3">
-          <FormGroup row>
+  <section className="container">
+    <Row>
+      <Col className="d-flex justify-content-center align-items-center">
+        <Form className="box-shadow-element-noborder m-4 p-4">
+          <FormGroup>
             <InputGroup>
-              <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons.mail.toSVG()} /></InputGroupAddon>
-              <Input type="email" name="email" id="userEmail" placeholder="my-email@gmail.com" valid />
-              <FormFeedback valid>Sweet! that name is available</FormFeedback>
+              <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons.mail.toSVG()}/></InputGroupAddon>
+              <Input type="email" name="email" id="userEmail" placeholder="my-mail@gmail.com" valid/>
+              <FormFeedback valid>The email is available</FormFeedback>
             </InputGroup>
           </FormGroup>
-          <FormGroup row>
+          <FormGroup>
             <InputGroup>
-              <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons.key.toSVG()} /></InputGroupAddon>
-              <Input type="password" name="password" id="userPassword" placeholder="my-password123" valid />
-              <FormFeedback valid>Sweet! that name is available</FormFeedback>
+              <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons.key.toSVG()}/></InputGroupAddon>
+              <Input type="password" name="password" id="userPassword" placeholder="my-password123" valid/>
+              <FormFeedback valid>The password is good</FormFeedback>
             </InputGroup>
           </FormGroup>
-          <FormGroup className="text-center" check row>
-              <Button color="info">Sign In</Button>
+          <FormGroup className="text-right">
+              <Button>Sign in</Button>
           </FormGroup>
+          <hr/>
+          <div className="text-center">
+            <p><small className="text-muted">Sign in through the steam</small></p>
+            <input type="image" src={steamPng} style={steamStyle} alt="steam-img"/>
+          </div>
+          <hr/>
+          <div className="text-center">
+            <Button color="link">Sign up directly in the system</Button>
+          </div>
         </Form>
       </Col>
     </Row>

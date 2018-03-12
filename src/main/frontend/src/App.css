@@ -1,5 +1,5 @@
-html, body, #root {
-    min-height: 100%;
+html, body, #root, .app {
+    min-height: 100vh;
 }
 
 body {
@@ -14,10 +14,6 @@ footer {
     background-color: #fff;
 }
 
-.app {
-    height: 100%;
-}
-
 .rounded-circle {
     border-radius: 20px;
 }
@@ -25,17 +21,3 @@ footer {
 .content {
     flex: 1;
 }
-
-
-
-/*
-
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-*/
