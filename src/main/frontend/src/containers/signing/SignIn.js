@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import octicons from 'octicons';
 import {Row, Col, Form, FormGroup, InputGroup, InputGroupAddon, Input, Button, FormFeedback} from 'reactstrap';
 import {InnerFormSvg} from '../../components/innerHtml/InnerHtml'
-import {settings} from '../../constants/settings'
+import {appGlobal} from '../../constants/appGlobal'
 
 import './singIn.css'
 import steamPng from './steam.png';
@@ -105,17 +105,33 @@ class SignIn extends Component {
 
     debugger;
 
-    fetch(settings.common.func.getFullUrlByPath(settings.auth.signInUrl), {
-      method: settings.common.methods.POST,
-      headers: settings.auth.getAuthHeader,
-      body: settings.common.func.getFormEncodedParams({
+    fetch(appGlobal.common.func.getFullUrlByPath(appGlobal.auth.signInUrl), {
+      method: appGlobal.common.methods.POST,
+      headers: appGlobal.auth.getAuthHeader,
+      body: appGlobal.common.func.getFormEncodedParams({
         'username': this.state.username.value,
         'password': this.state.password.value,
-        'grant_type': settings.auth.grantType
+        'grant_type': appGlobal.auth.grantType
       })
     }).then((response) => {
-
-      response.forEach((e) => console.log(e));
+      response.json().then((json) => {
+        if(json[appGlobal.auth.oauthSignIn.accessToken]) {
+          appGlobal.common.func.setCookie(
+            appGlobal.auth.oauthSignIn.accessToken,
+            json[appGlobal.auth.oauthSignIn.accessToken],
+            json[appGlobal.auth.oauthSignIn.expires]
+          );
+        }
+        if(json[appGlobal.auth.oauthSignIn.refreshToken]) {
+          const date = new Date();
+          date.setTime(date.getTime() + (365*24*60*60*1000));
+          appGlobal.common.func.setCookie(
+            appGlobal.auth.oauthSignIn.refreshToken,
+            json[appGlobal.auth.oauthSignIn.refreshToken],
+            date.toUTCString()
+          )
+        }
+      })
     }).catch((error) => {
       console.log('Error: ' + error.message)
     });
