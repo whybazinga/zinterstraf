@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserDao extends JpaRepository<User, Integer> {
 	
-	User findByUsername(String email);
+	User findByUsername(String username);
 
 	@Query(value="SELECT ou FROM oauth_users ou " +
 			"INNER JOIN link_users_roles lur ON ou.id = lur.id_user " +

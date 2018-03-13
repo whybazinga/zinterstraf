@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import octicons from 'octicons';
 import {Row, Col, Form, FormGroup, InputGroup, InputGroupAddon, Input, Button, FormFeedback} from 'reactstrap';
 import {InnerFormSvg} from '../../components/innerHtml/InnerHtml'
+import {settings} from '../../constants/settings'
 
 import './singIn.css'
 import steamPng from './steam.png';
@@ -11,7 +12,7 @@ const steamStyle = {
 };
 
 
-class SignIn extends React.Component {
+class SignIn extends Component {
 
   constructor(props) {
     super(props);
@@ -19,7 +20,7 @@ class SignIn extends React.Component {
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     this.state = {
-      email: {
+      username: {
         value: '',
         validInput: '',
         validHint: {
@@ -42,12 +43,12 @@ class SignIn extends React.Component {
     };
   }
 
-  onLogin(e) {
+  onLogin() {
     let error = false;
-    if(this.state.email.value) {
+    if(this.state.username.value) {
       this.setState({
-        email: {
-          ...this.state.email,
+        username: {
+          ...this.state.username,
           validInput: 'is-valid',
           validHint: {
             display: 'block'
@@ -59,8 +60,8 @@ class SignIn extends React.Component {
       });
     }else{
       this.setState({
-        email: {
-          ...this.state.email,
+        username: {
+          ...this.state.username,
           validInput: 'is-invalid',
           validHint: {
             display: 'none'
@@ -87,8 +88,8 @@ class SignIn extends React.Component {
       });
     }else{
       this.setState({
-        email: {
-          ...this.state.email,
+        password: {
+          ...this.state.password,
           validInput: 'is-invalid',
           validHint: {
             display: 'none'
@@ -101,26 +102,31 @@ class SignIn extends React.Component {
       error = true;
     }
     if(error) return;
+
     debugger;
 
-    fetch(window.location.host + '/oauth/token', {
-      method: 'post',
-      headers: {
-        'Authorization': 'Basic '+btoa('username:password'),
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: JSON.stringify({
-        'client_id': '(API KEY)',
-        'client_secret': '(API SECRET)',
-        'grant_type': 'client_credentials'
+    fetch(settings.common.func.getFullUrlByPath(settings.auth.signInUrl), {
+      method: settings.common.methods.POST,
+      headers: settings.auth.getAuthHeader,
+      body: settings.common.func.getFormEncodedParams({
+        'username': this.state.username.value,
+        'password': this.state.password.value,
+        'grant_type': settings.auth.grantType
       })
-    }).then()
+    }).then((response) => {
+
+      response.forEach((e) => console.log(e));
+    }).catch((error) => {
+      console.log('Error: ' + error.message)
+    });
+
+
   }
 
   onChangeName(e) {
     this.setState({
-      email: {
-        ...this.state.email,
+      username: {
+        ...this.state.username,
         value: e.target.value
       }
     });
@@ -144,15 +150,15 @@ class SignIn extends React.Component {
               <FormGroup>
                 <InputGroup>
                   <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons.mail.toSVG()}/></InputGroupAddon>
-                  <Input type="email" name="email" id="userEmail" placeholder="my-mail@gmail.com" value={this.state.email.value} className={this.state.email.validInput} onChange={this.onChangeName} />
+                  <Input type="email" id="userName" placeholder="my-mail@gmail.com" value={this.state.username.value} className={this.state.username.validInput} onChange={this.onChangeName} />
                 </InputGroup>
-                <FormFeedback valid style={this.state.email.validHint}>This username is correct</FormFeedback>
-                <FormFeedback style={this.state.email.invalidHint}>The username mustn't be empty.</FormFeedback>
+                <FormFeedback valid style={this.state.username.validHint}>This username is correct</FormFeedback>
+                <FormFeedback style={this.state.username.invalidHint}>The username mustn't be empty.</FormFeedback>
               </FormGroup>
               <FormGroup>
                 <InputGroup>
                   <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons.key.toSVG()}/></InputGroupAddon>
-                  <Input type="password" name="password" id="userPassword" placeholder="my-password123" value={this.state.password.value} className={this.state.password.validInput} onChange={this.onChangePassword} />
+                  <Input type="password" id="userPassword" placeholder="my-password123" value={this.state.password.value} className={this.state.password.validInput} onChange={this.onChangePassword} />
                 </InputGroup>
                 <FormFeedback valid style={this.state.password.validHint}>This password is correct</FormFeedback>
                 <FormFeedback style={this.state.password.invalidHint}>The password mustn't be empty.</FormFeedback>
