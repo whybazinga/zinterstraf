@@ -10,7 +10,7 @@ it('getting url with no errors', () => {
     'grant_type': 'test2'
   }));
 
-  fetch('http://localhost:8080' + appGlobal.auth.signInUrl, {
+  fetch(window.location.host + appGlobal.auth.signInUrl, {
     method: appGlobal.common.methods.POST,
     headers: appGlobal.auth.getAuthHeader,
     body: appGlobal.common.func.getFormEncodedParams({
@@ -19,10 +19,7 @@ it('getting url with no errors', () => {
       'grant_type': appGlobal.auth.grantType
     })
   }).then((response) => {
-    for(let i in response) {
-      console.log(i);
-    }
-    console.log(response);
+    response.json().then((json) => console.log(json.message || json))
   }).catch((error) => {
     console.log('Error: ' + error.message)
   });

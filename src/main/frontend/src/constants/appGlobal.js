@@ -4,13 +4,16 @@ export const appGlobal = (() => {
       signInUrl: '/oauth/token',
       grantType: 'password',
       getAuthHeader: {
-        'Authorization': 'Basic '+btoa("clientIdPassword:secret"),
+        'Authorization': 'Basic ' + btoa("clientIdPassword:secret"),
         'Content-type': "application/x-www-form-urlencoded; charset=utf-8"
       },
-      oauthSignIn: {
+      signInResponse: {
         accessToken: 'access_token',
         refreshToken: 'refresh_token',
-        expires: 'expires_in'
+        expires: 'expires_in',
+        error: 'error',
+        errorDescription: 'error_description',
+        errorDescriptionDefaultVal: 'Unknown error, please, contact the support team'
       }
     },
     common: {
@@ -18,11 +21,13 @@ export const appGlobal = (() => {
         POST: 'post',
         GET: 'get'
       },
+
       func: {
         getFullUrlByPath: (path) => (window.location.protocol + '//' + window.location.host + path),
         getFormEncodedParams: (json) => ( Object.keys(json).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(json[key])).join('&') ),
         setCookie: setCookieFunc,
-        getCookie: getCookieFunc
+        getCookie: getCookieFunc,
+        callFuncIfParamExists: (param, func, ...args) => { if(param && typeof func === 'function') { func(args) } }
       }
     },
     isDebug: true

@@ -6,9 +6,10 @@ import {appGlobal} from '../../constants/appGlobal'
 
 import './singIn.css'
 import steamPng from './steam.png';
+
 const steamStyle = {
-  width:'40px',
-  borderRadius:'20px'
+  width: '40px',
+  borderRadius: '20px'
 };
 
 
@@ -22,88 +23,49 @@ class SignIn extends Component {
     this.state = {
       username: {
         value: '',
-        validInput: '',
-        validHint: {
-          display: 'none'
-        },
-        invalidHint: {
-          display: 'none'
-        }
+        validInputClass: '',
+        invalidHintStyle: SignIn.hideElementIfExists()
       },
       password: {
         value: '',
-        validInput: '',
-        validHint: {
-          display: 'none'
-        },
-        invalidHint: {
-          display: 'none'
-        }
+        validInputClass: '',
+        invalidHintStyle: SignIn.hideElementIfExists()
       },
+      authStatus: {
+        style: SignIn.hideElementIfExists(),
+        value: appGlobal.auth.signInResponse.errorDescriptionDefaultVal
+      }
     };
   }
 
-  onLogin() {
-    let error = false;
-    if(this.state.username.value) {
-      this.setState({
-        username: {
-          ...this.state.username,
-          validInput: 'is-valid',
-          validHint: {
-            display: 'block'
-          },
-          invalidHint: {
-            display: 'none'
-          }
-        }
-      });
-    }else{
-      this.setState({
-        username: {
-          ...this.state.username,
-          validInput: 'is-invalid',
-          validHint: {
-            display: 'none'
-          },
-          invalidHint: {
-            display: 'block'
-          }
-        }
-      });
-      error = true;
+  static hideElementIfExists(param=true) {
+    return {
+      display: param ? 'none' : 'block'
     }
-    if(this.state.password.value) {
-      this.setState({
-        password: {
-          ...this.state.password,
-          validInput: 'is-valid',
-          validHint: {
-            display: 'block'
-          },
-          invalidHint: {
-            display: 'none'
-          }
-        }
-      });
-    }else{
-      this.setState({
-        password: {
-          ...this.state.password,
-          validInput: 'is-invalid',
-          validHint: {
-            display: 'none'
-          },
-          invalidHint: {
-            display: 'block'
-          }
-        }
-      });
-      error = true;
-    }
-    if(error) return;
+  }
 
-    debugger;
+  static getHintClassByParam(param=true) {
+    return param ? 'is-valid' : 'is-invalid'
+  }
+
+  onLogin() {
+    this.setState({
+      username: {
+        ...this.state.username,
+        validInputClass: SignIn.getHintClassByParam(this.state.username.value),
+        invalidHintStyle:  SignIn.hideElementIfExists(this.state.username.value)
+      }
+    });
+
+    this.setState({
+      password: {
+        ...this.state.password,
+        validInputClass: SignIn.getHintClassByParam(this.state.password.value),
+        invalidHintStyle: SignIn.hideElementIfExists(this.state.password.value)
+      }
+    });
+
+    if (!this.state.username.value || !this.state.password.value) return;
 
     fetch(appGlobal.common.func.getFullUrlByPath(appGlobal.auth.signInUrl), {
       method: appGlobal.common.methods.POST,
@@ -114,28 +76,49 @@ class SignIn extends Component {
         'grant_type': appGlobal.auth.grantType
       })
     }).then((response) => {
-      response.json().then((json) => {
-        if(json[appGlobal.auth.oauthSignIn.accessToken]) {
-          appGlobal.common.func.setCookie(
-            appGlobal.auth.oauthSignIn.accessToken,
-            json[appGlobal.auth.oauthSignIn.accessToken],
-            json[appGlobal.auth.oauthSignIn.expires]
-          );
-        }
-        if(json[appGlobal.auth.oauthSignIn.refreshToken]) {
-          const date = new Date();
-          date.setTime(date.getTime() + (365*24*60*60*1000));
-          appGlobal.common.func.setCookie(
-            appGlobal.auth.oauthSignIn.refreshToken,
-            json[appGlobal.auth.oauthSignIn.refreshToken],
-            date.toUTCString()
-          )
-        }
-      })
-    }).catch((error) => {
-      console.log('Error: ' + error.message)
-    });
+      appGlobal.common.func.callFuncIfParamExists(appGlobal.isDebug,console.log,response);
+      return response.json();
+    }).then((json) => {
+      appGlobal.common.func.callFuncIfParamExists(appGlobal.isDebug,console.log,json);
 
+      this.setState({
+        authStatus: {
+          ...this.state.authStatus,
+          style: SignIn.hideElementIfExists(!json[appGlobal.auth.signInResponse.error]),
+          value: json[appGlobal.auth.signInResponse.error] ? json[appGlobal.auth.signInResponse.errorDescription] : json[appGlobal.auth.signInResponse.errorDescriptionDefaultVal]
+        }
+      });
+
+      appGlobal.common.func.callFuncIfParamExists(
+        json[appGlobal.auth.signInResponse.accessToken],
+        appGlobal.common.func.setCookie,
+        appGlobal.auth.signInResponse.accessToken,
+        json[appGlobal.auth.signInResponse.accessToken],
+        json[appGlobal.auth.signInResponse.expires]
+      );
+      appGlobal.common.func.callFuncIfParamExists(
+        json[appGlobal.auth.signInResponse.refreshToken],
+        appGlobal.common.func.setCookie,
+        appGlobal.auth.signInResponse.refreshToken,
+        json[appGlobal.auth.signInResponse.refreshToken],
+        (() => {
+          const date = new Date();
+          date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
+          return date.toUTCString()
+        })()
+      );
+      appGlobal.common.func.callFuncIfParamExists(appGlobal.isDebug,console.log,json[appGlobal.auth.signInResponse.accessToken] || 'access token is empty');
+      appGlobal.common.func.callFuncIfParamExists(appGlobal.isDebug,console.log,json[appGlobal.auth.signInResponse.refreshToken] || 'refresh token is empty');
+    }).catch((error) => {
+      appGlobal.common.func.callFuncIfParamExists(appGlobal.isDebug,console.log,error.message);
+      this.setState({
+        authStatus: {
+          ...this.state.authStatus,
+          style: SignIn.hideElementIfExists(!error.message),
+          value: 'Connection errors has occurred.'
+        }
+      });
+    });
 
   }
 
@@ -166,20 +149,23 @@ class SignIn extends Component {
               <FormGroup>
                 <InputGroup>
                   <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons.mail.toSVG()}/></InputGroupAddon>
-                  <Input type="email" id="userName" placeholder="my-mail@gmail.com" value={this.state.username.value} className={this.state.username.validInput} onChange={this.onChangeName} />
+                  <Input type="email" id="userName" placeholder="my-mail@gmail.com"
+                         value={this.state.username.value} className={this.state.username.validInputClass}
+                         onChange={this.onChangeName}/>
                 </InputGroup>
-                <FormFeedback valid style={this.state.username.validHint}>This username is correct</FormFeedback>
-                <FormFeedback style={this.state.username.invalidHint}>The username mustn't be empty.</FormFeedback>
+                <FormFeedback style={this.state.username.invalidHintStyle}>The username mustn't be empty.</FormFeedback>
               </FormGroup>
               <FormGroup>
                 <InputGroup>
                   <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons.key.toSVG()}/></InputGroupAddon>
-                  <Input type="password" id="userPassword" placeholder="my-password123" value={this.state.password.value} className={this.state.password.validInput} onChange={this.onChangePassword} />
+                  <Input type="password" id="userPassword" placeholder="my-password123"
+                         value={this.state.password.value} className={this.state.password.validInputClass}
+                         onChange={this.onChangePassword}/>
                 </InputGroup>
-                <FormFeedback valid style={this.state.password.validHint}>This password is correct</FormFeedback>
-                <FormFeedback style={this.state.password.invalidHint}>The password mustn't be empty.</FormFeedback>
+                <FormFeedback style={this.state.password.invalidHintStyle}>The password mustn't be empty.</FormFeedback>
               </FormGroup>
               <FormGroup className="text-right">
+                <FormFeedback style={this.state.authStatus.style} className="text-center font-weight-bold mb-2">{this.state.authStatus.value}</FormFeedback>
                 <Button onClick={this.onLogin}>Sign in</Button>
               </FormGroup>
               <hr/>
