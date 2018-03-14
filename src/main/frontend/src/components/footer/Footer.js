@@ -13,7 +13,7 @@ export default class Footer extends Component {
     return (
       <footer>
         <div className="ft-1 text-center font-weight-bold p-3">
-          Zinterstraf© {this.state.year} Privacy Policy
+          EGA© {this.state.year} Privacy Policy
         </div>
       </footer>
     );
