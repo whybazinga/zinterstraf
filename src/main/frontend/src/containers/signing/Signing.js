@@ -13,7 +13,7 @@ const steamStyle = {
 };
 
 
-class SignIn extends Component {
+class Signing extends Component {
 
   constructor(props) {
     super(props);
@@ -24,27 +24,27 @@ class SignIn extends Component {
       username: {
         value: '',
         validInputClass: '',
-        invalidHintStyle: SignIn.hideElementIfExists()
+        invalidHintStyle: Signing.hideElementIfExists(true)
       },
       password: {
         value: '',
         validInputClass: '',
-        invalidHintStyle: SignIn.hideElementIfExists()
+        invalidHintStyle: Signing.hideElementIfExists(true)
       },
       authStatus: {
-        style: SignIn.hideElementIfExists(),
+        style: Signing.hideElementIfExists(true),
         value: appGlobal.auth.signInResponse.errorDescriptionDefaultVal
       }
     };
   }
 
-  static hideElementIfExists(param=true) {
+  static hideElementIfExists(param) {
     return {
       display: param ? 'none' : 'block'
     }
   }
 
-  static getHintClassByParam(param=true) {
+  static getHintClassByParam(param) {
     return param ? 'is-valid' : 'is-invalid'
   }
 
@@ -52,16 +52,16 @@ class SignIn extends Component {
     this.setState({
       username: {
         ...this.state.username,
-        validInputClass: SignIn.getHintClassByParam(this.state.username.value),
-        invalidHintStyle:  SignIn.hideElementIfExists(this.state.username.value)
+        validInputClass: Signing.getHintClassByParam(this.state.username.value),
+        invalidHintStyle:  Signing.hideElementIfExists(this.state.username.value)
       }
     });
 
     this.setState({
       password: {
         ...this.state.password,
-        validInputClass: SignIn.getHintClassByParam(this.state.password.value),
-        invalidHintStyle: SignIn.hideElementIfExists(this.state.password.value)
+        validInputClass: Signing.getHintClassByParam(this.state.password.value),
+        invalidHintStyle: Signing.hideElementIfExists(this.state.password.value)
       }
     });
 
@@ -69,11 +69,14 @@ class SignIn extends Component {
 
     fetch(appGlobal.common.func.getFullUrlByPath(appGlobal.auth.signInUrl), {
       method: appGlobal.common.methods.POST,
-      headers: appGlobal.auth.getAuthHeader,
+      headers: appGlobal.auth.func.getAuthHeaderByCred(
+        appGlobal.auth.tokenFlows.passwordFlow.clientId,
+        appGlobal.auth.tokenFlows.passwordFlow.clientSecret
+      ),
       body: appGlobal.common.func.getFormEncodedParams({
         'username': this.state.username.value,
         'password': this.state.password.value,
-        'grant_type': appGlobal.auth.grantType
+        'grant_type': 'client_credentials' //appGlobal.auth.tokenFlows.passwordFlow.grant_type
       })
     }).then((response) => {
       appGlobal.common.func.callFuncIfParamExists(appGlobal.isDebug,console.log,response);
@@ -84,7 +87,7 @@ class SignIn extends Component {
       this.setState({
         authStatus: {
           ...this.state.authStatus,
-          style: SignIn.hideElementIfExists(!json[appGlobal.auth.signInResponse.error]),
+          style: Signing.hideElementIfExists(!json[appGlobal.auth.signInResponse.error]),
           value: json[appGlobal.auth.signInResponse.error] ? json[appGlobal.auth.signInResponse.errorDescription] : json[appGlobal.auth.signInResponse.errorDescriptionDefaultVal]
         }
       });
@@ -114,7 +117,7 @@ class SignIn extends Component {
       this.setState({
         authStatus: {
           ...this.state.authStatus,
-          style: SignIn.hideElementIfExists(!error.message),
+          style: Signing.hideElementIfExists(!error.message),
           value: 'Connection errors has occurred.'
         }
       });
@@ -153,7 +156,7 @@ class SignIn extends Component {
                          value={this.state.username.value} className={this.state.username.validInputClass}
                          onChange={this.onChangeName}/>
                 </InputGroup>
-                <FormFeedback style={this.state.username.invalidHintStyle}>The username mustn't be empty.</FormFeedback>
+                <FormFeedback style={this.state.username.invalidHintStyle}>The username or email mustn't be empty.</FormFeedback>
               </FormGroup>
               <FormGroup>
                 <InputGroup>

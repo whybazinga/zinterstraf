@@ -2,10 +2,15 @@ export const appGlobal = (() => {
   return Object.freeze({
     auth: {
       signInUrl: '/oauth/token',
-      grantType: 'password',
-      getAuthHeader: {
-        'Authorization': 'Basic ' + btoa("clientIdPassword:secret"),
-        'Content-type': "application/x-www-form-urlencoded; charset=utf-8"
+      tokenFlows: {
+        passwordFlow: {
+          grant_type: 'password',
+          clientId: 'clientIdPassword',
+          clientSecret: 'secret'
+        },
+        clientCredFlow: {
+          grant_type: 'client_credentials',
+        },
       },
       signInResponse: {
         accessToken: 'access_token',
@@ -14,6 +19,12 @@ export const appGlobal = (() => {
         error: 'error',
         errorDescription: 'error_description',
         errorDescriptionDefaultVal: 'Unknown error, please, contact the support team'
+      },
+      func: {
+        getAuthHeaderByCred: (clientId, clientSecret) => ({
+          'Authorization': 'Basic ' + btoa(clientId + ":" + clientSecret),
+          'Content-type': "application/x-www-form-urlencoded; charset=utf-8"
+        })
       }
     },
     common: {
