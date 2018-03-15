@@ -25,10 +25,10 @@ public class User extends AbstractEntity implements UserDetails {
 	@Column(name="password")
 	private String password;
 
-	@Column(name="created")
+	@Column(name="created", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private Date created;
 
-	@Column(name="updated")
+	@Column(name="updated", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
 	private Date updated;
 
 	@Column(name="acc_status")

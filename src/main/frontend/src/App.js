@@ -11,7 +11,7 @@ import {
 } from 'react-router-dom'
 
 import StartPage from './components/startPage/StartPage';
-import SignIn from './containers/signing/SignIn';
+import SignIn from './containers/signing/Signing';
 
 
 class App extends Component {
