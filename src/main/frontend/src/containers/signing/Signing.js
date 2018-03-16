@@ -3,8 +3,8 @@ import octicons from 'octicons';
 import {Row, Col, Form, FormGroup, InputGroup, InputGroupAddon, Input, Button, FormFeedback} from 'reactstrap';
 import {InnerFormSvg} from '../../components/innerHtml/InnerHtml'
 import {appGlobal} from '../../constants/appGlobal'
-
 import './style.css'
+
 import steamPng from './steam.png';
 
 const steamStyle = {
