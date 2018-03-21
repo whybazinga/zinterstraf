@@ -8,11 +8,6 @@ import uuidv1 from "uuid";
 
 export default class StartPage extends Component {
 
-  constructor(props) {
-    super(props);
-
-  }
-
 
   render() {
     return (
@@ -56,30 +51,6 @@ export default class StartPage extends Component {
                 highly devious and unscrupulous, but many American and Chinese generals underestimated them at their peril.
               </p>
             </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col className="text-center">
-            <div className="text-capitalize color-nat-black pb-2">In order to clarify everything watch this video</div>
-            <div className="start-video">
-              <div className="embed-responsive embed-responsive-16by9 div-video">
-                <iframe className="embed-responsive-item" src="https://www.youtube.com/embed/WrdnerqWtX4?rel=0" title="papich">
-                  Your browser doesn't support iFrames!
-                </iframe>
-              </div>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <h3 className="text-capitalize color-nat-black text-center">Contact Us</h3>
-            <p>Contact me and i will get back to you within 24 hours.</p>
-            <p>* Minsk, Belarus</p>
-            <p>* 8-029-202-03-27</p>
-            <p>* vvopaa@mail.com</p>
-          </Col>
-          <Col>
-            <div id="googleMap">The map doesn't work... something has gone wrong.</div>
           </Col>
         </Row>
       </section>

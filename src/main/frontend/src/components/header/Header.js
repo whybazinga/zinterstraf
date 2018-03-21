@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem} from 'reactstrap';
 import './header.css'
-import egaHome from'./ega.png';
-import { Link, Redirect } from 'react-router-dom'
+import egaHome from'../ega.png';
+import { Link } from 'react-router-dom'
 
 export default class Header extends Component {
   constructor(props) {
@@ -43,7 +43,7 @@ export default class Header extends Component {
       <header>
         <div className="navigation-fixed">
           <Navbar color="faded" expand="md" className="header-nav" light>
-            <NavbarBrand onClick={this.scrollTop} href="#"><img src={egaHome} className="logo-home" alt=""/></NavbarBrand>
+            <NavbarBrand onClick={this.scrollTop} href="#"><img src={egaHome} className="logo-home" alt="logo-header"/></NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
             <Collapse className="header-links" isOpen={this.state.isOpen} navbar>
               <Nav navbar>

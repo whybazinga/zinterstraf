@@ -10,10 +10,6 @@ body {
     overflow: auto;
 }
 
-footer {
-    background-color: #fff;
-}
-
 .rounded-circle {
     border-radius: 20px;
 }

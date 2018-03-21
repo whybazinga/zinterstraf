@@ -1,0 +1,36 @@
+.footer-top {
+    background-color: rgb(0,42,91);
+    font-size: 0.875rem;
+}
+
+.footer-bottom {
+    background-color: #fff;
+    font-size: 0.75rem;
+}
+
+footer a {
+    color: rgb(164,176,190);
+}
+
+footer h6 {
+    color: #fff;
+}
+
+.logo-footer {
+    height: 20px;
+}
+
+.logo-footer-text {
+    color: rgb(0,42,91);
+    text-align: right;
+}
+
+@media (max-width: 540px) {
+    footer {
+        text-align: center;
+    }
+
+    footer .logo-footer-text {
+        text-align: center;
+    }
+}

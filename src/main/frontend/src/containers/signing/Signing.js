@@ -148,7 +148,7 @@ class Signing extends Component {
       <section className="container">
         <Row>
           <Col className="d-flex justify-content-center align-items-center">
-            <Form className="box-shadow-element-noborder m-4 p-4">
+            <Form className="box-shadow-element-no-border m-4 p-4">
               <FormGroup>
                 <InputGroup>
                   <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons.mail.toSVG()}/></InputGroupAddon>
