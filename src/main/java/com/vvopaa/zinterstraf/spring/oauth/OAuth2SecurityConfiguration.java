@@ -33,7 +33,7 @@ public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/" ,"/register", "/*.{(js|ico)$}",
             "/static/**", "/oauth/**", "/zinterstraf/**",
             "/api/**", "/swagger-resources/**", "/swagger-resources",
-            "/webjars/**", "/webjars", "/**"
+            "/webjars/**", "/webjars", "/v2/**", "/**"
     };
 
     @Autowired

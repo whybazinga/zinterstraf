@@ -16,6 +16,7 @@
     "reactstrap": "^5.0.0-beta.2",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
+    "swagger-ui": "^3.13.0",
     "uuid": "^3.2.1"
   },
   "scripts": {

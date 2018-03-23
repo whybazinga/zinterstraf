@@ -12,7 +12,7 @@ import {
 
 import StartPage from './components/startPage/StartPage';
 import SignIn from './containers/signing/Signing';
-
+import SwaggerUi from './components/swagger/Swagger';
 
 class App extends Component {
 
@@ -22,6 +22,7 @@ class App extends Component {
         <Header/>
         <Content/>
         <Footer/>
+        <SwaggerUi/>
       </div>
     );
   }
@@ -29,12 +30,14 @@ class App extends Component {
 
 export default App;
 
+const test1 = '/sign-in';
+const test2 = window.location.host + '/v2/swagger.json';
 
 const Content = () => (
   <main className="content">
     <Switch>
       <Route exact path='/' component={StartPage}/>
-      <Route path='/sign-in' component={SignIn}/>
+      <Route path={test1} component={SignIn}/>
       <PrivateRoute path='/protected' component={StartPage}/>
     </Switch>
   </main>

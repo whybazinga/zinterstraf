@@ -76,11 +76,11 @@ const footerUrls = [
       {
         url: '/',
         name: 'Social'
-      },
+      }
     ]
   },
   {
-    header: 'EGA League',
+    header: 'Stats',
     urls: [
       {
         url: '/',

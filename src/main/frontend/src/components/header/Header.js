@@ -47,24 +47,11 @@ export default class Header extends Component {
             <NavbarToggler onClick={this.toggle} />
             <Collapse className="header-links" isOpen={this.state.isOpen} navbar>
               <Nav navbar>
-                <NavItem>
-                  <Link className="span nav-link" to='/'>Home</Link>
-                </NavItem>
-                <NavItem>
-                  <Link className="span nav-link" to='/'>Matches</Link>
-                </NavItem>
-                <NavItem>
-                  <Link className="span nav-link" to='/'>Results</Link>
-                </NavItem>
-                <NavItem>
-                  <Link className="span nav-link" to='/'>Tables</Link>
-                </NavItem>
-                <NavItem>
-                  <Link className="span nav-link" to='/'>Teams</Link>
-                </NavItem>
-                <NavItem>
-                  <Link className="span nav-link" to='/'>Social</Link>
-                </NavItem>
+                {headerUrls.map( el => (
+                  <NavItem>
+                    <Link className="nav-link" to={el.url}>{el.name}</Link>
+                  </NavItem>
+                ))}
                 <NavItem className="register">
                   <Link className="span nav-link" to='/sign-in'>Sign in</Link>
                 </NavItem>
@@ -77,3 +64,30 @@ export default class Header extends Component {
     );
   }
 }
+
+const headerUrls = [
+  {
+    url: '/',
+    name: 'Home'
+  },
+  {
+    url: '/',
+    name: 'Matches'
+  },
+  {
+    url: '/',
+    name: 'Results'
+  },
+  {
+    url: '/',
+    name: 'Tables'
+  },
+  {
+    url: '/',
+    name: 'Teams'
+  },
+  {
+    url: '/',
+    name: 'Social'
+  }
+];
