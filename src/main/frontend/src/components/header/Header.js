@@ -52,6 +52,9 @@ export default class Header extends Component {
                     <Link className="nav-link" to={el.url}>{el.name}</Link>
                   </NavItem>
                 ))}
+                <NavItem>
+                  <Link className="nav-link" to="/swagger-ui">Swagger</Link>
+                </NavItem>
                 <NavItem className="register">
                   <Link className="span nav-link" to='/sign-in'>Sign in</Link>
                 </NavItem>

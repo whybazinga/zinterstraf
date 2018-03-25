@@ -22,7 +22,6 @@ class App extends Component {
         <Header/>
         <Content/>
         <Footer/>
-        <SwaggerUi/>
       </div>
     );
   }
@@ -30,14 +29,13 @@ class App extends Component {
 
 export default App;
 
-const test1 = '/sign-in';
-const test2 = window.location.host + '/v2/swagger.json';
 
 const Content = () => (
   <main className="content">
     <Switch>
       <Route exact path='/' component={StartPage}/>
-      <Route path={test1} component={SignIn}/>
+      <Route path="/sign-in" component={SignIn}/>
+      <Route path="/swagger-ui" component={SwaggerUi}/>
       <PrivateRoute path='/protected' component={StartPage}/>
     </Switch>
   </main>

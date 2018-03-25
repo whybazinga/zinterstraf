@@ -47,6 +47,7 @@ class Signing extends Component {
   static getHintClassByParam(param) {
     return param ? 'is-valid' : 'is-invalid'
   }
+  
 
   onLogin() {
     this.setState({

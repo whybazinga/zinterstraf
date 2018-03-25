@@ -4,16 +4,11 @@ import 'swagger-ui/dist/swagger-ui.css';
 
 class SwaggerTest extends Component {
   componentDidMount() {
-    try {
       SwaggerUi({
         dom_id: '#swaggerContainer',
-        url: 'http://' + window.location.host + '/v2/swagger.json',
+        url: 'http://' + window.location.host + '/v2/api-docs',
         presets: [presets.apis],
       });
-    } catch(err) {
-      console.log('SWAGGER UI ERROR' + err.message);
-    }
-
   }
 
   render() {
