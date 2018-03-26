@@ -3,6 +3,7 @@ import {Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem} from 'reacts
 import './header.css'
 import egaHome from'../ega.png';
 import { Link } from 'react-router-dom'
+import uuidv1 from "uuid";
 
 export default class Header extends Component {
   constructor(props) {
@@ -48,8 +49,8 @@ export default class Header extends Component {
             <Collapse className="header-links" isOpen={this.state.isOpen} navbar>
               <Nav navbar>
                 {headerUrls.map( el => (
-                  <NavItem>
-                    <Link className="nav-link" to={el.url}>{el.name}</Link>
+                  <NavItem key={uuidv1()}>
+                    <Link className="nav-link" to={el.url} key={uuidv1()}>{el.name}</Link>
                   </NavItem>
                 ))}
                 <NavItem>

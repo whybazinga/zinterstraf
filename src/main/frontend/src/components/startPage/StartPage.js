@@ -71,12 +71,25 @@ const ConnectedList = ({matches}) => (
   </ListGroup>
 );
 const MatchList = connect(mapStateToProps)(ConnectedList);
-
+/*
 function mapDispatchToProps(match) {
   return (dispatch) => {
     setTimeout(() => {
       dispatch(addMatch(match));
     }, 1000)
+  }
+}
+*/
+
+
+function onAddMatch(match) {
+  return (dispatch) => {
+    dispatch(addMatch(match));
+  }
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    addNewMatch: (match) => { dispatch(onAddMatch(match)) }
   }
 }
 
@@ -101,7 +114,7 @@ class ConnectedForm extends Component {
     const { title } = this.state;
     const id = uuidv1();
 
-    this.props.mapDispatchToProps({ title, id });
+    this.props.addNewMatch({ title, id });
     this.setState({ title: "" });
   }
 

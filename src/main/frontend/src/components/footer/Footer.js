@@ -3,6 +3,7 @@ import {Row, Col} from 'reactstrap';
 import { Link } from 'react-router-dom'
 import './style.css'
 import egaHome from'../ega.png';
+import uuidv1 from "uuid";
 
 export default class Footer extends Component {
   constructor(props) {
@@ -20,8 +21,8 @@ export default class Footer extends Component {
             <Col md="2">
               <h6>{topEl.header}</h6>
               {topEl.urls.map((childEl) => (
-                <div>
-                  <Link to={childEl.url}>{childEl.name}</Link>
+                <div key={uuidv1()}>
+                  <Link to={childEl.url} key={uuidv1()}>{childEl.name}</Link>
                 </div>
               ))}
             </Col>
