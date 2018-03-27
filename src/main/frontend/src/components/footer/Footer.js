@@ -17,16 +17,16 @@ export default class Footer extends Component {
     return (
       <footer className="container-fluid">
         <Row className="justify-content-center footer-top pt-4 pb-4">
-          {footerUrls.map((topEl) => (
-            <Col md="2">
-              <h6>{topEl.header}</h6>
+          {footerUrls.map((topEl) => {
+            return(<Col md="2" key={uuidv1()}>
+              <h6 key={uuidv1()}>{topEl.header}</h6>
               {topEl.urls.map((childEl) => (
                 <div key={uuidv1()}>
                   <Link to={childEl.url} key={uuidv1()}>{childEl.name}</Link>
                 </div>
               ))}
-            </Col>
-          ))}
+            </Col>);
+          })}
         </Row>
         <Row className="justify-content-center footer-bottom font-weight-bold pt-2 pb-2">
           <Col sm="4">

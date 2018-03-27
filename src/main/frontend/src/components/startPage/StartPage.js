@@ -71,15 +71,6 @@ const ConnectedList = ({matches}) => (
   </ListGroup>
 );
 const MatchList = connect(mapStateToProps)(ConnectedList);
-/*
-function mapDispatchToProps(match) {
-  return (dispatch) => {
-    setTimeout(() => {
-      dispatch(addMatch(match));
-    }, 1000)
-  }
-}
-*/
 
 
 function onAddMatch(match) {
@@ -89,7 +80,7 @@ function onAddMatch(match) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    addNewMatch: (match) => { dispatch(onAddMatch(match)) }
+    addNewMatch: (match) => dispatch(onAddMatch(match))
   }
 }
 
@@ -110,7 +101,6 @@ class ConnectedForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    debugger;
     const { title } = this.state;
     const id = uuidv1();
 
@@ -139,7 +129,7 @@ class ConnectedForm extends Component {
     );
   }
 }
-const Form = connect(null, {mapDispatchToProps})(ConnectedForm);
+const Form = connect(null, mapDispatchToProps)(ConnectedForm);
 
 /*
 export const myMap = () => {

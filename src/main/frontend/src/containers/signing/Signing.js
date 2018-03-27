@@ -1,17 +1,17 @@
-import React, {Component} from 'react';
-import octicons from 'octicons';
-import {Row, Col, Form, FormGroup, InputGroup, InputGroupAddon, Input, Button, FormFeedback} from 'reactstrap';
+import React, {Component} from 'react'
+import octicons from 'octicons'
+import {Row, Col, Form, FormGroup, InputGroup, InputGroupAddon, Input, Button, FormFeedback} from 'reactstrap'
 import {InnerFormSvg} from '../../components/innerHtml/InnerHtml'
-import {appGlobal} from '../../constants/appGlobal'
+import {appGlobal, debugLogVar} from '../../constants/appGlobal'
+import {signingConst} from '../../constants/signingConst'
 import './style.css'
-
-import steamPng from './steam.png';
+import {Route, Redirect, Link, Switch} from 'react-router-dom'
+import steamPng from './steam.png'
 
 const steamStyle = {
   width: '40px',
   borderRadius: '20px'
 };
-
 
 class Signing extends Component {
 
@@ -33,7 +33,13 @@ class Signing extends Component {
       },
       authStatus: {
         style: Signing.hideElementIfExists(true),
-        value: appGlobal.auth.signInResponse.errorDescriptionDefaultVal
+        redirect: false,
+        value: signingConst.signInResponse.errorDescriptionDefaultVal
+      },
+      signUpStatus: {
+        style: Signing.hideElementIfExists(true),
+        redirect: false,
+        value: signingConst.signInResponse.errorDescriptionDefaultVal
       }
     };
   }
@@ -47,7 +53,6 @@ class Signing extends Component {
   static getHintClassByParam(param) {
     return param ? 'is-valid' : 'is-invalid'
   }
-  
 
   onLogin() {
     this.setState({
@@ -68,58 +73,66 @@ class Signing extends Component {
 
     if (!this.state.username.value || !this.state.password.value) return;
 
-    fetch(appGlobal.common.func.getFullUrlByPath(appGlobal.auth.signInUrl), {
-      method: appGlobal.common.methods.POST,
-      headers: appGlobal.auth.func.getAuthHeaderByCred(
-        appGlobal.auth.tokenFlows.passwordFlow.clientId,
-        appGlobal.auth.tokenFlows.passwordFlow.clientSecret
+    fetch(appGlobal.func.getFullUrlByPath(signingConst.signInUrl), {
+      method: appGlobal.methods.POST,
+      headers: appGlobal.func.getAuthHeaderByCred(
+        signingConst.tokenFlows.passwordFlow.clientId,
+        signingConst.tokenFlows.passwordFlow.clientSecret
       ),
-      body: appGlobal.common.func.getFormEncodedParams({
+      body: appGlobal.func.getFormEncodedParams({
         'username': this.state.username.value,
         'password': this.state.password.value,
-        'grant_type': 'client_credentials' //appGlobal.auth.tokenFlows.passwordFlow.grant_type
+        'grant_type': signingConst.tokenFlows.passwordFlow.grant_type
       })
     }).then((response) => {
-      appGlobal.common.func.callFuncIfParamExists(appGlobal.isDebug,console.log,response);
+      debugLogVar(response);
       return response.json();
     }).then((json) => {
-      appGlobal.common.func.callFuncIfParamExists(appGlobal.isDebug,console.log,json);
+      debugLogVar(json);
 
       this.setState({
         authStatus: {
           ...this.state.authStatus,
-          style: Signing.hideElementIfExists(!json[appGlobal.auth.signInResponse.error]),
-          value: json[appGlobal.auth.signInResponse.error] ? json[appGlobal.auth.signInResponse.errorDescription] : json[appGlobal.auth.signInResponse.errorDescriptionDefaultVal]
+          style: Signing.hideElementIfExists(!json[signingConst.signInResponse.error]),
+          value: json[signingConst.signInResponse.error] ? json[signingConst.signInResponse.errorDescription] : json[signingConst.signInResponse.errorDescriptionDefaultVal]
         }
       });
 
-      appGlobal.common.func.callFuncIfParamExists(
-        json[appGlobal.auth.signInResponse.accessToken],
-        appGlobal.common.func.setCookie,
-        appGlobal.auth.signInResponse.accessToken,
-        json[appGlobal.auth.signInResponse.accessToken],
-        json[appGlobal.auth.signInResponse.expires]
+      appGlobal.func.callFuncIfParamExists(
+        json[signingConst.signInResponse.accessToken],
+        appGlobal.func.setCookie,
+        signingConst.signInResponse.accessToken,
+        json[signingConst.signInResponse.accessToken],
+        json[signingConst.signInResponse.expires]
       );
-      appGlobal.common.func.callFuncIfParamExists(
-        json[appGlobal.auth.signInResponse.refreshToken],
-        appGlobal.common.func.setCookie,
-        appGlobal.auth.signInResponse.refreshToken,
-        json[appGlobal.auth.signInResponse.refreshToken],
+      appGlobal.func.callFuncIfParamExists(
+        json[signingConst.signInResponse.refreshToken],
+        appGlobal.func.setCookie,
+        signingConst.signInResponse.refreshToken,
+        json[signingConst.signInResponse.refreshToken],
         (() => {
           const date = new Date();
           date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
           return date.toUTCString()
         })()
       );
-      appGlobal.common.func.callFuncIfParamExists(appGlobal.isDebug,console.log,json[appGlobal.auth.signInResponse.accessToken] || 'access token is empty');
-      appGlobal.common.func.callFuncIfParamExists(appGlobal.isDebug,console.log,json[appGlobal.auth.signInResponse.refreshToken] || 'refresh token is empty');
+      debugLogVar(json[signingConst.signInResponse.accessToken] || 'access token is empty');
+      debugLogVar(json[signingConst.signInResponse.refreshToken] || 'refresh token is empty');
+      return !!json[signingConst.signInResponse.accessToken];
+    }).then((isRedirect) => {
+      this.setState({
+        authStatus: {
+          ...this.state.authStatus,
+          redirect: isRedirect
+        }
+      });
     }).catch((error) => {
-      appGlobal.common.func.callFuncIfParamExists(appGlobal.isDebug,console.log,error.message);
+      debugLogVar(error.message);
       this.setState({
         authStatus: {
           ...this.state.authStatus,
           style: Signing.hideElementIfExists(!error.message),
-          value: 'Connection errors has occurred.'
+          value: appGlobal.error.connectionError
         }
       });
     });
@@ -145,6 +158,9 @@ class Signing extends Component {
   }
 
   render() {
+    const { redirect } = this.state.authStatus;
+    if (redirect) return <Redirect to='/' />;
+
     return (
       <section className="container">
         <Row>
@@ -168,21 +184,12 @@ class Signing extends Component {
                 </InputGroup>
                 <FormFeedback style={this.state.password.invalidHintStyle}>The password mustn't be empty.</FormFeedback>
               </FormGroup>
-              <FormGroup className="text-right">
-                <FormFeedback style={this.state.authStatus.style} className="text-center font-weight-bold mb-2">{this.state.authStatus.value}</FormFeedback>
-                <Button onClick={this.onLogin}>Sign in</Button>
-              </FormGroup>
-              <hr/>
-              <div className="text-center">
-                <p>
-                  <small className="text-muted">Sign in through the steam</small>
-                </p>
-                <input type="image" src={steamPng} style={steamStyle} alt="steam-img"/>
-              </div>
-              <hr/>
-              <div className="text-center">
-                <Button color="link">Sign up directly in the system</Button>
-              </div>
+
+              <Switch>
+                <Route path='/signing/in' render={() => (<SignIn signingStatus={this.state.authStatus} signingFunc={this.onLogin}/>)} />
+                <Route path='/signing/up' render={() => (<SignUp signingStatus={this.state.signUpStatus} signingFunc={this.onLogin}/>)} />
+              </Switch>
+
             </Form>
           </Col>
         </Row>
@@ -192,3 +199,62 @@ class Signing extends Component {
 }
 
 export default Signing;
+
+
+const SignIn = ({signingStatus, signingFunc}) => (
+  <div>
+    <FormGroup className="text-right">
+      <FormFeedback style={signingStatus.style} className="text-center font-weight-bold mb-2">{signingStatus.value}</FormFeedback>
+      <Button onClick={signingFunc}>Sign in</Button>
+    </FormGroup>
+    <hr/>
+    <div className="text-center">
+      <p>
+        <small className="text-muted">Sign In through the google</small>
+      </p>
+      <input type="image" src={steamPng} style={steamStyle} alt="steam-img"/>
+    </div>
+    <hr/>
+    <div className="text-center">
+      <Button color="link">Sign In the system</Button>
+    </div>
+  </div>
+);
+
+const SignUp = ({signingStatus, signingFunc}) => (
+  <div>
+    <FormGroup className="text-right">
+      <FormFeedback style={signingStatus.style} className="text-center font-weight-bold mb-2">{signingStatus.value}</FormFeedback>
+      <Button onClick={signingFunc}>Sign up</Button>
+    </FormGroup>
+    <hr/>
+    <div className="text-center">
+      <p>
+        <small className="text-muted">Sign Up through the google</small>
+      </p>
+      <input type="image" src={steamPng} style={steamStyle} alt="steam-img"/>
+    </div>
+    <hr/>
+    <div className="text-center">
+      <Button color="link">Sign Up in the system</Button>
+    </div>
+  </div>
+);
+
+/*
+<FormGroup className="text-right">
+  <FormFeedback style={this.state.authStatus.style} className="text-center font-weight-bold mb-2">{this.state.authStatus.value}</FormFeedback>
+  <Button onClick={this.onLogin}>Sign in</Button>
+</FormGroup>
+<hr/>
+<div className="text-center">
+  <p>
+    <small className="text-muted">Sign in through the steam</small>
+  </p>
+  <input type="image" src={steamPng} style={steamStyle} alt="steam-img"/>
+</div>
+<hr/>
+<div className="text-center">
+  <Button color="link">Sign up directly in the system</Button>
+</div>
+ */
