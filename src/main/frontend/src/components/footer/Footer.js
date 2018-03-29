@@ -46,105 +46,42 @@ const footerUrls = [
   {
     header: 'EGA League',
     urls: [
-      {
-        url: '/',
-        name: 'Home'
-      },
-      {
-        url: '/',
-        name: 'Matches'
-      },
-      {
-        url: '/',
-        name: 'Results'
-      },
-      {
-        url: '/',
-        name: 'Tables'
-      },
-      {
-        url: '/',
-        name: 'Broadcast'
-      },
-      {
-        url: '/',
-        name: 'Clubs'
-      },
-      {
-        url: '/',
-        name: 'Players'
-      },
-      {
-        url: '/',
-        name: 'Social'
-      }
+      {url: '/', name: 'Home'},
+      {url: '/', name: 'Matches'},
+      {url: '/', name: 'Results'},
+      {url: '/', name: 'Tables'},
+      {url: '/', name: 'Broadcast'},
+      {url: '/', name: 'Clubs'},
+      {url: '/', name: 'Players'},
+      {url: '/', name: 'Social'}
     ]
   },
   {
     header: 'Stats',
     urls: [
-      {
-        url: '/',
-        name: 'Dashboard'
-      },
-      {
-        url: '/',
-        name: 'Player Stats'
-      },
-      {
-        url: '/',
-        name: 'Club Stats'
-      }
+      {url: '/', name: 'Dashboard'},
+      {url: '/', name: 'Player Stats'},
+      {url: '/', name: 'Club Stats'}
     ]
   },
   {
     header: 'More',
     urls: [
-      {
-        url: '/',
-        name: 'Transfers'
-      },
-      {
-        url: '/',
-        name: 'Partners'
-      },
-      {
-        url: '/',
-        name: 'About'
-      },
-      {
-        url: '/',
-        name: 'Publications'
-      },
-      {
-        url: '/',
-        name: 'Contact'
-      }
+      {url: '/', name: 'Transfers'},
+      {url: '/', name: 'Partners'},
+      {url: '/', name: 'About'},
+      {url: '/', name: 'Publications'},
+      {url: '/', name: 'Contact'}
     ]
   },
   {
     header: 'Socials',
     urls: [
-      {
-        url: '/',
-        name: 'EGA on Twitter'
-      },
-      {
-        url: '/',
-        name: 'EGA on Facebook'
-      },
-      {
-        url: '/',
-        name: 'EGA on VK'
-      },
-      {
-        url: '/',
-        name: 'EGA on Instagram'
-      },
-      {
-        url: '/',
-        name: 'EGA on Discord'
-      }
+      {url: '/', name: 'EGA on Twitter'},
+      {url: '/', name: 'EGA on Facebook'},
+      {url: '/', name: 'EGA on VK'},
+      {url: '/', name: 'EGA on Instagram'},
+      {url: '/', name: 'EGA on Discord'}
     ]
   }
 ];

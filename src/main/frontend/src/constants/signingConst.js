@@ -1,7 +1,6 @@
-export const signingConst = (() => {
-  return Object.freeze({
+export const signingConst = Object.freeze({
     signInUrl: '/oauth/token',
-    signUpUrl: '/user/sign-up-user',
+    signUpUrl: '/user/register',
     getAuthUserUrl: '/user/get-current-user',
     tokenFlows: {
       passwordFlow: {
@@ -21,5 +20,4 @@ export const signingConst = (() => {
       errorDescription: 'error_description',
       errorDescriptionDefaultVal: 'Something went wrong during login'
     }
-  });
-})();
+});

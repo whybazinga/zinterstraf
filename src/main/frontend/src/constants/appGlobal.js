@@ -12,6 +12,7 @@ export const appGlobal = (() => {
         getFormEncodedParams: (json) => ( Object.keys(json).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(json[key])).join('&') ),
         setCookie: _setCookie,
         getCookie: _getCookie,
+        deleteCookie: _deleteCookie,
         getAuthHeaderByCred: (clientId, clientSecret) => ({
           'Authorization': 'Basic ' + btoa(clientId + ":" + clientSecret),
           'Content-type': "application/x-www-form-urlencoded; charset=utf-8"
@@ -40,6 +41,10 @@ export const appGlobal = (() => {
       }
     }
     return "";
+  }
+
+  function _deleteCookie(name) {
+    document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 UTC;';
   }
 
 })();

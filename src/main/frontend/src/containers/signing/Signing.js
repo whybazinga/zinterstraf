@@ -18,8 +18,11 @@ class Signing extends Component {
   constructor(props) {
     super(props);
     this.onLogin = this.onLogin.bind(this);
+    this.onRegister = this.onRegister().bind(this);
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangeRepeatPassword = this.onChangeRepeatPassword(this);
+    this.checkIfSigningFieldsValid = this.checkIfSigningFieldsValid(this);
     this.state = {
       username: {
         value: '',
@@ -27,6 +30,11 @@ class Signing extends Component {
         invalidHintStyle: Signing.hideElementIfExists(true)
       },
       password: {
+        value: '',
+        validInputClass: '',
+        invalidHintStyle: Signing.hideElementIfExists(true)
+      },
+      repeatPassword: {
         value: '',
         validInputClass: '',
         invalidHintStyle: Signing.hideElementIfExists(true)
@@ -54,7 +62,7 @@ class Signing extends Component {
     return param ? 'is-valid' : 'is-invalid'
   }
 
-  onLogin() {
+  checkIfSigningFieldsValid(isSigningUp=false) {
     this.setState({
       username: {
         ...this.state.username,
@@ -62,7 +70,6 @@ class Signing extends Component {
         invalidHintStyle:  Signing.hideElementIfExists(this.state.username.value)
       }
     });
-
     this.setState({
       password: {
         ...this.state.password,
@@ -70,8 +77,31 @@ class Signing extends Component {
         invalidHintStyle: Signing.hideElementIfExists(this.state.password.value)
       }
     });
+    if(isSigningUp) {
+      this.setState({
+        repeatPassword: {
+          ...this.state.repeatPassword,
+          validInputClass: Signing.getHintClassByParam(this.state.repeatPassword.value),
+          invalidHintStyle: Signing.hideElementIfExists(this.state.repeatPassword.value)
+        }
+      });
 
-    if (!this.state.username.value || !this.state.password.value) return;
+      return !!this.state.username.value && !!this.state.password.value && (this.state.repeatPassword.value === this.state.password.value)
+    }
+
+    return !!this.state.username.value && !!this.state.password.value
+  };
+
+  onRegister() {
+    if (this.checkIfSigningFieldsValid(true) === false) return;
+
+    fetch(appGlobal.func.getFullUrlByPath(signingConst.signUpUrl), {
+      
+    })
+  }
+
+  onLogin() {
+    if (this.checkIfSigningFieldsValid(false) === false) return;
 
     fetch(appGlobal.func.getFullUrlByPath(signingConst.signInUrl), {
       method: appGlobal.methods.POST,
@@ -157,6 +187,15 @@ class Signing extends Component {
     });
   }
 
+  onChangeRepeatPassword(e) {
+    this.setState({
+      repeatPassword: {
+        ...this.state.repeatPassword,
+        value: e.target.value
+      }
+    });
+  }
+
   render() {
     const { redirect } = this.state.authStatus;
     if (redirect) return <Redirect to='/' />;
@@ -216,13 +255,22 @@ const SignIn = ({signingStatus, signingFunc}) => (
     </div>
     <hr/>
     <div className="text-center">
-      <Button color="link">Sign In the system</Button>
+      <Link to='/signing/up'>Register directly in our system</Link>
     </div>
   </div>
 );
 
 const SignUp = ({signingStatus, signingFunc}) => (
   <div>
+    <FormGroup>
+      <InputGroup>
+        <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons["issue-opened"].toSVG()}/></InputGroupAddon>
+        <Input type="password" id="userPassword" placeholder="my-password123"
+               value={this.state.password.value} className={this.state.password.validInputClass}
+               onChange={this.onChangePassword}/>
+      </InputGroup>
+      <FormFeedback style={this.state.password.invalidHintStyle}>The password mustn't be empty.</FormFeedback>
+    </FormGroup>
     <FormGroup className="text-right">
       <FormFeedback style={signingStatus.style} className="text-center font-weight-bold mb-2">{signingStatus.value}</FormFeedback>
       <Button onClick={signingFunc}>Sign up</Button>
@@ -236,25 +284,7 @@ const SignUp = ({signingStatus, signingFunc}) => (
     </div>
     <hr/>
     <div className="text-center">
-      <Button color="link">Sign Up in the system</Button>
+      <Link to='/signing/in'>Sign In if you have an account</Link>
     </div>
   </div>
 );
-
-/*
-<FormGroup className="text-right">
-  <FormFeedback style={this.state.authStatus.style} className="text-center font-weight-bold mb-2">{this.state.authStatus.value}</FormFeedback>
-  <Button onClick={this.onLogin}>Sign in</Button>
-</FormGroup>
-<hr/>
-<div className="text-center">
-  <p>
-    <small className="text-muted">Sign in through the steam</small>
-  </p>
-  <input type="image" src={steamPng} style={steamStyle} alt="steam-img"/>
-</div>
-<hr/>
-<div className="text-center">
-  <Button color="link">Sign up directly in the system</Button>
-</div>
- */

@@ -70,28 +70,10 @@ export default class Header extends Component {
 }
 
 const headerUrls = [
-  {
-    url: '/',
-    name: 'Home'
-  },
-  {
-    url: '/',
-    name: 'Matches'
-  },
-  {
-    url: '/',
-    name: 'Results'
-  },
-  {
-    url: '/',
-    name: 'Tables'
-  },
-  {
-    url: '/',
-    name: 'Teams'
-  },
-  {
-    url: '/',
-    name: 'Social'
-  }
+  { url: '/', name: 'Home' },
+  { url: '/', name: 'Matches' },
+  { url: '/', name: 'Results' },
+  { url: '/', name: 'Tables' },
+  { url: '/', name: 'Teams' },
+  { url: '/', name: 'Social' }
 ];
