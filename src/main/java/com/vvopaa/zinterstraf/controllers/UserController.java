@@ -17,10 +17,11 @@ import com.vvopaa.zinterstraf.service.converters.jackson.JsonMessageCreator;
 import com.vvopaa.zinterstraf.util.StringUtil;
 
 
-@RestController
-public class AjaxController {
-	private static final String EMAIL_PARAM = "email";
-	private static final String PASS_PARAM = "pass";
+@RestController("/user")
+public class UserController {
+	private static final String USERNAME = "username";
+	private static final String PASSWORD = "password";
+	private static final String TYPE = "type";
 
 	@Autowired
 	private UserService userService;
@@ -48,6 +49,25 @@ public class AjaxController {
 		return jsonReponse;
 	}
 */
+	@RequestMapping(value = "/register", produces={"application/json"}, method={RequestMethod.POST})
+	public JsonMessage registerUser(
+			@RequestParam(USERNAME) String username,
+			@RequestParam(PASSWORD) String password,
+			@RequestParam(TYPE) String type) {
+		switch (type) {
+			case "direct":
+				if(StringUtil.isStringEmail(username) && StringUtil.isStringProperUserPass(password)) {
+					User user = userService.saveUser(username, password);
+					//register JSON MESSAGE
+				}
+		}
+
+
+
+		JsonMessage jsonReponse = JsonMessageCreator.createSimpleJsonMessage(" ez DONE");
+		return jsonReponse;
+	}
+
 
 	@RequestMapping(value = "/main", produces={"application/json"}, method={RequestMethod.GET})
 	public JsonMessage loginUser(@RequestParam("access_token") String data) {

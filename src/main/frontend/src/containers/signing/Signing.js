@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import octicons from 'octicons'
 import {Row, Col, Form, FormGroup, InputGroup, InputGroupAddon, Input, Button, FormFeedback} from 'reactstrap'
 import {InnerFormSvg} from '../../components/innerHtml/InnerHtml'
-import {appGlobal, debugLogVar} from '../../constants/appGlobal'
+import {appGlobal, debugLogVar, fetchPostJsonResponse} from '../../constants/appGlobal'
 import {signingConst} from '../../constants/signingConst'
 import './style.css'
 import {Route, Redirect, Link, Switch} from 'react-router-dom'
@@ -18,11 +18,11 @@ class Signing extends Component {
   constructor(props) {
     super(props);
     this.onLogin = this.onLogin.bind(this);
-    this.onRegister = this.onRegister().bind(this);
+    this.onRegister = this.onRegister.bind(this);
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
-    this.onChangeRepeatPassword = this.onChangeRepeatPassword(this);
-    this.checkIfSigningFieldsValid = this.checkIfSigningFieldsValid(this);
+    this.onChangeRepeatPassword = this.onChangeRepeatPassword.bind(this);
+    this.checkIfSigningFieldsValid = this.checkIfSigningFieldsValid.bind(this);
     this.state = {
       username: {
         value: '',
@@ -40,11 +40,6 @@ class Signing extends Component {
         invalidHintStyle: Signing.hideElementIfExists(true)
       },
       authStatus: {
-        style: Signing.hideElementIfExists(true),
-        redirect: false,
-        value: signingConst.signInResponse.errorDescriptionDefaultVal
-      },
-      signUpStatus: {
         style: Signing.hideElementIfExists(true),
         redirect: false,
         value: signingConst.signInResponse.errorDescriptionDefaultVal
@@ -86,37 +81,33 @@ class Signing extends Component {
         }
       });
 
-      return !!this.state.username.value && !!this.state.password.value && (this.state.repeatPassword.value === this.state.password.value)
+      return this.state.username.value && this.state.password.value && this.state.repeatPassword.value === this.state.password.value
     }
 
-    return !!this.state.username.value && !!this.state.password.value
+    return this.state.username.value && this.state.password.value
   };
 
   onRegister() {
-    if (this.checkIfSigningFieldsValid(true) === false) return;
+    if (!this.checkIfSigningFieldsValid(true)) return;
 
-    fetch(appGlobal.func.getFullUrlByPath(signingConst.signUpUrl), {
-      
+    fetchPostJsonResponse(signingConst.signUpUrl, {
+      'username': this.state.username.value,
+      'password': this.state.password.value,
+      'type': 'direct'
+    }).then((json) => {
+
     })
+
   }
 
   onLogin() {
-    if (this.checkIfSigningFieldsValid(false) === false) return;
 
-    fetch(appGlobal.func.getFullUrlByPath(signingConst.signInUrl), {
-      method: appGlobal.methods.POST,
-      headers: appGlobal.func.getAuthHeaderByCred(
-        signingConst.tokenFlows.passwordFlow.clientId,
-        signingConst.tokenFlows.passwordFlow.clientSecret
-      ),
-      body: appGlobal.func.getFormEncodedParams({
-        'username': this.state.username.value,
-        'password': this.state.password.value,
-        'grant_type': signingConst.tokenFlows.passwordFlow.grant_type
-      })
-    }).then((response) => {
-      debugLogVar(response);
-      return response.json();
+    if (!this.checkIfSigningFieldsValid(false)) return;
+
+    fetchPostJsonResponse(signingConst.signInUrl, {
+      'username': this.state.username.value,
+      'password': this.state.password.value,
+      'grant_type': signingConst.tokenFlows.passwordFlow.grantType
     }).then((json) => {
       debugLogVar(json);
 
@@ -166,7 +157,6 @@ class Signing extends Component {
         }
       });
     });
-
   }
 
   onChangeName(e) {
@@ -225,8 +215,8 @@ class Signing extends Component {
               </FormGroup>
 
               <Switch>
-                <Route path='/signing/in' render={() => (<SignIn signingStatus={this.state.authStatus} signingFunc={this.onLogin}/>)} />
-                <Route path='/signing/up' render={() => (<SignUp signingStatus={this.state.signUpStatus} signingFunc={this.onLogin}/>)} />
+                <Route path='/signing/in' render={() => (<SignIn signingStatus={this.state.authStatus} signingFunc={this.onLogin} />)} />
+                <Route path='/signing/up' render={() => (<SignUp signingStatus={this.state.authStatus} signingFunc={this.onRegister} repeatPassword={this.state.repeatPassword} repeatPasswordFunc={this.onChangeRepeatPassword} />)} />
               </Switch>
 
             </Form>
@@ -260,16 +250,16 @@ const SignIn = ({signingStatus, signingFunc}) => (
   </div>
 );
 
-const SignUp = ({signingStatus, signingFunc}) => (
+const SignUp = ({signingStatus, signingFunc, repeatPassword, repeatPasswordFunc}) => (
   <div>
     <FormGroup>
       <InputGroup>
         <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons["issue-opened"].toSVG()}/></InputGroupAddon>
         <Input type="password" id="userPassword" placeholder="my-password123"
-               value={this.state.password.value} className={this.state.password.validInputClass}
-               onChange={this.onChangePassword}/>
+               value={repeatPassword.value} className={repeatPassword.validInputClass}
+               onChange={repeatPasswordFunc}/>
       </InputGroup>
-      <FormFeedback style={this.state.password.invalidHintStyle}>The password mustn't be empty.</FormFeedback>
+      <FormFeedback style={repeatPassword.invalidHintStyle}>The password mustn't be empty.</FormFeedback>
     </FormGroup>
     <FormGroup className="text-right">
       <FormFeedback style={signingStatus.style} className="text-center font-weight-bold mb-2">{signingStatus.value}</FormFeedback>

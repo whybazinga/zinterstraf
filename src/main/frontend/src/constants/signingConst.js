@@ -4,12 +4,12 @@ export const signingConst = Object.freeze({
     getAuthUserUrl: '/user/get-current-user',
     tokenFlows: {
       passwordFlow: {
-        grant_type: 'password',
+        grantType: 'password',
         clientId: 'clientIdPassword',
         clientSecret: 'secret'
       },
       clientCredFlow: {
-        grant_type: 'client_credentials',
+        grantType: 'client_credentials',
       },
     },
     signInResponse: {

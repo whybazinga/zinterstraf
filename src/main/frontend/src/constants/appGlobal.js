@@ -1,3 +1,5 @@
+import {signingConst} from "./signingConst";
+
 export const appGlobal = (() => {
   return Object.freeze({
       methods: {
@@ -52,3 +54,22 @@ export const appGlobal = (() => {
 export const debugLogVar = (variable) => {
   appGlobal.isDebug && console.log(variable);
 };
+
+export const fetchPostJsonResponse = (url, json, error="Error: response is not application/json") => (
+  fetch(appGlobal.func.getFullUrlByPath(url), {
+    method: appGlobal.methods.POST,
+    headers: appGlobal.func.getAuthHeaderByCred(
+      signingConst.tokenFlows.passwordFlow.clientId,
+      signingConst.tokenFlows.passwordFlow.clientSecret
+    ),
+    body: appGlobal.func.getFormEncodedParams(json)
+  }).then((response) => {
+    debugLogVar(response);
+    const contentType = response.headers.get("content-type");
+    if(contentType && contentType.includes("application/json")) {
+      return response.json();
+    }
+    throw new TypeError(error);
+  })
+);
+
