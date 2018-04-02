@@ -5,8 +5,9 @@ import Footer from './components/footer/Footer';
 import {Route, Redirect, withRouter, Switch} from 'react-router-dom'
 
 import StartPage from './components/startPage/StartPage';
-import Signing from './containers/signing/Signing';
-import SwaggerUi from './components/swagger/Swagger';
+import LoginPage from './containers/signing/Login';
+import EmptyPage from './components/empty/Empty'
+import SwaggerUiPage from './components/swagger/Swagger';
 import {appGlobal, debugLogVar} from "./constants/appGlobal";
 import {signingConst} from "./constants/signingConst";
 import {authenticate} from "./actions/authActions";
@@ -64,9 +65,10 @@ const Content = ({isAuthenticated}) => { return(
   <main className="content">
     <Switch>
       <Route exact path='/' component={StartPage}/>
-      <Route path="/signing/" component={Signing}/>
-      <Route path="/swagger-ui" component={SwaggerUi}/>
+      <Route path="/login/" component={LoginPage}/>
+      <Route path="/swagger-ui" component={SwaggerUiPage}/>
       <PrivateRoute path='/protected' component={StartPage} isAuthenticated={isAuthenticated} />
+      <Route component={EmptyPage} />
     </Switch>
   </main>
 )};

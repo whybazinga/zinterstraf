@@ -1,48 +1,35 @@
 import React, {Component} from 'react'
 import octicons from 'octicons'
-import {Row, Col, Form, FormGroup, InputGroup, InputGroupAddon, Input, Button, FormFeedback} from 'reactstrap'
+import {Row, Col, Form, FormGroup, InputGroup, InputGroupAddon, Input, FormFeedback} from 'reactstrap'
 import {InnerFormSvg} from '../../components/innerHtml/InnerHtml'
 import {appGlobal, debugLogVar, fetchPostJsonResponse} from '../../constants/appGlobal'
 import {signingConst} from '../../constants/signingConst'
-import './signing.css'
-import {Route, Redirect, Link, Switch} from 'react-router-dom'
-import steamPng from './steam.png'
+import './login.css'
+import {Redirect, Link} from 'react-router-dom'
 import uuidv1 from "uuid";
 
 
-const steamStyle = {
-  width: '40px',
-  borderRadius: '20px'
-};
-
-class Signing extends Component {
+class Login extends Component {
 
   constructor(props) {
     super(props);
     this.onLogin = this.onLogin.bind(this);
-    this.onRegister = this.onRegister.bind(this);
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
-    this.onChangeRepeatPassword = this.onChangeRepeatPassword.bind(this);
     this.checkIfSigningFieldsValid = this.checkIfSigningFieldsValid.bind(this);
     this.state = {
       username: {
         value: '',
         validInputClass: '',
-        invalidHintStyle: Signing.hideElementIfExists(true)
+        invalidHintStyle: Login.hideElementIfExists(true)
       },
       password: {
         value: '',
         validInputClass: '',
-        invalidHintStyle: Signing.hideElementIfExists(true)
-      },
-      repeatPassword: {
-        value: '',
-        validInputClass: '',
-        invalidHintStyle: Signing.hideElementIfExists(true)
+        invalidHintStyle: Login.hideElementIfExists(true)
       },
       authStatus: {
-        style: Signing.hideElementIfExists(true),
+        style: Login.hideElementIfExists(true),
         redirect: false,
         value: signingConst.signInResponse.errorDescriptionDefaultVal
       }
@@ -59,36 +46,25 @@ class Signing extends Component {
     return param ? 'is-valid' : 'is-invalid'
   }
 
-  checkIfSigningFieldsValid(isSigningUp=false) {
+  checkIfSigningFieldsValid() {
     this.setState({
       username: {
         ...this.state.username,
-        validInputClass: Signing.getHintClassByParam(this.state.username.value),
-        invalidHintStyle:  Signing.hideElementIfExists(this.state.username.value)
+        validInputClass: Login.getHintClassByParam(this.state.username.value),
+        invalidHintStyle:  Login.hideElementIfExists(this.state.username.value)
       }
     });
     this.setState({
       password: {
         ...this.state.password,
-        validInputClass: Signing.getHintClassByParam(this.state.password.value),
-        invalidHintStyle: Signing.hideElementIfExists(this.state.password.value)
+        validInputClass: Login.getHintClassByParam(this.state.password.value),
+        invalidHintStyle: Login.hideElementIfExists(this.state.password.value)
       }
     });
-    if(isSigningUp) {
-      this.setState({
-        repeatPassword: {
-          ...this.state.repeatPassword,
-          validInputClass: Signing.getHintClassByParam(this.state.repeatPassword.value),
-          invalidHintStyle: Signing.hideElementIfExists(this.state.repeatPassword.value)
-        }
-      });
-
-      return this.state.username.value && this.state.password.value && this.state.repeatPassword.value === this.state.password.value
-    }
 
     return this.state.username.value && this.state.password.value
   };
-
+/*
   onRegister() {
     if (!this.checkIfSigningFieldsValid(true)) return;
 
@@ -101,10 +77,10 @@ class Signing extends Component {
     })
 
   }
-
+*/
   onLogin() {
 
-    if (!this.checkIfSigningFieldsValid(false)) return;
+    if (!this.checkIfSigningFieldsValid()) return;
 
     fetchPostJsonResponse(signingConst.signInUrl, {
       'username': this.state.username.value,
@@ -116,7 +92,7 @@ class Signing extends Component {
       this.setState({
         authStatus: {
           ...this.state.authStatus,
-          style: Signing.hideElementIfExists(!json[signingConst.signInResponse.error]),
+          style: Login.hideElementIfExists(!json[signingConst.signInResponse.error]),
           value: json[signingConst.signInResponse.error] ? json[signingConst.signInResponse.errorDescription] : json[signingConst.signInResponse.errorDescriptionDefaultVal]
         }
       });
@@ -154,7 +130,7 @@ class Signing extends Component {
       this.setState({
         authStatus: {
           ...this.state.authStatus,
-          style: Signing.hideElementIfExists(!error.message),
+          style: Login.hideElementIfExists(!error.message),
           value: appGlobal.error.connectionError
         }
       });
@@ -179,14 +155,6 @@ class Signing extends Component {
     });
   }
 
-  onChangeRepeatPassword(e) {
-    this.setState({
-      repeatPassword: {
-        ...this.state.repeatPassword,
-        value: e.target.value
-      }
-    });
-  }
 
   render() {
     const { redirect } = this.state.authStatus;
@@ -216,7 +184,7 @@ class Signing extends Component {
           </Row>
           <Row className="justify-content-center pb-5">
             <Col md="4">
-              <Form className="p-4" style={{backgroundColor: '#fff'}}>
+              <Form className="p-4 signing-containers">
                 <FormGroup>
                   <InputGroup>
                     <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons['mail'].toSVG()}/></InputGroupAddon>
@@ -235,23 +203,53 @@ class Signing extends Component {
                   </InputGroup>
                   <FormFeedback style={this.state.password.invalidHintStyle}>The password mustn't be empty.</FormFeedback>
                 </FormGroup>
-
-                <Switch>
-                  <Route path='/signing/in' render={() => (<SignIn signingStatus={this.state.authStatus} signingFunc={this.onLogin} />)} />
-                  <Route path='/signing/up' render={() => (<SignUp signingStatus={this.state.authStatus} signingFunc={this.onRegister} repeatPassword={this.state.repeatPassword} repeatPasswordFunc={this.onChangeRepeatPassword} />)} />
-                </Switch>
-
+                <FormGroup className="pt-2">
+                  <FormFeedback style={this.state.authStatus.style} className="text-center font-weight-bold mb-2">{this.state.authStatus.value}</FormFeedback>
+                  <Row>
+                    <Col md="6">
+                      <Link to='/'>Forgot login details?</Link>
+                    </Col>
+                    <Col md="6">
+                      <button className="btn container-href-btn theme-blue" onClick={this.onLogin}>Log in</button>
+                    </Col>
+                  </Row>
+                </FormGroup>
+                <hr/>
+                <div className="text-center">
+                  <p>
+                    <small className="text-muted">or login with</small>
+                  </p>
+                </div>
+                <div>
+                  <Row className="pb-2">
+                    <Col md="6">
+                      <button className="btn container-href-btn facebook-btn app-font-size">Facebook</button>
+                    </Col>
+                    <Col md="6">
+                      <button className="btn container-href-btn twitter-btn app-font-size">Twitter</button>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md="6">
+                      <button className="btn container-href-btn vk-btn app-font-size">VK</button>
+                    </Col>
+                    <Col md="6">
+                      <button className="btn container-href-btn google-btn">Google</button>
+                    </Col>
+                  </Row>
+                </div>
               </Form>
             </Col>
             <Col md="4">
-              <article className="p-4" style={{backgroundColor: '#fff'}}>
-                <h3>Don't have an EGA account?</h3>
+              <article className="p-4 signing-containers">
+                <h6>Don't have an EGA account?</h6>
                 <p>In that case, you are missing out on:</p>
                 <ul>
                   {signingConst.authBenefits.en.map(el => (
                     <li key={uuidv1()}>{el}</li>
                   ))}
                 </ul>
+                <button className="btn theme-blue container-href-btn">Register</button>
               </article>
             </Col>
           </Row>
@@ -261,54 +259,4 @@ class Signing extends Component {
   }
 }
 
-export default Signing;
-
-
-const SignIn = ({signingStatus, signingFunc}) => (
-  <div>
-    <FormGroup className="text-right">
-      <FormFeedback style={signingStatus.style} className="text-center font-weight-bold mb-2">{signingStatus.value}</FormFeedback>
-      <Button onClick={signingFunc}>Sign in</Button>
-    </FormGroup>
-    <hr/>
-    <div className="text-center">
-      <p>
-        <small className="text-muted">Sign In through the google</small>
-      </p>
-      <input type="image" src={steamPng} style={steamStyle} alt="steam-img"/>
-    </div>
-    <hr/>
-    <div className="text-center">
-      <Link to='/signing/up'>Register directly in our system</Link>
-    </div>
-  </div>
-);
-
-const SignUp = ({signingStatus, signingFunc, repeatPassword, repeatPasswordFunc}) => (
-  <div>
-    <FormGroup>
-      <InputGroup>
-        <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons["issue-opened"].toSVG()}/></InputGroupAddon>
-        <Input type="password" id="userPassword" placeholder="my-password123"
-               value={repeatPassword.value} className={repeatPassword.validInputClass}
-               onChange={repeatPasswordFunc}/>
-      </InputGroup>
-      <FormFeedback style={repeatPassword.invalidHintStyle}>The password mustn't be empty.</FormFeedback>
-    </FormGroup>
-    <FormGroup className="text-right">
-      <FormFeedback style={signingStatus.style} className="text-center font-weight-bold mb-2">{signingStatus.value}</FormFeedback>
-      <Button onClick={signingFunc}>Sign up</Button>
-    </FormGroup>
-    <hr/>
-    <div className="text-center">
-      <p>
-        <small className="text-muted">Sign Up through the google</small>
-      </p>
-      <input type="image" src={steamPng} style={steamStyle} alt="steam-img"/>
-    </div>
-    <hr/>
-    <div className="text-center">
-      <Link to='/signing/in'>Sign In if you have an account</Link>
-    </div>
-  </div>
-);
+export default Login;
