@@ -4,9 +4,11 @@ import {Row, Col, Form, FormGroup, InputGroup, InputGroupAddon, Input, Button, F
 import {InnerFormSvg} from '../../components/innerHtml/InnerHtml'
 import {appGlobal, debugLogVar, fetchPostJsonResponse} from '../../constants/appGlobal'
 import {signingConst} from '../../constants/signingConst'
-import './style.css'
+import './signing.css'
 import {Route, Redirect, Link, Switch} from 'react-router-dom'
 import steamPng from './steam.png'
+import uuidv1 from "uuid";
+
 
 const steamStyle = {
   width: '40px',
@@ -191,38 +193,70 @@ class Signing extends Component {
     if (redirect) return <Redirect to='/' />;
 
     return (
-      <section className="container">
-        <Row>
-          <Col className="d-flex justify-content-center align-items-center">
-            <Form className="box-shadow-element-no-border m-4 p-4">
-              <FormGroup>
-                <InputGroup>
-                  <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons.mail.toSVG()}/></InputGroupAddon>
-                  <Input type="email" id="userName" placeholder="my-mail@gmail.com"
-                         value={this.state.username.value} className={this.state.username.validInputClass}
-                         onChange={this.onChangeName}/>
-                </InputGroup>
-                <FormFeedback style={this.state.username.invalidHintStyle}>The username or email mustn't be empty.</FormFeedback>
-              </FormGroup>
-              <FormGroup>
-                <InputGroup>
-                  <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons.key.toSVG()}/></InputGroupAddon>
-                  <Input type="password" id="userPassword" placeholder="my-password123"
-                         value={this.state.password.value} className={this.state.password.validInputClass}
-                         onChange={this.onChangePassword}/>
-                </InputGroup>
-                <FormFeedback style={this.state.password.invalidHintStyle}>The password mustn't be empty.</FormFeedback>
-              </FormGroup>
+      <div>
+        <section className="container-fluid">
+          <Row className="signing-main-title theme-blue pt-5 pb-5">
+            <Col className="d-flex align-items-center offset-sm-2">
+              <span>Your Account</span>
+            </Col>
+          </Row>
+        </section>
+        <section className="container">
+          <Row className="justify-content-center signing-child-titles pt-3 pb-3">
+            <Col md="8">
+              <Row className="theme-blue">
+                <Col>
+                  <h6>Log In</h6>
+                </Col>
+                <Col>
+                  <h6>Register</h6>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+          <Row className="justify-content-center pb-5">
+            <Col md="4">
+              <Form className="p-4" style={{backgroundColor: '#fff'}}>
+                <FormGroup>
+                  <InputGroup>
+                    <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons['mail'].toSVG()}/></InputGroupAddon>
+                    <Input type="email" id="userName" placeholder="my-mail@gmail.com"
+                           value={this.state.username.value} className={this.state.username.validInputClass}
+                           onChange={this.onChangeName}/>
+                  </InputGroup>
+                  <FormFeedback style={this.state.username.invalidHintStyle}>The username or email mustn't be empty.</FormFeedback>
+                </FormGroup>
+                <FormGroup>
+                  <InputGroup>
+                    <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons['key'].toSVG()}/></InputGroupAddon>
+                    <Input type="password" id="userPassword" placeholder="my-password123"
+                           value={this.state.password.value} className={this.state.password.validInputClass}
+                           onChange={this.onChangePassword}/>
+                  </InputGroup>
+                  <FormFeedback style={this.state.password.invalidHintStyle}>The password mustn't be empty.</FormFeedback>
+                </FormGroup>
 
-              <Switch>
-                <Route path='/signing/in' render={() => (<SignIn signingStatus={this.state.authStatus} signingFunc={this.onLogin} />)} />
-                <Route path='/signing/up' render={() => (<SignUp signingStatus={this.state.authStatus} signingFunc={this.onRegister} repeatPassword={this.state.repeatPassword} repeatPasswordFunc={this.onChangeRepeatPassword} />)} />
-              </Switch>
+                <Switch>
+                  <Route path='/signing/in' render={() => (<SignIn signingStatus={this.state.authStatus} signingFunc={this.onLogin} />)} />
+                  <Route path='/signing/up' render={() => (<SignUp signingStatus={this.state.authStatus} signingFunc={this.onRegister} repeatPassword={this.state.repeatPassword} repeatPasswordFunc={this.onChangeRepeatPassword} />)} />
+                </Switch>
 
-            </Form>
-          </Col>
-        </Row>
-      </section>
+              </Form>
+            </Col>
+            <Col md="4">
+              <article className="p-4" style={{backgroundColor: '#fff'}}>
+                <h3>Don't have an EGA account?</h3>
+                <p>In that case, you are missing out on:</p>
+                <ul>
+                  {signingConst.authBenefits.en.map(el => (
+                    <li key={uuidv1()}>{el}</li>
+                  ))}
+                </ul>
+              </article>
+            </Col>
+          </Row>
+        </section>
+      </div>
     )
   }
 }

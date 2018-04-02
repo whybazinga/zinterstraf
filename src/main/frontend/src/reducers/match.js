@@ -1,7 +1,7 @@
 import {ADD_MATCH} from "../constants/actionTypes";
 
 const initialState = {
-  matches: [],
+  matches: []
 };
 
 const reducer = (state = initialState, action) => {

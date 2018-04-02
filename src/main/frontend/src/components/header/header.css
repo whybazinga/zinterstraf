@@ -1,8 +1,8 @@
-.logo-home {
+header .logo-home {
     height:70px;
 }
 
-.navigation-fixed {
+header .navigation-fixed {
     height: 96px;
     position: fixed;
     width: 100%;
@@ -10,24 +10,24 @@
     background-color: #fff;
 }
 
-.navigation-empty {
+header .navigation-empty {
     height: 96px;
 }
 
-.header-nav {
+header .header-nav {
     background-color: #fff;
 }
 
-.header-links {
+header .header-links {
     border-radius: 10px;
     text-align: center;
 }
 
-.header-nav .header-links {
+header .header-nav .header-links {
     background-color: rgb(0,42,91);
 }
 
-.header-links a {
+header .header-links a {
     font-weight: bold;
     color: rgb(164,176,190) !important;
 }
