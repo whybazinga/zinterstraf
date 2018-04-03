@@ -1,11 +1,14 @@
-import React from 'react';
-import { Row, Col } from 'reactstrap';
+import React from 'react'
+import { Row, Col, Button } from 'reactstrap'
+import errorGif from './404.gif'
+import './empty.css'
 
-const Empty = () => (
-  <section className="container pt-5">
+const Empty = (props) => (
+  <section className="container pt-2 pb-2">
     <Row>
       <Col className="d-flex justify-content-center align-items-center">
-        <h2>Sorry this page currently is not available... We are working on it!</h2>
+        <img src={errorGif} className="empty-img rounded-border" alt="error-gif"/>
+        <Button className="empty-back-btn" color="info" onClick={props.history.goBack}>Go Back</Button>
       </Col>
     </Row>
   </section>

@@ -10,7 +10,7 @@ body {
     overflow: auto;
 }
 
-.rounded-circle {
+.rounded-border {
     border-radius: 20px;
 }
 

@@ -5,7 +5,7 @@ import Footer from './components/footer/Footer';
 import {Route, Redirect, withRouter, Switch} from 'react-router-dom'
 
 import StartPage from './components/startPage/StartPage';
-import LoginPage from './containers/signing/Login';
+import LoginPage from './containers/login/Login';
 import EmptyPage from './components/empty/Empty'
 import SwaggerUiPage from './components/swagger/Swagger';
 import {appGlobal, debugLogVar} from "./constants/appGlobal";

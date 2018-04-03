@@ -20,11 +20,17 @@ export const signingConst = Object.freeze({
     errorDescription: 'error_description',
     errorDescriptionDefaultVal: 'Something went wrong during login'
   },
-  authBenefits: {
-    en: ['Fantasy EGA League game',
-      'Exclusive fan services',
-      'Customised site content',
-      'Favourite Club information and notifications'
-    ]
+  authBenefits: [
+    'Fantasy EGA League game',
+    'Exclusive fan services',
+    'Customised site content',
+    'Favourite Club information and notifications'
+  ],
+  loginButtons: {
+    system: { val: 'system', name: 'Log in'},
+    facebook: {val: 'facebook', name: 'Facebook'},
+    vk: {val: 'vk', name: 'VK'},
+    google: {val: 'google', name: 'Google'},
+    twitter: {val: 'twitter', name: 'Twitter'}
   }
 });

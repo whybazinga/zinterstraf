@@ -1,6 +1,7 @@
 package com.vvopaa.zinterstraf.model;
 
 import com.vvopaa.zinterstraf.model.enums.UserStatuses;
+import org.hibernate.validator.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -19,6 +20,7 @@ import javax.persistence.JoinColumn;
 public class User extends AbstractEntity implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
+	@Email
 	@Column(name="username", unique = true)
 	private String username;
 

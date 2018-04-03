@@ -14,6 +14,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.onLogin = this.onLogin.bind(this);
+    this.systemLogin = this.systemLogin.bind(this);
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     this.checkIfSigningFieldsValid = this.checkIfSigningFieldsValid.bind(this);
@@ -46,40 +47,7 @@ class Login extends Component {
     return param ? 'is-valid' : 'is-invalid'
   }
 
-  checkIfSigningFieldsValid() {
-    this.setState({
-      username: {
-        ...this.state.username,
-        validInputClass: Login.getHintClassByParam(this.state.username.value),
-        invalidHintStyle:  Login.hideElementIfExists(this.state.username.value)
-      }
-    });
-    this.setState({
-      password: {
-        ...this.state.password,
-        validInputClass: Login.getHintClassByParam(this.state.password.value),
-        invalidHintStyle: Login.hideElementIfExists(this.state.password.value)
-      }
-    });
-
-    return this.state.username.value && this.state.password.value
-  };
-/*
-  onRegister() {
-    if (!this.checkIfSigningFieldsValid(true)) return;
-
-    fetchPostJsonResponse(signingConst.signUpUrl, {
-      'username': this.state.username.value,
-      'password': this.state.password.value,
-      'type': 'direct'
-    }).then((json) => {
-
-    })
-
-  }
-*/
-  onLogin() {
-
+  systemLogin() {
     if (!this.checkIfSigningFieldsValid()) return;
 
     fetchPostJsonResponse(signingConst.signInUrl, {
@@ -137,6 +105,48 @@ class Login extends Component {
     });
   }
 
+  checkIfSigningFieldsValid() {
+    this.setState({
+      username: {
+        ...this.state.username,
+        validInputClass: Login.getHintClassByParam(this.state.username.value),
+        invalidHintStyle:  Login.hideElementIfExists(this.state.username.value)
+      }
+    });
+    this.setState({
+      password: {
+        ...this.state.password,
+        validInputClass: Login.getHintClassByParam(this.state.password.value),
+        invalidHintStyle: Login.hideElementIfExists(this.state.password.value)
+      }
+    });
+
+    return this.state.username.value && this.state.password.value
+  };
+
+  onLogin(e) {
+    e.preventDefault();
+    switch(e.target.value) {
+      case signingConst.loginButtons.system.val:
+        this.systemLogin();
+        break;
+      case signingConst.loginButtons.vk.val:
+        debugLogVar('vk auth is no ready yet');
+        break;
+      case signingConst.loginButtons.twitter.val:
+        debugLogVar('twitter auth is no ready yet');
+        break;
+      case signingConst.loginButtons.google.val:
+        debugLogVar('google auth is no ready yet');
+        break;
+      case signingConst.loginButtons.facebook.val:
+        debugLogVar('facebook auth is no ready yet');
+        break;
+      default:
+        debugLogVar('No auth provided');
+    }
+  }
+
   onChangeName(e) {
     this.setState({
       username: {
@@ -184,15 +194,15 @@ class Login extends Component {
           </Row>
           <Row className="justify-content-center pb-5">
             <Col md="4">
-              <Form className="p-4 signing-containers">
+              <Form className="p-4 signing-containers rounded-border">
                 <FormGroup>
                   <InputGroup>
-                    <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons['mail'].toSVG()}/></InputGroupAddon>
+                    <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons['mention'].toSVG()}/></InputGroupAddon>
                     <Input type="email" id="userName" placeholder="my-mail@gmail.com"
                            value={this.state.username.value} className={this.state.username.validInputClass}
                            onChange={this.onChangeName}/>
                   </InputGroup>
-                  <FormFeedback style={this.state.username.invalidHintStyle}>The username or email mustn't be empty.</FormFeedback>
+                  <FormFeedback style={this.state.username.invalidHintStyle}>The email mustn't be empty.</FormFeedback>
                 </FormGroup>
                 <FormGroup>
                   <InputGroup>
@@ -203,14 +213,14 @@ class Login extends Component {
                   </InputGroup>
                   <FormFeedback style={this.state.password.invalidHintStyle}>The password mustn't be empty.</FormFeedback>
                 </FormGroup>
-                <FormGroup className="pt-2">
+                <FormGroup>
                   <FormFeedback style={this.state.authStatus.style} className="text-center font-weight-bold mb-2">{this.state.authStatus.value}</FormFeedback>
                   <Row>
                     <Col md="6">
                       <Link to='/'>Forgot login details?</Link>
                     </Col>
                     <Col md="6">
-                      <button className="btn container-href-btn theme-blue" onClick={this.onLogin}>Log in</button>
+                      <button className="btn container-href-btn theme-blue" onClick={this.onLogin} value={signingConst.loginButtons.system.val}>{signingConst.loginButtons.system.name}</button>
                     </Col>
                   </Row>
                 </FormGroup>
@@ -223,29 +233,29 @@ class Login extends Component {
                 <div>
                   <Row className="pb-2">
                     <Col md="6">
-                      <button className="btn container-href-btn facebook-btn app-font-size">Facebook</button>
+                      <button className="btn container-href-btn facebook-btn" onClick={this.onLogin} value={signingConst.loginButtons.facebook.val}>{signingConst.loginButtons.facebook.name}</button>
                     </Col>
                     <Col md="6">
-                      <button className="btn container-href-btn twitter-btn app-font-size">Twitter</button>
+                      <button className="btn container-href-btn twitter-btn" onClick={this.onLogin} value={signingConst.loginButtons.twitter.val}>{signingConst.loginButtons.twitter.name}</button>
                     </Col>
                   </Row>
                   <Row>
                     <Col md="6">
-                      <button className="btn container-href-btn vk-btn app-font-size">VK</button>
+                      <button className="btn container-href-btn vk-btn" onClick={this.onLogin} value={signingConst.loginButtons.vk.val}>{signingConst.loginButtons.vk.name}</button>
                     </Col>
                     <Col md="6">
-                      <button className="btn container-href-btn google-btn">Google</button>
+                      <button className="btn container-href-btn google-btn" onClick={this.onLogin} value={signingConst.loginButtons.google.val}>{signingConst.loginButtons.google.name}</button>
                     </Col>
                   </Row>
                 </div>
               </Form>
             </Col>
             <Col md="4">
-              <article className="p-4 signing-containers">
+              <article className="p-4 signing-containers rounded-border">
                 <h6>Don't have an EGA account?</h6>
                 <p>In that case, you are missing out on:</p>
                 <ul>
-                  {signingConst.authBenefits.en.map(el => (
+                  {signingConst.authBenefits.map(el => (
                     <li key={uuidv1()}>{el}</li>
                   ))}
                 </ul>

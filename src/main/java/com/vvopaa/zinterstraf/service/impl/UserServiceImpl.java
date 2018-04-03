@@ -1,5 +1,6 @@
 package com.vvopaa.zinterstraf.service.impl;
 
+import com.vvopaa.zinterstraf.exception.UsernameAlreadyExistsException;
 import com.vvopaa.zinterstraf.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,14 +28,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Override
 	@Transactional
-	public User saveUser(String login, String pass) {
-		User user = userDao.findByUsername(login);
-		if(user == null) {
-			user = new User();
-			user.setUsername(login);
-			user.setPassword(pass);
-			userDao.save(user);
-		}
+	public User saveUser(String login, String pass) throws  {
+		User user = new User();
+		user.setUsername(login);
+		user.setPassword(pass);
+		userDao.save(user);
+
 		return user;
 	}
 

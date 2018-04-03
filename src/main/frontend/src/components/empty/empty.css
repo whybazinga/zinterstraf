@@ -1,0 +1,14 @@
+.empty-img {
+    width: 80%;
+}
+
+.empty-back-btn {
+    position: absolute;
+    bottom: 0;
+}
+
+@media (max-width:961px) {
+    .empty-back-btn {
+        font-size: 0.675rem !important;
+    }
+}

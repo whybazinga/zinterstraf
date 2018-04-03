@@ -19,8 +19,12 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.sql.DataSource;
+import java.util.Arrays;
 
 
 @Configuration
@@ -46,12 +50,22 @@ public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.cors().and().csrf().disable()
             .authorizeRequests()
                 .antMatchers(commonUrls).permitAll()
                 .anyRequest().authenticated();
             //.and().formLogin().loginPage("/").permitAll();
 
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://petstore.swagger.io"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     @Override
