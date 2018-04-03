@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Override
 	@Transactional
-	public User saveUser(String login, String pass) throws  {
+	public User saveUser(String login, String pass) {
 		User user = new User();
 		user.setUsername(login);
 		user.setPassword(pass);
