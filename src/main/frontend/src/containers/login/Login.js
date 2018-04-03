@@ -7,6 +7,7 @@ import {signingConst} from '../../constants/signingConst'
 import './login.css'
 import {Redirect, Link} from 'react-router-dom'
 import uuidv1 from "uuid";
+import FluidRowTitle from '../../components/fluidRow/FluidRow'
 
 
 class Login extends Component {
@@ -172,13 +173,7 @@ class Login extends Component {
 
     return (
       <div>
-        <section className="container-fluid">
-          <Row className="signing-main-title theme-blue pt-5 pb-5">
-            <Col className="d-flex align-items-center offset-sm-2">
-              <span>Your Account</span>
-            </Col>
-          </Row>
-        </section>
+        <FluidRowTitle title="Your Account" />
         <section className="container">
           <Row className="justify-content-center signing-child-titles pt-3 pb-3">
             <Col md="8">
