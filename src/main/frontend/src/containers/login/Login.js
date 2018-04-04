@@ -3,15 +3,14 @@ import octicons from 'octicons'
 import {Row, Col, Form, FormGroup, InputGroup, InputGroupAddon, Input, FormFeedback} from 'reactstrap'
 import {InnerFormSvg} from '../../components/innerHtml/InnerHtml'
 import {appGlobal, debugLogVar, fetchPostJsonResponse} from '../../constants/appGlobal'
-import {signingConst} from '../../constants/signingConst'
+import {loginConst} from '../../constants/loginConst'
 import './login.css'
 import {Redirect, Link} from 'react-router-dom'
 import uuidv1 from "uuid";
-import FluidRowTitle from '../../components/fluidRow/FluidRow'
+import FluidRowTitle from '../../components/fluidRowTitle/FluidRowTitle'
 
 
 class Login extends Component {
-
   constructor(props) {
     super(props);
     this.onLogin = this.onLogin.bind(this);
@@ -33,7 +32,7 @@ class Login extends Component {
       authStatus: {
         style: Login.hideElementIfExists(true),
         redirect: false,
-        value: signingConst.signInResponse.errorDescriptionDefaultVal
+        value: loginConst.signInResponse.errorDescriptionDefaultVal
       }
     };
   }
@@ -51,42 +50,25 @@ class Login extends Component {
   systemLogin() {
     if (!this.checkIfSigningFieldsValid()) return;
 
-    fetchPostJsonResponse(signingConst.signInUrl, {
+    fetchPostJsonResponse(loginConst.signInUrl, {
       'username': this.state.username.value,
       'password': this.state.password.value,
-      'grant_type': signingConst.tokenFlows.passwordFlow.grantType
+      'grant_type': loginConst.tokenFlows.passwordFlow.grantType
     }).then((json) => {
       debugLogVar(json);
 
       this.setState({
         authStatus: {
           ...this.state.authStatus,
-          style: Login.hideElementIfExists(!json[signingConst.signInResponse.error]),
-          value: json[signingConst.signInResponse.error] ? json[signingConst.signInResponse.errorDescription] : json[signingConst.signInResponse.errorDescriptionDefaultVal]
+          style: Login.hideElementIfExists(!json[loginConst.signInResponse.error]),
+          value: json[loginConst.signInResponse.error] ? json[loginConst.signInResponse.errorDescription] : json[loginConst.signInResponse.errorDescriptionDefaultVal]
         }
       });
 
-      appGlobal.func.callFuncIfParamExists(
-        json[signingConst.signInResponse.accessToken],
-        appGlobal.func.setCookie,
-        signingConst.signInResponse.accessToken,
-        json[signingConst.signInResponse.accessToken],
-        json[signingConst.signInResponse.expires]
-      );
-      appGlobal.func.callFuncIfParamExists(
-        json[signingConst.signInResponse.refreshToken],
-        appGlobal.func.setCookie,
-        signingConst.signInResponse.refreshToken,
-        json[signingConst.signInResponse.refreshToken],
-        (() => {
-          const date = new Date();
-          date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
-          return date.toUTCString()
-        })()
-      );
-      debugLogVar(json[signingConst.signInResponse.accessToken] || 'access token is empty');
-      debugLogVar(json[signingConst.signInResponse.refreshToken] || 'refresh token is empty');
-      return !!json[signingConst.signInResponse.accessToken];
+      appGlobal.func.setCookie(loginConst.signInResponse.accessToken, json[loginConst.signInResponse.accessToken], json[loginConst.signInResponse.expires]);
+      appGlobal.func.setCookie(loginConst.signInResponse.refreshToken, json[loginConst.signInResponse.refreshToken], appGlobal.func.getCurrentUTCPlusHours(loginConst.signInResponse.refreshTokenExpires));
+
+      return !!json[loginConst.signInResponse.accessToken];
     }).then((isRedirect) => {
       this.setState({
         authStatus: {
@@ -95,12 +77,11 @@ class Login extends Component {
         }
       });
     }).catch((error) => {
-      debugLogVar(error.message);
       this.setState({
         authStatus: {
           ...this.state.authStatus,
           style: Login.hideElementIfExists(!error.message),
-          value: appGlobal.error.connectionError
+          value: error.message
         }
       });
     });
@@ -128,19 +109,19 @@ class Login extends Component {
   onLogin(e) {
     e.preventDefault();
     switch(e.target.value) {
-      case signingConst.loginButtons.system.val:
+      case loginConst.loginButtons.system.val:
         this.systemLogin();
         break;
-      case signingConst.loginButtons.vk.val:
+      case loginConst.loginButtons.vk.val:
         debugLogVar('vk auth is no ready yet');
         break;
-      case signingConst.loginButtons.twitter.val:
+      case loginConst.loginButtons.twitter.val:
         debugLogVar('twitter auth is no ready yet');
         break;
-      case signingConst.loginButtons.google.val:
+      case loginConst.loginButtons.google.val:
         debugLogVar('google auth is no ready yet');
         break;
-      case signingConst.loginButtons.facebook.val:
+      case loginConst.loginButtons.facebook.val:
         debugLogVar('facebook auth is no ready yet');
         break;
       default:
@@ -215,7 +196,7 @@ class Login extends Component {
                       <Link to='/'>Forgot login details?</Link>
                     </Col>
                     <Col md="6">
-                      <button className="btn container-href-btn theme-blue" onClick={this.onLogin} value={signingConst.loginButtons.system.val}>{signingConst.loginButtons.system.name}</button>
+                      <button className="btn container-href-btn theme-blue" onClick={this.onLogin} value={loginConst.loginButtons.system.val}>{loginConst.loginButtons.system.name}</button>
                     </Col>
                   </Row>
                 </FormGroup>
@@ -228,18 +209,18 @@ class Login extends Component {
                 <div>
                   <Row className="pb-2">
                     <Col md="6">
-                      <button className="btn container-href-btn facebook-btn" onClick={this.onLogin} value={signingConst.loginButtons.facebook.val}>{signingConst.loginButtons.facebook.name}</button>
+                      <button className="btn container-href-btn facebook-btn" onClick={this.onLogin} value={loginConst.loginButtons.facebook.val}>{loginConst.loginButtons.facebook.name}</button>
                     </Col>
                     <Col md="6">
-                      <button className="btn container-href-btn twitter-btn" onClick={this.onLogin} value={signingConst.loginButtons.twitter.val}>{signingConst.loginButtons.twitter.name}</button>
+                      <button className="btn container-href-btn twitter-btn" onClick={this.onLogin} value={loginConst.loginButtons.twitter.val}>{loginConst.loginButtons.twitter.name}</button>
                     </Col>
                   </Row>
                   <Row>
                     <Col md="6">
-                      <button className="btn container-href-btn vk-btn" onClick={this.onLogin} value={signingConst.loginButtons.vk.val}>{signingConst.loginButtons.vk.name}</button>
+                      <button className="btn container-href-btn vk-btn" onClick={this.onLogin} value={loginConst.loginButtons.vk.val}>{loginConst.loginButtons.vk.name}</button>
                     </Col>
                     <Col md="6">
-                      <button className="btn container-href-btn google-btn" onClick={this.onLogin} value={signingConst.loginButtons.google.val}>{signingConst.loginButtons.google.name}</button>
+                      <button className="btn container-href-btn google-btn" onClick={this.onLogin} value={loginConst.loginButtons.google.val}>{loginConst.loginButtons.google.name}</button>
                     </Col>
                   </Row>
                 </div>
@@ -250,7 +231,7 @@ class Login extends Component {
                 <h6>Don't have an EGA account?</h6>
                 <p>In that case, you are missing out on:</p>
                 <ul>
-                  {signingConst.authBenefits.map(el => (
+                  {loginConst.authBenefits.map(el => (
                     <li key={uuidv1()}>{el}</li>
                   ))}
                 </ul>

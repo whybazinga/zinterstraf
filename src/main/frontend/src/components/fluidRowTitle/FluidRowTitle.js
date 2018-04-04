@@ -1,6 +1,6 @@
 import React from 'react'
 import { Row, Col } from 'reactstrap'
-import './fluidRow.css'
+import './fluidRowTitle.css'
 
 const FluidRowTitle = ({title}) => (
   <section className="container-fluid">

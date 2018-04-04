@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import './startPage.css';
+import './start.css';
 import { Row, Col, ListGroup, ListGroupItem  } from 'reactstrap';
 import glaPng from './gla.png'
 import { connect } from "react-redux";
 import { addMatch } from "../../actions/matchActions";
 import uuidv1 from "uuid";
 
-export default class StartPage extends Component {
+export default class Start extends Component {
 
 
   render() {

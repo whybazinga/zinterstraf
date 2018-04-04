@@ -1,22 +1,23 @@
 import React, {Component} from 'react';
-import './App.css';
-import Header from './components/header/Header';
-import Footer from './components/footer/Footer';
 import {Route, Redirect, withRouter, Switch} from 'react-router-dom'
-
-import StartPage from './components/startPage/StartPage';
-import LoginPage from './containers/login/Login';
-import EmptyPage from './components/empty/Empty'
-import SwaggerUiPage from './components/swagger/Swagger';
-import {appGlobal, debugLogVar} from "./constants/appGlobal";
-import {signingConst} from "./constants/signingConst";
-import {authenticate} from "./actions/authActions";
 import {connect} from "react-redux";
+
+import './App.css';
+import Header from './containers/header/Header';
+import Footer from './containers/footer/Footer';
+import StartPage from './containers/start/Start';
+import LoginPage from './containers/login/Login';
+import EmptyPage from './containers/empty/Empty'
+import SwaggerUiPage from './containers/swagger/Swagger';
+import {appGlobal, debugLogVar} from "./constants/appGlobal";
+import {loginConst} from "./constants/loginConst";
+import {authenticate} from "./actions/authActions";
+
 
 class App extends Component {
 
   componentDidMount() {
-    appGlobal.func.getCookie(signingConst.signInResponse.accessToken) && !this.props.auth.isAuthenticated && this.props.authenticate();
+    appGlobal.func.getCookie(loginConst.signInResponse.accessToken) && !this.props.auth.isAuthenticated && this.props.authenticate();
   }
 
   render() {
@@ -33,11 +34,11 @@ class App extends Component {
 
 function onAuthenticate() {
   return (dispatch) => {
-    fetch(appGlobal.func.getFullUrlByPath(signingConst.getAuthUserUrl), {
+    fetch(appGlobal.func.getFullUrlByPath(loginConst.getAuthUserUrl), {
       method: appGlobal.methods.POST,
       headers: appGlobal.func.getAuthHeaderByCred(
-        signingConst.tokenFlows.passwordFlow.clientId,
-        signingConst.tokenFlows.passwordFlow.clientSecret
+        loginConst.tokenFlows.passwordFlow.clientId,
+        loginConst.tokenFlows.passwordFlow.clientSecret
       )
     }).then((response) => {
       debugLogVar(response);
@@ -61,17 +62,19 @@ const mapStateToProps = state => (
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
 
-const Content = ({isAuthenticated}) => { return(
-  <main className="content">
-    <Switch>
-      <Route exact path='/' component={StartPage}/>
-      <Route path="/login/" component={LoginPage}/>
-      <Route path="/swagger-ui" component={SwaggerUiPage}/>
-      <PrivateRoute path='/protected' component={StartPage} isAuthenticated={isAuthenticated} />
-      <Route component={EmptyPage} />
-    </Switch>
-  </main>
-)};
+const Content = ({isAuthenticated}) => {
+  return(
+    <main className="content">
+      <Switch>
+        <Route exact path='/' component={StartPage} />
+        <Route path="/login/" component={LoginPage} />
+        <Route path="/swagger-ui" component={SwaggerUiPage} />
+        <PrivateRoute path='/protected' component={StartPage} isAuthenticated={isAuthenticated} />
+        <Route component={EmptyPage} />
+      </Switch>
+    </main>
+  )
+};
 
 
 const PrivateRoute = ({component: Component, ...rest}) => (

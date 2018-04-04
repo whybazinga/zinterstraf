@@ -1,4 +1,4 @@
-export const signingConst = Object.freeze({
+export const loginConst = Object.freeze({
   signInUrl: '/oauth/token',
   signUpUrl: '/user/register',
   getAuthUserUrl: '/user/get-current-user',
@@ -15,6 +15,7 @@ export const signingConst = Object.freeze({
   signInResponse: {
     accessToken: 'access_token',
     refreshToken: 'refresh_token',
+    refreshTokenExpires: 365*24,
     expires: 'expires_in',
     error: 'error',
     errorDescription: 'error_description',
