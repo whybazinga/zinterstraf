@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem} from 'reactstrap';
 import './header.css'
-import egaHome from'./ega.png';
+import egaHome from'../../images/ega.png';
 import { Link } from 'react-router-dom'
 import uuidv1 from "uuid";
 

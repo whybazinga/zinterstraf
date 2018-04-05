@@ -8,6 +8,8 @@ import Footer from './containers/footer/Footer';
 import StartPage from './containers/start/Start';
 import LoginPage from './containers/login/Login';
 import EmptyPage from './containers/empty/Empty'
+import RegisterPage from './containers/register/Register'
+
 import SwaggerUiPage from './containers/swagger/Swagger';
 import {appGlobal, debugLogVar} from "./constants/appGlobal";
 import {loginConst} from "./constants/loginConst";
@@ -69,6 +71,7 @@ const Content = ({isAuthenticated}) => {
         <Route exact path='/' component={StartPage} />
         <Route path="/login/" component={LoginPage} />
         <Route path="/swagger-ui" component={SwaggerUiPage} />
+        <Route path="/register" component={RegisterPage} />
         <PrivateRoute path='/protected' component={StartPage} isAuthenticated={isAuthenticated} />
         <Route component={EmptyPage} />
       </Switch>

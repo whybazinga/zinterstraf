@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Row, Col} from 'reactstrap';
 import { Link } from 'react-router-dom'
 import './style.css'
-import egaHome from'../ega.png';
+import egaHome from'../../images/ega.png';
 import uuidv1 from "uuid";
 
 export default class Footer extends Component {

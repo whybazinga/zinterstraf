@@ -7,7 +7,7 @@ import {loginConst} from '../../constants/loginConst'
 import './login.css'
 import {Redirect, Link} from 'react-router-dom'
 import uuidv1 from "uuid";
-import FluidRowTitle from '../../components/fluidRowTitle/FluidRowTitle'
+import {FluidRowTitle} from '../../components/fluidRowTitle/FluidRowTitle'
 
 
 class Login extends Component {
@@ -153,10 +153,10 @@ class Login extends Component {
     if (redirect) return <Redirect to='/' />;
 
     return (
-      <div>
+      <React.Fragment>
         <FluidRowTitle title="Your Account" />
         <section className="container">
-          <Row className="justify-content-center signing-child-titles pt-3 pb-3">
+          <Row className="justify-content-center container-title pt-3 pb-3">
             <Col md="8">
               <Row className="theme-blue">
                 <Col>
@@ -196,7 +196,7 @@ class Login extends Component {
                       <Link to='/'>Forgot login details?</Link>
                     </Col>
                     <Col md="6">
-                      <button className="btn container-href-btn theme-blue" onClick={this.onLogin} value={loginConst.loginButtons.system.val}>{loginConst.loginButtons.system.name}</button>
+                      <button className="btn fluid-btn theme-blue" onClick={this.onLogin} value={loginConst.loginButtons.system.val}>{loginConst.loginButtons.system.name}</button>
                     </Col>
                   </Row>
                 </FormGroup>
@@ -209,18 +209,18 @@ class Login extends Component {
                 <div>
                   <Row className="pb-2">
                     <Col md="6">
-                      <button className="btn container-href-btn facebook-btn" onClick={this.onLogin} value={loginConst.loginButtons.facebook.val}>{loginConst.loginButtons.facebook.name}</button>
+                      <button className="btn fluid-btn facebook-btn" onClick={this.onLogin} value={loginConst.loginButtons.facebook.val}>{loginConst.loginButtons.facebook.name}</button>
                     </Col>
                     <Col md="6">
-                      <button className="btn container-href-btn twitter-btn" onClick={this.onLogin} value={loginConst.loginButtons.twitter.val}>{loginConst.loginButtons.twitter.name}</button>
+                      <button className="btn fluid-btn twitter-btn" onClick={this.onLogin} value={loginConst.loginButtons.twitter.val}>{loginConst.loginButtons.twitter.name}</button>
                     </Col>
                   </Row>
                   <Row>
                     <Col md="6">
-                      <button className="btn container-href-btn vk-btn" onClick={this.onLogin} value={loginConst.loginButtons.vk.val}>{loginConst.loginButtons.vk.name}</button>
+                      <button className="btn fluid-btn vk-btn" onClick={this.onLogin} value={loginConst.loginButtons.vk.val}>{loginConst.loginButtons.vk.name}</button>
                     </Col>
                     <Col md="6">
-                      <button className="btn container-href-btn google-btn" onClick={this.onLogin} value={loginConst.loginButtons.google.val}>{loginConst.loginButtons.google.name}</button>
+                      <button className="btn fluid-btn google-btn" onClick={this.onLogin} value={loginConst.loginButtons.google.val}>{loginConst.loginButtons.google.name}</button>
                     </Col>
                   </Row>
                 </div>
@@ -235,12 +235,12 @@ class Login extends Component {
                     <li key={uuidv1()}>{el}</li>
                   ))}
                 </ul>
-                <button className="btn theme-blue container-href-btn">Register</button>
+                <button className="btn theme-blue fluid-btn"  onClick={() => this.props.history.push('/register')}>Register</button>
               </article>
             </Col>
           </Row>
         </section>
-      </div>
+      </React.Fragment>
     )
   }
 }

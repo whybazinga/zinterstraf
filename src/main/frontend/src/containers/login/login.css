@@ -1,42 +1,5 @@
-.box-shadow-element-no-border {
-    -webkit-box-shadow: 0px 0px 3px 3px rgba(181,181,199,1);
-    -moz-box-shadow: 0px 0px 3px 3px rgba(181,181,199,1);
-    box-shadow: 0px 0px 3px 3px rgba(181,181,199,1);
-    background-color: #ffffff;
-}
-
-.signing-child-titles {
-    color: #fff;
-}
-
-.signing-child-titles h6 {
-    margin-top: 0.5rem;
-}
-
 .signing-containers {
     background-color: #fff;
-}
-
-.signing-containers .container-href-btn {
-    display: block;
-    color: #fff;
-    width: 100%;
-}
-
-.signing-containers .vk-btn {
-    background-color: #4a76a8;
-}
-
-.signing-containers .facebook-btn {
-    background-color: #29487d;
-}
-
-.signing-containers .twitter-btn {
-    background-color: #1da1f2;
-}
-
-.signing-containers .google-btn {
-    background-color: #d14836;
 }
 
 .signing-containers button {

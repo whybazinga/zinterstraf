@@ -3,7 +3,9 @@ import {Row, Col, Form, FormGroup, InputGroup, InputGroupAddon, Input, FormFeedb
 import './register.css'
 import {Redirect, Link} from 'react-router-dom'
 import uuidv1 from "uuid"
-import FluidRowTitle from '../../components/fluidRowTitle/FluidRowTitle'
+import {FluidRowTitle} from '../../components/fluidRowTitle/FluidRowTitle'
+import {countryTypes} from '../../constants/countryTypes'
+import PropTypes from 'prop-types'
 
 
 class Register extends Component {
@@ -11,34 +13,43 @@ class Register extends Component {
     super(props);
 
     this.state = {
-
+      details: [
+        { name: 'First Name', value: '', required: true, inputClassName: '', hintClassName: '' },
+        { name: 'Last Name', value: '', required: true, inputClassName: '', hintClassName: '' },
+        { name: 'Email Address', value: '', required: true, inputClassName: '', hintClassName: '' },
+        { name: 'Password', value: '', required: true, inputClassName: '', hintClassName: '' },
+        { name: 'Gender', value: '', required: true, inputClassName: '', hintClassName: '' },
+        { name: 'Date of Birth', value: '', required: true, inputClassName: '', hintClassName: '' },
+        { name: 'Country of Residence', value: '', required: true, inputClassName: '', hintClassName: '' }
+      ]
     }
   }
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <FluidRowTitle title="Your Account" />
         <section className="container">
-          <Row className="justify-content-center signing-child-titles pt-3 pb-3">
-            <Col md="8">
+          <Row className="justify-content-center container-title pt-3 pb-3">
+            <Col md="8" className="theme-blue">
               <h6>Creating a new account</h6>
             </Col>
           </Row>
-          <Row className="justify-content-center pb-5">
-            <Col md="4">
+          <Row className="justify-content-center pb-5 container-block">
+            <Col md="3">
+              one
             </Col>
-            <Col md="8">
+            <Col md="5">
+              two
             </Col>
           </Row>
         </section>
-      </div>
+      </React.Fragment>
     );
   }
 }
 
-
-
+export default Register;
 
 /*
   onRegister() {

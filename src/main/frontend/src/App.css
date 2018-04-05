@@ -5,7 +5,6 @@ html, body, #root, .app {
 body {
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
     background-color: #edeef0 !important;
     overflow: auto;
 }
@@ -24,4 +23,38 @@ body {
 
 .theme-white {
     background-color: #fff;
+}
+
+.vk-btn {
+    background-color: #4a76a8;
+}
+
+.facebook-btn {
+    background-color: #29487d;
+}
+
+.twitter-btn {
+    background-color: #1da1f2;
+}
+
+.google-btn {
+    background-color: #d14836;
+}
+
+.container-title {
+    color: #fff;
+}
+
+.container-title h6 {
+    margin-top: 0.5rem;
+}
+
+.container-block {
+    background-color: #fff;
+}
+
+.fluid-btn {
+    display: block;
+    color: #fff;
+    width: 100%;
 }

@@ -28,7 +28,7 @@ export const loginConst = Object.freeze({
     'Favourite Club information and notifications'
   ],
   loginButtons: {
-    system: { val: 'system', name: 'Log in'},
+    system: {val: 'system', name: 'Log in'},
     facebook: {val: 'facebook', name: 'Facebook'},
     vk: {val: 'vk', name: 'VK'},
     google: {val: 'google', name: 'Google'},

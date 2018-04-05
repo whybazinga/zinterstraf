@@ -6,12 +6,12 @@
     "bootstrap": "^4.0.0",
     "octicons": "^7.2.0",
     "prop-types": "^15.6.1",
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
     "react-load-script": "0.0.6",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.0",
+    "react-scripts": "1.1.4",
     "reactstrap": "^5.0.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
@@ -26,7 +26,7 @@
     "copy": "copyfiles -u 1 ./build/**/* ../resources/public/"
   },
   "devDependencies": {
-    "copyfiles": "^1.2.0",
+    "copyfiles": "^2.0.0",
     "del-cli": "^1.1.0"
   }
 }
