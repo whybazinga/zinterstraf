@@ -13,7 +13,7 @@ class Register extends Component {
     super(props);
 
     this.state = {
-      details: [
+      inputs: [
         { name: 'First Name', value: '', required: true, inputClassName: '', hintClassName: '' },
         { name: 'Last Name', value: '', required: true, inputClassName: '', hintClassName: '' },
         { name: 'Email Address', value: '', required: true, inputClassName: '', hintClassName: '' },
@@ -35,14 +35,16 @@ class Register extends Component {
               <h6>Creating a new account</h6>
             </Col>
           </Row>
-          <Row className="justify-content-center pb-5 container-block">
-            <Col md="3">
-              one
-            </Col>
-            <Col md="5">
-              two
-            </Col>
-          </Row>
+          {this.state.inputs.map((el) => (
+            <Row className="justify-content-center container-block">
+              <Col md="3" className="theme-blue">
+                one
+              </Col>
+              <Col md="5" className="theme-blue">
+                two
+              </Col>
+            </Row>
+          ))}
         </section>
       </React.Fragment>
     );
