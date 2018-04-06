@@ -1,28 +1,47 @@
 import React, {Component} from 'react'
-import {Row, Col, Form, FormGroup, InputGroup, InputGroupAddon, Input, FormFeedback} from 'reactstrap'
-import './register.css'
+import {Row, Col, Form, FormGroup, InputGroup, InputGroupAddon, FormFeedback, Label} from 'reactstrap'
 import {Redirect, Link} from 'react-router-dom'
 import uuidv1 from "uuid"
-import {FluidRowTitle} from '../../components/fluidRowTitle/FluidRowTitle'
-import {countryTypes} from '../../constants/countryTypes'
 import PropTypes from 'prop-types'
+
+import './register.css'
+import {FluidRowTitle} from '../../components/fluidRowTitle/FluidRowTitle'
+import {FormDynamicInput} from "../../components/formDynamicInput/FormDynamicInput"
+import {inputTypes} from "../../constants/inputTypes";
+import {FormErrorHint} from "../../components/formErrorHint/FormErrorHint";
+import {countryTypes} from '../../constants/countryTypes'
+import {genderTypes} from "../../constants/genderTypes";
 
 
 class Register extends Component {
   constructor(props) {
     super(props);
-
+    this.onChangeElement = this.onChangeElement.bind(this);
     this.state = {
-      inputs: [
-        { name: 'First Name', value: '', required: true, inputClassName: '', hintClassName: '' },
-        { name: 'Last Name', value: '', required: true, inputClassName: '', hintClassName: '' },
-        { name: 'Email Address', value: '', required: true, inputClassName: '', hintClassName: '' },
-        { name: 'Password', value: '', required: true, inputClassName: '', hintClassName: '' },
-        { name: 'Gender', value: '', required: true, inputClassName: '', hintClassName: '' },
-        { name: 'Date of Birth', value: '', required: true, inputClassName: '', hintClassName: '' },
-        { name: 'Country of Residence', value: '', required: true, inputClassName: '', hintClassName: '' }
-      ]
+      inputs: {
+        fName: {type: inputTypes.text, txt: 'First Name', value: '', required: true, warn: '', hintTxt: ''},
+        lName: {type: inputTypes.text, txt: 'Last Name', value: '', required: true, warn: '', hintTxt: ''},
+        email: {type: inputTypes.email, txt: 'Email Address', value: '', required: true, warn: '', hintTxt: ''},
+        pass: {type: inputTypes.password, txt: 'Password', value: '', required: true, warn: '', hintTxt: ''},
+        gender: {type: inputTypes.select, txt: 'Gender', value: '', required: true, warn: '', hintTxt: '', opt: genderTypes},
+        dob: {type: inputTypes.date, txt: 'Date of Birth', value: '', required: true, warn: '', hintTxt: ''},
+        cor: {type: inputTypes.select, txt: 'Country of Residence', value: '', required: true, warn: '', hintTxt: '', opt: countryTypes}
+      }
     }
+  }
+
+  onChangeElement(e) {
+    const targetId = e.target.id;
+    const state = {
+      inputs: {
+        ...this.state.inputs,
+      }
+    };
+    state.inputs[targetId] = {
+      ...this.state.inputs[targetId],
+      value: e.target.value
+    };
+    this.setState(state);
   }
 
   render() {
@@ -35,16 +54,28 @@ class Register extends Component {
               <h6>Creating a new account</h6>
             </Col>
           </Row>
-          {this.state.inputs.map((el) => (
-            <Row className="justify-content-center container-block">
-              <Col md="3" className="theme-blue">
-                one
-              </Col>
-              <Col md="5" className="theme-blue">
-                two
-              </Col>
-            </Row>
-          ))}
+          <Row className="justify-content-center pb-5">
+            <Col md="8">
+              <Form className="container-block p-4 rounded-border">
+                {Object.keys(this.state.inputs).map((key) => (
+                    <React.Fragment>
+                      <FormGroup row key={uuidv1()}>
+                        <Label for={key} md={4}>{this.state.inputs[key].txt}{this.state.inputs[key].required && '*'}</Label>
+                        <Col md={8}>
+                          <FormDynamicInput type={this.state.inputs[key].type} id={key} options={this.state.inputs[key].opt || []} value={this.state.inputs[key].value} onChange={this.onChangeElement}/>
+                        </Col>
+                      </FormGroup>
+                      <FormGroup row key={uuidv1()}>
+                        <Col>
+                          <FormErrorHint txt=""/>
+                        </Col>
+                      </FormGroup>
+                    </React.Fragment>
+
+                ))}
+              </Form>
+            </Col>
+          </Row>
         </section>
       </React.Fragment>
     );
@@ -52,6 +83,8 @@ class Register extends Component {
 }
 
 export default Register;
+
+
 
 /*
   onRegister() {

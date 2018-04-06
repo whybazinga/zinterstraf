@@ -174,7 +174,7 @@ class Login extends Component {
                 <FormGroup>
                   <InputGroup>
                     <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons['mention'].toSVG()}/></InputGroupAddon>
-                    <Input type="email" id="userName" placeholder="my-mail@gmail.com"
+                    <Input type="email" placeholder="my-mail@gmail.com"
                            value={this.state.username.value} className={this.state.username.validInputClass}
                            onChange={this.onChangeName}/>
                   </InputGroup>
@@ -183,7 +183,7 @@ class Login extends Component {
                 <FormGroup>
                   <InputGroup>
                     <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons['key'].toSVG()}/></InputGroupAddon>
-                    <Input type="password" id="userPassword" placeholder="my-password123"
+                    <Input type="password" placeholder="my-password123"
                            value={this.state.password.value} className={this.state.password.validInputClass}
                            onChange={this.onChangePassword}/>
                   </InputGroup>
