@@ -1,14 +1,13 @@
 import React, {Component} from 'react'
 import {Row, Col, Form, FormGroup, InputGroup, InputGroupAddon, FormFeedback, Label} from 'reactstrap'
 import {Redirect, Link} from 'react-router-dom'
-import uuidv1 from "uuid"
 import PropTypes from 'prop-types'
 
 import './register.css'
 import {FluidRowTitle} from '../../components/fluidRowTitle/FluidRowTitle'
 import {FormDynamicInput} from "../../components/formDynamicInput/FormDynamicInput"
 import {inputTypes} from "../../constants/inputTypes";
-import {FormErrorHint} from "../../components/formErrorHint/FormErrorHint";
+import {FormRowErrorHint} from "../../components/formRowErrorHint/FormRowErrorHint";
 import {countryTypes} from '../../constants/countryTypes'
 import {genderTypes} from "../../constants/genderTypes";
 
@@ -57,22 +56,18 @@ class Register extends Component {
           <Row className="justify-content-center pb-5">
             <Col md="8">
               <Form className="container-block p-4 rounded-border">
-                {Object.keys(this.state.inputs).map((key) => (
-                    <React.Fragment>
-                      <FormGroup row key={uuidv1()}>
-                        <Label for={key} md={4}>{this.state.inputs[key].txt}{this.state.inputs[key].required && '*'}</Label>
-                        <Col md={8}>
-                          <FormDynamicInput type={this.state.inputs[key].type} id={key} options={this.state.inputs[key].opt || []} value={this.state.inputs[key].value} onChange={this.onChangeElement}/>
-                        </Col>
-                      </FormGroup>
-                      <FormGroup row key={uuidv1()}>
-                        <Col>
-                          <FormErrorHint txt=""/>
-                        </Col>
-                      </FormGroup>
-                    </React.Fragment>
-
+                {Object.keys(this.state.inputs).map((id, index) => (
+                  <React.Fragment key={id}>
+                    <FormGroup row>
+                      <Label for={id} md={4} >{this.state.inputs[id].txt}{this.state.inputs[id].required && '*'}</Label>
+                      <Col md={8}>
+                        <FormDynamicInput key={index} type={this.state.inputs[id].type} id={id} options={this.state.inputs[id].opt || []} value={this.state.inputs[id].value} onChange={this.onChangeElement}/>
+                      </Col>
+                    </FormGroup>
+                    <FormRowErrorHint txt=""/>
+                  </React.Fragment>
                 ))}
+
               </Form>
             </Col>
           </Row>

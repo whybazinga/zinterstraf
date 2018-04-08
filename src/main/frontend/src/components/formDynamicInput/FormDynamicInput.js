@@ -1,7 +1,6 @@
 import React from 'react'
 import {Input} from 'reactstrap'
 import {inputTypes} from '../../constants/inputTypes'
-import uuidv1 from "uuid"
 import PropTypes from 'prop-types'
 
 export const FormDynamicInput = ({warn, type, options, ...rest}) => {
@@ -10,8 +9,8 @@ export const FormDynamicInput = ({warn, type, options, ...rest}) => {
   if(type === inputTypes.select) {
     return (
       <Input {...rest} type={type} className={inputValidity} >
-        {options && options.map((el) => (
-          <option value={el.value} key={uuidv1()}>{el.name}</option>
+        {options && options.map((el, index) => (
+          <option value={el.value} key={index}>{el.name}</option>
         ))}
       </Input>
     )
