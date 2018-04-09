@@ -28,11 +28,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Override
 	@Transactional
-	public User saveUser(String login, String pass) {
+	public User saveUser(String login, String pass) throws UsernameAlreadyExistsException {
 		User user = new User();
 		user.setUsername(login);
 		user.setPassword(pass);
-		userDao.save(user);
+		try {
+			userDao.save(user);
+		} catch (Exception e) {
+			throw new UsernameAlreadyExistsException("User already exists");
+		}
 
 		return user;
 	}

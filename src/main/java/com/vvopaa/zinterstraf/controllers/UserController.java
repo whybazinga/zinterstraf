@@ -40,6 +40,7 @@ public class UserController {
 			@RequestParam(value = PASSWORD_PARAM, required = false) String password,
 			@RequestParam(value = TYPE_PARAM, required = false) String type) {
 		String message = "ez DONE";
+
 		switch (type) {
 			case SYSTEM_TYPE:
 				try {
@@ -48,8 +49,6 @@ public class UserController {
 						? String.format(msg.getMessage("user.save.success", null, Locale.getDefault()), username)
 						: String.format(msg.getMessage("user.save.exists", null, Locale.getDefault()), username);
 				} catch (UsernameAlreadyExistsException e) {
-					message = "wow";
-				} catch (Exception e) {
 					message = msg.getMessage("user.save.invalid", null, Locale.getDefault());
 				}
 

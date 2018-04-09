@@ -2,11 +2,11 @@ import React from 'react'
 import {FormGroup, Col, FormFeedback} from 'reactstrap'
 import PropTypes from 'prop-types'
 
-export const FormRowErrorHint = ({warn, txt}) => (
+export const FormRowErrorHint = ({warn, children}) => (
   warn === true ?
     <FormGroup row>
       <Col>
-        <FormFeedback style={{display: 'block'}}>{txt}</FormFeedback>
+        <FormFeedback style={{display: 'block'}}>{children}</FormFeedback>
       </Col>
     </FormGroup>
     : null
@@ -17,5 +17,4 @@ FormRowErrorHint.propTypes = {
     PropTypes.string,
     PropTypes.bool
   ]),
-  txt: PropTypes.string.isRequired
 };

@@ -4,7 +4,7 @@ import {inputTypes} from '../../constants/inputTypes'
 import PropTypes from 'prop-types'
 
 export const FormDynamicInput = ({warn, type, options, ...rest}) => {
-  const inputValidity = warn===true ? 'is-invalid' : warn===false ? 'is-valid' : '';
+  const inputValidity = warn === true ? 'is-invalid' : warn === false ? 'is-valid' : '';
 
   if(type === inputTypes.select) {
     return (

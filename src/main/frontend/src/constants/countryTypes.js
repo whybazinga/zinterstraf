@@ -1,4 +1,5 @@
 export const countryTypes = Object.freeze([
+  {"name": '', "value": ''},
   {"name": "Afghanistan", "value": "AF"},
   {"name": "Aland Islands", "value": "AX"},
   {"name": "Albania", "value": "AL"},

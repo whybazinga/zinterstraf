@@ -1,13 +1,17 @@
 import React, {Component} from 'react'
 import octicons from 'octicons'
-import {Row, Col, Form, FormGroup, InputGroup, InputGroupAddon, Input, FormFeedback} from 'reactstrap'
+import {Row, Col, Form, FormGroup, InputGroup, InputGroupAddon} from 'reactstrap'
+import {Redirect, Link} from 'react-router-dom'
+import uuidv1 from "uuid";
+
 import {InnerFormSvg} from '../../components/innerHtml/InnerHtml'
 import {appGlobal, debugLogVar, fetchPostJsonResponse} from '../../constants/appGlobal'
 import {loginConst} from '../../constants/loginConst'
-import './login.css'
-import {Redirect, Link} from 'react-router-dom'
-import uuidv1 from "uuid";
 import {FluidRowTitle} from '../../components/fluidRowTitle/FluidRowTitle'
+import {FormDynamicInput} from "../../components/formDynamicInput/FormDynamicInput"
+import {FormRowErrorHint} from "../../components/formRowErrorHint/FormRowErrorHint"
+import {inputTypes} from "../../constants/inputTypes"
+import './login.css'
 
 
 class Login extends Component {
@@ -15,52 +19,41 @@ class Login extends Component {
     super(props);
     this.onLogin = this.onLogin.bind(this);
     this.systemLogin = this.systemLogin.bind(this);
-    this.onChangeName = this.onChangeName.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
-    this.checkIfSigningFieldsValid = this.checkIfSigningFieldsValid.bind(this);
+    this.onChangeElement = this.onChangeElement.bind(this);
+    this.checkFieldsValidity = this.checkFieldsValidity.bind(this);
+    this.onFocusHideStatusWarn = this.onFocusHideStatusWarn.bind(this);
     this.state = {
-      username: {
-        value: '',
-        validInputClass: '',
-        invalidHintStyle: Login.hideElementIfExists(true)
-      },
-      password: {
-        value: '',
-        validInputClass: '',
-        invalidHintStyle: Login.hideElementIfExists(true)
-      },
-      authStatus: {
-        style: Login.hideElementIfExists(true),
-        redirect: false,
-        value: loginConst.signInResponse.errorDescriptionDefaultVal
-      }
+      email: {value: '', warn: ''},
+      password: {value: '', warn: ''},
+      authStatus: {value: loginConst.signInResponse.errorDescriptionDefaultVal, warn: '', redirect: false}
     };
   }
 
-  static hideElementIfExists(param) {
-    return {
-      display: param ? 'none' : 'block'
+  onFocusHideStatusWarn(e) {
+    e.preventDefault();
+    if(this.state.authStatus.warn === true) {
+      this.setState({
+        authStatus: {
+          ...this.state.authStatus,
+          warn: ''
+        }
+      })
     }
   }
 
-  static getHintClassByParam(param) {
-    return param ? 'is-valid' : 'is-invalid'
-  }
-
   systemLogin() {
-    if (!this.checkIfSigningFieldsValid()) return;
+    if (!this.checkFieldsValidity()) return;
 
     fetchPostJsonResponse(loginConst.signInUrl, {
-      'username': this.state.username.value,
+      'username': this.state.email.value,
       'password': this.state.password.value,
       'grant_type': loginConst.tokenFlows.passwordFlow.grantType
     }).then((json) => {
       debugLogVar(json);
-
       this.setState({
         authStatus: {
           ...this.state.authStatus,
-          style: Login.hideElementIfExists(!json[loginConst.signInResponse.error]),
+          warn: !!json[loginConst.signInResponse.error],
           value: json[loginConst.signInResponse.error] ? json[loginConst.signInResponse.errorDescription] : json[loginConst.signInResponse.errorDescriptionDefaultVal]
         }
       });
@@ -80,30 +73,28 @@ class Login extends Component {
       this.setState({
         authStatus: {
           ...this.state.authStatus,
-          style: Login.hideElementIfExists(!error.message),
+          warn: true,
           value: error.message
         }
       });
     });
   }
 
-  checkIfSigningFieldsValid() {
+  checkFieldsValidity() {
     this.setState({
-      username: {
-        ...this.state.username,
-        validInputClass: Login.getHintClassByParam(this.state.username.value),
-        invalidHintStyle:  Login.hideElementIfExists(this.state.username.value)
+      email: {
+        ...this.state.email,
+        warn: !this.state.email.value
       }
     });
     this.setState({
       password: {
         ...this.state.password,
-        validInputClass: Login.getHintClassByParam(this.state.password.value),
-        invalidHintStyle: Login.hideElementIfExists(this.state.password.value)
+        warn: !this.state.password.value
       }
     });
 
-    return this.state.username.value && this.state.password.value
+    return this.state.email.value && this.state.password.value
   };
 
   onLogin(e) {
@@ -129,22 +120,14 @@ class Login extends Component {
     }
   }
 
-  onChangeName(e) {
-    this.setState({
-      username: {
-        ...this.state.username,
-        value: e.target.value
-      }
-    });
-  }
-
-  onChangePassword(e) {
-    this.setState({
-      password: {
-        ...this.state.password,
-        value: e.target.value
-      }
-    });
+  onChangeElement(e) {
+    const state = {};
+    state[e.target.id] = {
+      ...this.state[e.target.id],
+      value: e.target.value,
+      warn: ''
+    };
+    this.setState(state);
   }
 
 
@@ -170,27 +153,23 @@ class Login extends Component {
           </Row>
           <Row className="justify-content-center pb-5">
             <Col md="4">
-              <Form className="p-4 signing-containers rounded-border">
+              <Form className="p-4 signing-containers rounded-border" onFocus={this.onFocusHideStatusWarn}>
                 <FormGroup>
                   <InputGroup>
-                    <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons['mention'].toSVG()}/></InputGroupAddon>
-                    <Input type="email" placeholder="my-mail@gmail.com"
-                           value={this.state.username.value} className={this.state.username.validInputClass}
-                           onChange={this.onChangeName}/>
+                    <InputGroupAddon addonType="prepend"><InnerFormSvg>{octicons['mention'].toSVG()}</InnerFormSvg></InputGroupAddon>
+                    <FormDynamicInput type={inputTypes.email} id={inputTypes.email} value={this.state.email.value} onChange={this.onChangeElement} warn={this.state.email.warn}  placeholder="my-mail@gmail.com" />
                   </InputGroup>
-                  <FormFeedback style={this.state.username.invalidHintStyle}>The email mustn't be empty.</FormFeedback>
                 </FormGroup>
+                <FormRowErrorHint warn={this.state.email.warn}>The email mustn't be empty.</FormRowErrorHint>
                 <FormGroup>
                   <InputGroup>
-                    <InputGroupAddon addonType="prepend"><InnerFormSvg svg={octicons['key'].toSVG()}/></InputGroupAddon>
-                    <Input type="password" placeholder="my-password123"
-                           value={this.state.password.value} className={this.state.password.validInputClass}
-                           onChange={this.onChangePassword}/>
+                    <InputGroupAddon addonType="prepend"><InnerFormSvg>{octicons['key'].toSVG()}</InnerFormSvg></InputGroupAddon>
+                    <FormDynamicInput type={inputTypes.password} id={inputTypes.password} value={this.state.password.value} onChange={this.onChangeElement} warn={this.state.password.warn}  placeholder="my-password123" />
                   </InputGroup>
-                  <FormFeedback style={this.state.password.invalidHintStyle}>The password mustn't be empty.</FormFeedback>
                 </FormGroup>
+                <FormRowErrorHint warn={this.state.password.warn}>The password mustn't be empty.</FormRowErrorHint>
+                <FormRowErrorHint warn={this.state.authStatus.warn}>{this.state.authStatus.value}</FormRowErrorHint>
                 <FormGroup>
-                  <FormFeedback style={this.state.authStatus.style} className="text-center font-weight-bold mb-2">{this.state.authStatus.value}</FormFeedback>
                   <Row>
                     <Col md="6">
                       <Link to='/'>Forgot login details?</Link>
@@ -235,7 +214,7 @@ class Login extends Component {
                     <li key={uuidv1()}>{el}</li>
                   ))}
                 </ul>
-                <button className="btn theme-blue fluid-btn"  onClick={() => this.props.history.push('/register')}>Register</button>
+                <button className="btn theme-blue fluid-btn" onClick={() => this.props.history.push('/register')}>Register</button>
               </article>
             </Col>
           </Row>

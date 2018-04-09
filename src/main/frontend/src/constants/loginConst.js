@@ -1,6 +1,5 @@
 export const loginConst = Object.freeze({
   signInUrl: '/oauth/token',
-  signUpUrl: '/user/register',
   getAuthUserUrl: '/user/get-current-user',
   tokenFlows: {
     passwordFlow: {
