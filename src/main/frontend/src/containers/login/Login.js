@@ -29,8 +29,7 @@ class Login extends Component {
     };
   }
 
-  onFocusHideStatusWarn(e) {
-    e.preventDefault();
+  onFocusHideStatusWarn() {
     if(this.state.authStatus.warn === true) {
       this.setState({
         authStatus: {
@@ -45,9 +44,9 @@ class Login extends Component {
     if (!this.checkFieldsValidity()) return;
 
     fetchPostJsonResponse(loginConst.signInUrl, {
-      'username': this.state.email.value,
-      'password': this.state.password.value,
-      'grant_type': loginConst.tokenFlows.passwordFlow.grantType
+      [loginConst.signInRequest.username]: this.state.email.value,
+      [loginConst.signInRequest.password]: this.state.password.value,
+      [loginConst.signInRequest.grantType]: loginConst.tokenFlows.passwordFlow.grantType
     }).then((json) => {
       debugLogVar(json);
       this.setState({
@@ -121,19 +120,17 @@ class Login extends Component {
   }
 
   onChangeElement(e) {
-    const state = {};
-    state[e.target.id] = {
-      ...this.state[e.target.id],
-      value: e.target.value,
-      warn: ''
-    };
-    this.setState(state);
+    this.setState({
+      [e.target.id]: {
+        ...this.state[e.target.id],
+        value: e.target.value,
+        warn: ''
+      }
+    })
   }
 
-
   render() {
-    const { redirect } = this.state.authStatus;
-    if (redirect) return <Redirect to='/' />;
+    if (this.state.authStatus.redirect) return <Redirect to='/' />;
 
     return (
       <React.Fragment>

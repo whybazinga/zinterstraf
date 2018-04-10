@@ -1,7 +1,10 @@
 export const registerConst = Object.freeze({
   registerUrl: '/user/register',
   registerRequest: {
-    direct: 'direct'
+    type: 'type',
+    username: 'username',
+    password: 'password',
+    directType: 'direct'
   },
   registerResponse: {
     //params

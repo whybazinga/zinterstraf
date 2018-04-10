@@ -11,6 +11,11 @@ export const loginConst = Object.freeze({
       grantType: 'client_credentials',
     },
   },
+  signInRequest: {
+    username: 'username',
+    password: 'password',
+    grantType: 'grant_type'
+  },
   signInResponse: {
     accessToken: 'access_token',
     refreshToken: 'refresh_token',

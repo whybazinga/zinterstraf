@@ -10,7 +10,7 @@ import {inputTypes} from "../../constants/inputTypes";
 import {FormRowErrorHint} from "../../components/formRowErrorHint/FormRowErrorHint";
 import {countryTypes} from '../../constants/countryTypes'
 import {genderTypes} from "../../constants/genderTypes";
-import {debugLogVar, fetchPostJsonResponse} from "../../constants/appGlobal";
+import {fetchPostJsonResponse} from "../../constants/appGlobal";
 import {registerConst} from "../../constants/registerConst";
 
 
@@ -23,13 +23,13 @@ class Register extends Component {
     this.onFocusHideStatusWarn = this.onFocusHideStatusWarn.bind(this);
     this.state = {
       inputs: {
-        fName: {type: inputTypes.text, txt: 'First Name', value: '', required: true, warn: '', hintTxt: ''},
-        lName: {type: inputTypes.text, txt: 'Last Name', value: '', required: true, warn: '', hintTxt: ''},
-        email: {type: inputTypes.email, txt: 'Email Address', value: '', required: true, warn: '', hintTxt: ''},
-        pass: {type: inputTypes.password, txt: 'Password', value: '', required: true, warn: '', hintTxt: ''},
-        gender: {type: inputTypes.select, txt: 'Gender', value: '', required: true, warn: '', hintTxt: '', opt: genderTypes},
-        dob: {type: inputTypes.date, txt: 'Date of Birth', value: '', required: true, warn: '', hintTxt: ''},
-        cor: {type: inputTypes.select, txt: 'Country of Residence', value: '', required: true, warn: '', hintTxt: '', opt: countryTypes}
+        fName: {type: inputTypes.text, txt: 'First Name', value: '', required: true, warn: '', hintTxt: "First name mustn't be empty"},
+        lName: {type: inputTypes.text, txt: 'Last Name', value: '', required: true, warn: '', hintTxt: "Last name mustn't be empty"},
+        email: {type: inputTypes.email, txt: 'Email Address', value: '', required: true, warn: '', hintTxt: "Email mustn't be empty"},
+        pass: {type: inputTypes.password, txt: 'Password', value: '', required: true, warn: '', hintTxt: "Password mustn't be empty"},
+        gender: {type: inputTypes.select, txt: 'Gender', value: '', required: true, warn: '', hintTxt: "Choose your gender", opt: genderTypes},
+        dob: {type: inputTypes.date, txt: 'Date of Birth', value: '', required: true, warn: '', hintTxt: "Choose your Date of Birth"},
+        cor: {type: inputTypes.select, txt: 'Country of Residence', value: '', required: true, warn: '', hintTxt: "Choose your country of residence", opt: countryTypes}
       },
       registerStatus: {value: registerConst.registerResponse.errDefault, warn: '', redirect: false}
     }
@@ -48,37 +48,32 @@ class Register extends Component {
   }
 
   onChangeElement(e) {
-    const state = {
+    this.setState({
       inputs: {
-        ...this.state.inputs
+        ...this.state.inputs,
+        [e.target.id]: {
+          ...this.state.inputs[e.target.id],
+          value: e.target.value,
+          warn: ''
+        }
       }
-    };
-    state.inputs[e.target.id] = {
-      ...this.state.inputs[e.target.id],
-      value: e.target.value,
-      warn: ''
-    };
-    this.setState(state);
+    })
   }
 
   checkFieldsValidity() {
     let isValid = true;
     Object.keys(this.state.inputs).forEach((id) => {
       if(this.state.inputs[id].required !== true) return;
-      debugger;
-      const state = {
+      this.setState((currentState) => ({
         inputs: {
-          ...this.state.inputs
+          ...currentState.inputs,
+          [id]: {
+            ...currentState.inputs[id],
+            warn: !currentState.inputs[id].value
+          }
         }
-      };
-      state.inputs[id] = {
-        ...this.state.inputs[id],
-        warn: !this.state.inputs[id].value
-      };
-      this.setState(state);
+      }));
       if(!this.state.inputs[id].value) isValid = false;
-
-      debugLogVar(`${id}: ${this.state.inputs[id].value}`);
     });
     return isValid;
   };
@@ -89,9 +84,9 @@ class Register extends Component {
     if (!this.checkFieldsValidity()) return;
 
     fetchPostJsonResponse(registerConst.registerUrl, {
-      'username': this.state.inputs.email.value,
-      'password': this.state.inputs.pass.value,
-      'type': registerConst.registerRequest.direct
+      [registerConst.registerRequest.username]: this.state.inputs.email.value,
+      [registerConst.registerRequest.password]: this.state.inputs.pass.value,
+      [registerConst.registerRequest.type]: registerConst.registerRequest.directType
     }).then((json) => {
 
       return false;
@@ -113,10 +108,11 @@ class Register extends Component {
         }
       });
     });
-
   }
 
   render() {
+    if(this.state.registerStatus.redirect) return <Redirect to='/' />;
+
     return (
       <React.Fragment>
         <FluidRowTitle title="Your Account" />
@@ -129,7 +125,7 @@ class Register extends Component {
           <Row className="justify-content-center pb-5">
             <Col md={8}>
               <Form className="container-block p-4 rounded-border" onSubmit={this.onRegister} onFocus={this.onFocusHideStatusWarn}>
-                <FormGroup row className="justify-content-center">
+                <FormGroup row>
                   <Col>
                     <h4>Your Personal Details</h4>
                   </Col>
