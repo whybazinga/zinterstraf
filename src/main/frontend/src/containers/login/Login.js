@@ -10,7 +10,6 @@ import {loginConst} from '../../constants/loginConst'
 import {FluidRowTitle} from '../../components/fluidRowTitle/FluidRowTitle'
 import {FormDynamicInput} from "../../components/formDynamicInput/FormDynamicInput"
 import {FormRowErrorHint} from "../../components/formRowErrorHint/FormRowErrorHint"
-import {inputTypes} from "../../constants/inputTypes"
 import './login.css'
 
 
@@ -154,14 +153,14 @@ class Login extends Component {
                 <FormGroup>
                   <InputGroup>
                     <InputGroupAddon addonType="prepend"><InnerFormSvg>{octicons['mention'].toSVG()}</InnerFormSvg></InputGroupAddon>
-                    <FormDynamicInput type={inputTypes.email} id={inputTypes.email} value={this.state.email.value} onChange={this.onChangeElement} warn={this.state.email.warn}  placeholder="my-mail@gmail.com" />
+                    <FormDynamicInput type={appGlobal.inputTypes.email} id={appGlobal.inputTypes.email} value={this.state.email.value} onChange={this.onChangeElement} warn={this.state.email.warn}  placeholder="my-mail@gmail.com" />
                   </InputGroup>
                 </FormGroup>
                 <FormRowErrorHint warn={this.state.email.warn}>The email mustn't be empty.</FormRowErrorHint>
                 <FormGroup>
                   <InputGroup>
                     <InputGroupAddon addonType="prepend"><InnerFormSvg>{octicons['key'].toSVG()}</InnerFormSvg></InputGroupAddon>
-                    <FormDynamicInput type={inputTypes.password} id={inputTypes.password} value={this.state.password.value} onChange={this.onChangeElement} warn={this.state.password.warn}  placeholder="my-password123" />
+                    <FormDynamicInput type={appGlobal.inputTypes.password} id={appGlobal.inputTypes.password} value={this.state.password.value} onChange={this.onChangeElement} warn={this.state.password.warn}  placeholder="my-password123" />
                   </InputGroup>
                 </FormGroup>
                 <FormRowErrorHint warn={this.state.password.warn}>The password mustn't be empty.</FormRowErrorHint>

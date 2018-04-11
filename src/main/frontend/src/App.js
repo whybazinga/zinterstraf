@@ -9,9 +9,8 @@ import StartPage from './containers/start/Start';
 import LoginPage from './containers/login/Login';
 import EmptyPage from './containers/empty/Empty'
 import RegisterPage from './containers/register/Register'
-
 import SwaggerUiPage from './containers/swagger/Swagger';
-import {appGlobal, debugLogVar} from "./constants/appGlobal";
+import {fetchPostJsonResponse, appGlobal, debugLogVar} from "./constants/appGlobal";
 import {loginConst} from "./constants/loginConst";
 import {authenticate} from "./actions/authActions";
 
@@ -19,15 +18,17 @@ import {authenticate} from "./actions/authActions";
 class App extends Component {
 
   componentDidMount() {
-    appGlobal.func.getCookie(loginConst.signInResponse.accessToken) && !this.props.auth.isAuthenticated && this.props.authenticate();
+    if(appGlobal.func.getCookie(loginConst.signInResponse.accessToken)) {
+      !this.props.authUser.isAuthenticated && this.props.authenticate();
+    }
   }
 
   render() {
-    const {isAuthenticated} = this.props.auth;
+    const {authUser} = this.props.auth;
     return (
       <div className="d-flex flex-column app">
-        <Header isAuthenticated={isAuthenticated} />
-        <Content isAuthenticated={isAuthenticated} />
+        <Header authUser={authUser} />
+        <Content authUser={authUser} />
         <Footer />
       </div>
     );
@@ -36,15 +37,7 @@ class App extends Component {
 
 function onAuthenticate() {
   return (dispatch) => {
-    fetch(appGlobal.func.getFullUrlByPath(loginConst.getAuthUserUrl), {
-      method: appGlobal.methods.POST,
-      headers: appGlobal.func.getAuthHeaderByCred(
-        loginConst.tokenFlows.passwordFlow.clientId,
-        loginConst.tokenFlows.passwordFlow.clientSecret
-      )
-    }).then((response) => {
-      debugLogVar(response);
-      return response.json();
+    fetchPostJsonResponse(loginConst.getAuthUserUrl, {
     }).then((user) => {
       debugLogVar(user);
       dispatch(authenticate(user));
@@ -59,12 +52,12 @@ const mapDispatchToProps = dispatch => (
 );
 
 const mapStateToProps = state => (
-  { auth: state.auth }
+  { authUser: state.auth.authUser }
 );
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
 
-const Content = ({isAuthenticated}) => {
+const Content = ({authUser}) => {
   return(
     <main className="content">
       <Switch>
@@ -72,7 +65,7 @@ const Content = ({isAuthenticated}) => {
         <Route path="/login/" component={LoginPage} />
         <Route path="/swagger-ui" component={SwaggerUiPage} />
         <Route path="/register" component={RegisterPage} />
-        <PrivateRoute path='/protected' component={StartPage} isAuthenticated={isAuthenticated} />
+        <PrivateRoute path='/protected' component={StartPage} authUser={authUser} />
         <Route component={EmptyPage} />
       </Switch>
     </main>
@@ -82,7 +75,7 @@ const Content = ({isAuthenticated}) => {
 
 const PrivateRoute = ({component: Component, ...rest}) => (
   <Route {...rest} render={(props) => (
-    props.isAuthenticated === true
+    !appGlobal.func.checkIfEmptyJson(props.authUser)
       ? <Component {...props} />
       : <Redirect to='/sign-in'/>
   )}/>

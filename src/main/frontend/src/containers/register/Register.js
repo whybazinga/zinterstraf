@@ -6,11 +6,10 @@ import {Redirect, Link} from 'react-router-dom'
 import './register.css'
 import {FluidRowTitle} from '../../components/fluidRowTitle/FluidRowTitle'
 import {FormDynamicInput} from "../../components/formDynamicInput/FormDynamicInput"
-import {inputTypes} from "../../constants/inputTypes";
 import {FormRowErrorHint} from "../../components/formRowErrorHint/FormRowErrorHint";
 import {countryTypes} from '../../constants/countryTypes'
 import {genderTypes} from "../../constants/genderTypes";
-import {fetchPostJsonResponse} from "../../constants/appGlobal";
+import {fetchPostJsonResponse, appGlobal} from "../../constants/appGlobal";
 import {registerConst} from "../../constants/registerConst";
 
 
@@ -23,13 +22,13 @@ class Register extends Component {
     this.onFocusHideStatusWarn = this.onFocusHideStatusWarn.bind(this);
     this.state = {
       inputs: {
-        fName: {type: inputTypes.text, txt: 'First Name', value: '', required: true, warn: '', hintTxt: "First name mustn't be empty"},
-        lName: {type: inputTypes.text, txt: 'Last Name', value: '', required: true, warn: '', hintTxt: "Last name mustn't be empty"},
-        email: {type: inputTypes.email, txt: 'Email Address', value: '', required: true, warn: '', hintTxt: "Email mustn't be empty"},
-        pass: {type: inputTypes.password, txt: 'Password', value: '', required: true, warn: '', hintTxt: "Password mustn't be empty"},
-        gender: {type: inputTypes.select, txt: 'Gender', value: '', required: true, warn: '', hintTxt: "Choose your gender", opt: genderTypes},
-        dob: {type: inputTypes.date, txt: 'Date of Birth', value: '', required: true, warn: '', hintTxt: "Choose your Date of Birth"},
-        cor: {type: inputTypes.select, txt: 'Country of Residence', value: '', required: true, warn: '', hintTxt: "Choose your country of residence", opt: countryTypes}
+        fName: {type: appGlobal.inputTypes.text, txt: 'First Name', value: '', required: true, warn: '', hintTxt: "First name mustn't be empty"},
+        lName: {type: appGlobal.inputTypes.text, txt: 'Last Name', value: '', required: true, warn: '', hintTxt: "Last name mustn't be empty"},
+        email: {type: appGlobal.inputTypes.email, txt: 'Email Address', value: '', required: true, warn: '', hintTxt: "Email mustn't be empty"},
+        pass: {type: appGlobal.inputTypes.password, txt: 'Password', value: '', required: true, warn: '', hintTxt: "Password mustn't be empty"},
+        gender: {type: appGlobal.inputTypes.select, txt: 'Gender', value: '', required: true, warn: '', hintTxt: "Choose your gender", opt: genderTypes},
+        dob: {type: appGlobal.inputTypes.date, txt: 'Date of Birth', value: '', required: true, warn: '', hintTxt: "Choose your Date of Birth"},
+        cor: {type: appGlobal.inputTypes.select, txt: 'Country of Residence', value: '', required: true, warn: '', hintTxt: "Choose your country of residence", opt: countryTypes}
       },
       registerStatus: {value: registerConst.registerResponse.errDefault, warn: '', redirect: false}
     }

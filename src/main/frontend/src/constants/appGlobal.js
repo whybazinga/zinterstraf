@@ -6,6 +6,16 @@ export const appGlobal = (() => {
       POST: 'post',
       GET: 'get'
     },
+    inputTypes: {
+      text: 'text',
+      email: 'email',
+      select: 'select',
+      textarea: 'textarea',
+      password: 'password',
+      radio: 'radio',
+      checkbox: 'checkbox',
+      date: 'date'
+    },
     func: {
       getFullUrlByPath: (path) => (window.location.protocol + '//' + window.location.host + path),
       getFormEncodedParams: (json) => ( Object.keys(json).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(json[key])).join('&') ),
@@ -21,7 +31,8 @@ export const appGlobal = (() => {
         date.setTime(date.getTime() + (time * 60 * 60 * 1000));
         return date.toUTCString()
       },
-      callFuncIfParamExists: (param, func, ...args) => { if(param && typeof func === 'function') { func(args) } }
+      callFuncIfParamExists: (param, func, ...args) => { if(param && typeof func === 'function') { func(args) } },
+      checkIfEmptyJson: json => (Object.keys(json).length === 0 && json.constructor === Object)
     },
     isDebug: true
   });
