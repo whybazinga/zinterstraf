@@ -1,31 +1,57 @@
 import React, {Component} from 'react';
 import {Row, Col} from 'reactstrap';
 import { Link } from 'react-router-dom'
+import uuidv1 from "uuid";
+
 import './style.css'
 import egaHome from'../../images/ega.png';
-import uuidv1 from "uuid";
+import {routerUrls} from "../../constants/routerUrls";
+
 
 export default class Footer extends Component {
   constructor(props) {
     super(props);
     const currentYear = new Date().getFullYear();
     this.state = {
-      year: currentYear
+      year: currentYear,
+      footerUrls: [
+        {
+          header: 'EGA League',
+          urls: [
+            routerUrls.home, routerUrls.matches, routerUrls.results, routerUrls.tables,
+            routerUrls.broadcast, routerUrls.teams, routerUrls.players, routerUrls.social
+          ]
+        },
+        {
+          header: 'Stats',
+          urls: [routerUrls.dashboard, routerUrls.playerStats, routerUrls.teamStats]
+        },
+        {
+          header: 'More',
+          urls: [routerUrls.transfers, routerUrls.partners, routerUrls.about, routerUrls.publications, routerUrls.contact]
+        },
+        {
+          header: 'Socials',
+          urls: [routerUrls.egaTwitter, routerUrls.egaFacebook, routerUrls.egaVk, routerUrls.egaVk, routerUrls.egaDiscord]
+        }
+      ]
     };
   }
   render() {
     return (
       <footer className="container-fluid">
         <Row className="justify-content-center footer-top pt-4 pb-4">
-          {footerUrls.map((topEl) => {
-            return(<Col md="2" key={uuidv1()}>
-              <h6 key={uuidv1()}>{topEl.header}</h6>
-              {topEl.urls.map((childEl) => (
-                <div key={uuidv1()}>
-                  <Link to={childEl.url} key={uuidv1()}>{childEl.name}</Link>
-                </div>
-              ))}
-            </Col>);
+          {this.state.footerUrls.map((topEl) => {
+            return(
+              <Col md="2" key={uuidv1()}>
+                <h6>{topEl.header}</h6>
+                {topEl.urls.map((childEl) => (
+                  <div key={uuidv1()}>
+                    <Link to={childEl.url}>{childEl.name}</Link>
+                  </div>
+                ))}
+              </Col>
+            );
           })}
         </Row>
         <Row className="justify-content-center footer-bottom font-weight-bold pt-2 pb-2">
@@ -41,47 +67,3 @@ export default class Footer extends Component {
     );
   }
 }
-
-const footerUrls = [
-  {
-    header: 'EGA League',
-    urls: [
-      {url: '/', name: 'Home'},
-      {url: '/', name: 'Matches'},
-      {url: '/', name: 'Results'},
-      {url: '/', name: 'Tables'},
-      {url: '/', name: 'Broadcast'},
-      {url: '/', name: 'Clubs'},
-      {url: '/', name: 'Players'},
-      {url: '/', name: 'Social'}
-    ]
-  },
-  {
-    header: 'Stats',
-    urls: [
-      {url: '/', name: 'Dashboard'},
-      {url: '/', name: 'Player Stats'},
-      {url: '/', name: 'Club Stats'}
-    ]
-  },
-  {
-    header: 'More',
-    urls: [
-      {url: '/', name: 'Transfers'},
-      {url: '/', name: 'Partners'},
-      {url: '/', name: 'About'},
-      {url: '/', name: 'Publications'},
-      {url: '/', name: 'Contact'}
-    ]
-  },
-  {
-    header: 'Socials',
-    urls: [
-      {url: '/', name: 'EGA on Twitter'},
-      {url: '/', name: 'EGA on Facebook'},
-      {url: '/', name: 'EGA on VK'},
-      {url: '/', name: 'EGA on Instagram'},
-      {url: '/', name: 'EGA on Discord'}
-    ]
-  }
-];

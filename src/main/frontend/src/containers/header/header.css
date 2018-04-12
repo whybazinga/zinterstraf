@@ -33,7 +33,7 @@ header .header-links a {
 }
 
 @media (min-width:961px) {
-    header .register {
+    header .auth-btn {
         margin-left: auto;
         margin-right: 0.5rem;
     }
