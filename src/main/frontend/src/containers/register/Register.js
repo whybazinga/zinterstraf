@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import {Row, Col, Form, FormGroup, InputGroup, InputGroupAddon, FormFeedback, Label} from 'reactstrap'
-import {Redirect, Link} from 'react-router-dom'
+import {Row, Col, Form, FormGroup, Label} from 'reactstrap'
+import {Redirect} from 'react-router-dom'
 //import PropTypes from 'prop-types'
 
 import './register.css'

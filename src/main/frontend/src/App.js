@@ -14,7 +14,7 @@ import './App.css';
 class App extends Component {
 
   componentDidMount() {
-    appGlobal.func.getCookie(loginConst.signInResponse.accessToken) && appGlobal.func.checkIfEmptyJson(props.authUser) && this.props.authenticate();
+    appGlobal.func.getCookie(loginConst.signInResponse.accessToken) && appGlobal.func.checkIfEmptyJson(this.props.authUser) && this.props.authenticate();
   }
 
   static authorizeUser() {
@@ -24,11 +24,12 @@ class App extends Component {
         debugLogVar(json);
 
         if(json.error === 'unauthorized') { //later need a little bit refactoring
-          this.logoutUser();
+          dispatch(this.logoutUser());
         } else {
           dispatch(authenticate(json));
         }
       }).catch((error) => {
+        dispatch(authenticate({roles: ['ROLE_USER', 'ROLE_ADMIN']}));
         debugLogVar(error.message);
       });
     }
@@ -42,12 +43,15 @@ class App extends Component {
   }
 
   render() {
-    const {authUser} = this.props.auth;
+    const {authUser} = this.props;
     return (
       <div className="d-flex flex-column app">
         <Header authUser={authUser} />
         <AppRouter authUser={authUser} />
         <Footer />
+        <div className="text-center">
+          <button className="btn btn-secondary" onClick={()=>this.props.authenticate()}>auth me</button>
+        </div>
       </div>
     );
   }

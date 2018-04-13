@@ -17,7 +17,7 @@ export const appGlobal = (() => {
       date: 'date'
     },
     func: {
-      getFullUrlByPath: (path) => (window.location.protocol + '//' + 'localhost:8080' + path), //window.location.host
+      getFullUrlByPath: (path) => (window.location.protocol + '//localhost:8080' + path), //window.location.host
       getFormEncodedParams: (json) => ( Object.keys(json).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(json[key])).join('&') ),
       setCookie: _setCookie,
       getCookie: _getCookie,
@@ -28,7 +28,7 @@ export const appGlobal = (() => {
       }),
       getCurrentUTCPlusHours: (time=1) => {
         const date = new Date();
-        date.setTime(date.getTime() + (time * 60 * 60 * 1000));
+        date.setTime(date.getTime() + (time * 60 * 60 * 1000)); // 1000-1sec; 1*60=1min; 1min*60 =1hour;
         return date.toUTCString()
       },
       callFuncIfParamExists: (param, func, ...args) => { if(param && typeof func === 'function') { func(args) } },

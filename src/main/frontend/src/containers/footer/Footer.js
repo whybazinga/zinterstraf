@@ -5,7 +5,7 @@ import uuidv1 from "uuid";
 
 import './style.css'
 import egaHome from'../../images/ega.png';
-import {routerUrls} from "../../constants/routerUrls";
+import {routerUrls, externalUrls} from "../../AppRouter";
 
 
 export default class Footer extends Component {
@@ -32,7 +32,7 @@ export default class Footer extends Component {
         },
         {
           header: 'Socials',
-          urls: [routerUrls.egaTwitter, routerUrls.egaFacebook, routerUrls.egaVk, routerUrls.egaVk, routerUrls.egaDiscord]
+          urls: [externalUrls.egaTwitter, externalUrls.egaFacebook, externalUrls.egaVk, externalUrls.egaVk, externalUrls.egaDiscord]
         }
       ]
     };

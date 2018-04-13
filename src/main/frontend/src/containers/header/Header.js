@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem} from 'reactstrap';
 import { Link } from 'react-router-dom'
-import uuidv1 from "uuid";
 import PropTypes from 'prop-types'
 
 import './header.css'
 import egaHome from'../../images/ega.png';
 import {appGlobal} from "../../constants/appGlobal";
-import {routerUrls} from "../../constants/routerUrls";
+import {routerUrls} from "../../AppRouter";
+import {checkIfUserHasRole} from "../../utils/authUtils";
 
 
 export default class Header extends Component {
@@ -19,14 +19,14 @@ export default class Header extends Component {
     this.state = {
       isOpen: false,
       headerUrls: [
-        routerUrls.home, routerUrls.matches, routerUrls.results,
-        routerUrls.tables, routerUrls.teams, routerUrls.social
+        routerUrls.home, routerUrls.matches, routerUrls.results, routerUrls.tables,
+        routerUrls.teams, routerUrls.social, routerUrls.swagger
       ]
     };
   }
 
   renderAuthButton() {
-    appGlobal.func.checkIfEmptyJson(this.props.authUser)
+    const route = appGlobal.func.checkIfEmptyJson(this.props.authUser) ? routerUrls.login : routerUrls.home;
 
     return (
       <NavItem className="auth-btn">
@@ -66,15 +66,14 @@ export default class Header extends Component {
             <NavbarToggler onClick={this.toggle} />
             <Collapse className="header-links" isOpen={this.state.isOpen} navbar>
               <Nav navbar>
-                {headerUrls.map( el => (
-                  <NavItem key={uuidv1()}>
-                    <Link className="nav-link" to={el.url}>{el.name}</Link>
-                  </NavItem>
+                {this.state.headerUrls.map((el, index) => (
+                  checkIfUserHasRole(el.role)
+                    ? <NavItem key={index}>
+                        <Link className="nav-link" to={el.url}>{el.name}</Link>
+                      </NavItem>
+                    : null
                 ))}
-                <NavItem>
-                  <Link className="nav-link" to="/swagger-ui">Swagger</Link>
-                </NavItem>
-                <NavItem className="register">
+                <NavItem className="auth-btn">
                   <Link className="span nav-link" to='/login'>Sign in</Link>
                 </NavItem>
               </Nav>
