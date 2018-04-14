@@ -3,12 +3,12 @@ import {Route, Redirect} from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import {routerUrls} from "../../AppRouter";
-import {checkIfUserHasRole} from "../../utils/authUtils";
+import {checkUserUrlRole} from "../../utils/authUtils";
 
 
 export const RoleRoute = ({component: Component, urlRole, authUser,...rest}) => (
   <Route {...rest} render={(props) => (
-    checkIfUserHasRole(urlRole, authUser)
+    checkUserUrlRole(urlRole, authUser)
       ? <Component {...props} authUser={authUser}/>
       : <Redirect to={routerUrls.login.url} />
   )}/>

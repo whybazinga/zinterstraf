@@ -1,38 +1,28 @@
 import React, {Component} from 'react';
-import {Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem} from 'reactstrap';
+import {Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import './header.css'
 import egaHome from'../../images/ega.png';
-import {appGlobal} from "../../constants/appGlobal";
 import {routerUrls} from "../../AppRouter";
-import {checkIfUserHasRole} from "../../utils/authUtils";
+import {checkUserUrlRole, isUserAuthorized} from "../../utils/authUtils";
 
 
 export default class Header extends Component {
   constructor(props) {
     super(props);
-    this.toggle = this.toggle.bind(this);
+    this.toggleNav = this.toggleNav.bind(this);
+    this.toggleNavBtn = this.toggleNavBtn.bind(this);
     this.scrollTop = this.scrollTop.bind(this);
-    this.renderAuthButton = this.renderAuthButton.bind(this);
     this.state = {
-      isOpen: false,
+      isOpenNav: false,
+      isOpenNavBtn: false,
       headerUrls: [
         routerUrls.home, routerUrls.matches, routerUrls.results, routerUrls.tables,
         routerUrls.teams, routerUrls.social, routerUrls.swagger
       ]
     };
-  }
-
-  renderAuthButton() {
-    const route = appGlobal.func.checkIfEmptyJson(this.props.authUser) ? routerUrls.login : routerUrls.home;
-
-    return (
-      <NavItem className="auth-btn">
-        <Link className="span nav-link" to='/login'>Sign in</Link>
-      </NavItem>
-    )
   }
 
   scrollTop(e) {
@@ -51,9 +41,15 @@ export default class Header extends Component {
     scrollTo(document.documentElement, 0, 300);
   }
 
-  toggle() {
+  toggleNav() {
     this.setState({
-      isOpen: !this.state.isOpen
+      isOpenNav: !this.state.isOpenNav
+    });
+  }
+
+  toggleNavBtn() {
+    this.setState({
+      isOpenNavBtn: !this.state.isOpenNavBtn
     });
   }
 
@@ -63,18 +59,31 @@ export default class Header extends Component {
         <div className="navigation-fixed">
           <Navbar color="faded" expand="md" className="header-nav" light>
             <NavbarBrand onClick={this.scrollTop} href="#"><img src={egaHome} className="logo-home" alt="logo-header"/></NavbarBrand>
-            <NavbarToggler onClick={this.toggle} />
-            <Collapse className="header-links" isOpen={this.state.isOpen} navbar>
+            <NavbarToggler onClick={this.toggleNav} />
+            <Collapse className="header-links" isOpen={this.state.isOpenNav} navbar>
               <Nav navbar>
                 {this.state.headerUrls.map((el, index) => (
-                  checkIfUserHasRole(el.role)
+                  checkUserUrlRole(el.role, this.props.authUser)
                     ? <NavItem key={index}>
                         <Link className="nav-link" to={el.url}>{el.name}</Link>
                       </NavItem>
                     : null
                 ))}
                 <NavItem className="auth-btn">
-                  <Link className="span nav-link" to='/login'>Sign in</Link>
+                  {isUserAuthorized(this.props.authUser)
+                    ? <ButtonDropdown isOpen={this.state.isOpenNavBtn} toggle={this.toggleNavBtn}>
+                        <DropdownToggle caret>
+                          Profile
+                        </DropdownToggle>
+                        <DropdownMenu>
+                          <DropdownItem>Profile settings</DropdownItem>
+                          <DropdownItem>My team</DropdownItem>
+                          <DropdownItem divider />
+                          <DropdownItem>Logout</DropdownItem>
+                        </DropdownMenu>
+                      </ButtonDropdown>
+                    : <Link className="nav-link" to={routerUrls.login.url}>{routerUrls.login.name}</Link>
+                  }
                 </NavItem>
               </Nav>
             </Collapse>

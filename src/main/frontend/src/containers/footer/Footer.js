@@ -6,6 +6,8 @@ import uuidv1 from "uuid";
 import './style.css'
 import egaHome from'../../images/ega.png';
 import {routerUrls, externalUrls} from "../../AppRouter";
+import {checkUserUrlRole} from "../../utils/authUtils";
+import PropTypes from "prop-types";
 
 
 export default class Footer extends Component {
@@ -41,18 +43,22 @@ export default class Footer extends Component {
     return (
       <footer className="container-fluid">
         <Row className="justify-content-center footer-top pt-4 pb-4">
-          {this.state.footerUrls.map((topEl) => {
-            return(
-              <Col md="2" key={uuidv1()}>
-                <h6>{topEl.header}</h6>
-                {topEl.urls.map((childEl) => (
-                  <div key={uuidv1()}>
-                    <Link to={childEl.url}>{childEl.name}</Link>
-                  </div>
-                ))}
-              </Col>
-            );
-          })}
+          {this.state.footerUrls.map((topEl) => (
+            <Col md="2" key={uuidv1()}>
+              <h6>{topEl.header}</h6>
+              {topEl.urls.map((childEl) => (
+                childEl.role
+                  ? checkUserUrlRole(childEl.role, this.props.authUser)
+                      ? <div key={uuidv1()}>
+                          <Link to={childEl.url}>{childEl.name}</Link>
+                        </div>
+                      : null
+                  : <div key={uuidv1()}>
+                      <a href={childEl.url}>{childEl.name}</a>
+                    </div>
+              ))}
+            </Col>
+          ))}
         </Row>
         <Row className="justify-content-center footer-bottom font-weight-bold pt-2 pb-2">
           <Col sm="4">
@@ -67,3 +73,7 @@ export default class Footer extends Component {
     );
   }
 }
+
+Footer.propTypes = {
+  authUser: PropTypes.object.isRequired
+};

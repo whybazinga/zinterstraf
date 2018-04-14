@@ -9,7 +9,7 @@ const reducer = (state = initialState, action) => {
     case AUTH_CONST.AUTHENTICATE:
       return { ...state, authUser: action.payload};
     case AUTH_CONST.LOGOUT:
-      return {...state, authUser: {}};
+      return {...state, authUser: action.payload};
     default:
       return state;
   }
