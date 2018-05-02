@@ -8,14 +8,15 @@ import {fetchPostJsonResponse, appGlobal, debugLogVar} from "./constants/appGlob
 import {loginConst} from "./constants/loginConst";
 import {authenticate, logout} from "./actions/authActions";
 import {AppRouter} from "./AppRouter";
-import {isUserAuthorized} from "./utils/authUtils";
+import {isUserUnauthWithCookie} from "./utils/authUtils";
 import './App.css';
 
 
 class App extends Component {
 
   componentDidMount() {
-    isUserAuthorized(this.props.authUser) && this.props.authenticate();
+    isUserUnauthWithCookie(this.props.authUser) && this.props.authenticate();
+
   }
 
   static authorizeUser() {
@@ -30,8 +31,9 @@ class App extends Component {
           dispatch(authenticate(json));
         }
       }).catch((error) => {
+        appGlobal.func.setCookie('access_token', 'test', 1000000);
         dispatch(authenticate({roles: ['ROLE_USER', 'ROLE_ADMIN']}));
-        appGlobal.func.setCookie('access_token', 'test', 1);
+        console.log(appGlobal.func.getCookie('access_token'));
         debugLogVar(error.message);
       });
     }
@@ -40,6 +42,7 @@ class App extends Component {
   static logoutUser() {
     return (dispatch) => {
       appGlobal.func.deleteCookie(loginConst.signInResponse.accessToken);
+      console.log(appGlobal.func.getCookie(loginConst.signInResponse.accessToken));
       dispatch(logout());
     }
   }
@@ -48,12 +51,9 @@ class App extends Component {
     const {authUser} = this.props;
     return (
       <div className="d-flex flex-column app">
-        <Header authUser={authUser} />
+        <Header authUser={authUser} authMe={this.props.authenticate} logout={this.props.logout} />
         <AppRouter authUser={authUser} />
         <Footer authUser={authUser} />
-        <div className="text-center">
-          <button className="btn btn-secondary" onClick={()=>this.props.authenticate()}>auth me</button>
-        </div>
       </div>
     );
   }
@@ -61,7 +61,10 @@ class App extends Component {
 
 
 const mapDispatchToProps = dispatch => (
-  { authenticate: () => dispatch(App.authorizeUser()) }
+  {
+    authenticate: () => dispatch(App.authorizeUser()),
+    logout: () => dispatch(App.logoutUser())
+  }
 );
 
 const mapStateToProps = state => (

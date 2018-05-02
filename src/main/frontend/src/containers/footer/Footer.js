@@ -34,7 +34,7 @@ export default class Footer extends Component {
         },
         {
           header: 'Socials',
-          urls: [externalUrls.egaTwitter, externalUrls.egaFacebook, externalUrls.egaVk, externalUrls.egaVk, externalUrls.egaDiscord]
+          urls: [externalUrls.egaTwitter, externalUrls.egaFacebook, externalUrls.egaVk, externalUrls.egaInstagram, externalUrls.egaDiscord]
         }
       ]
     };

@@ -10,6 +10,7 @@ import {loginConst} from '../../constants/loginConst'
 import {FluidRowTitle} from '../../components/fluidRowTitle/FluidRowTitle'
 import {FormDynamicInput} from "../../components/formDynamicInput/FormDynamicInput"
 import {FormRowErrorHint} from "../../components/formRowErrorHint/FormRowErrorHint"
+import {isUserAuthorized} from "../../utils/authUtils";
 import './login.css'
 
 
@@ -129,7 +130,7 @@ class Login extends Component {
   }
 
   render() {
-    if (this.state.authStatus.redirect) return <Redirect to='/' />;
+    if (this.state.authStatus.redirect || isUserAuthorized(this.props.authUser)) return <Redirect to='/' />;
 
     return (
       <React.Fragment>

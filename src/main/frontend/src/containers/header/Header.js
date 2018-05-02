@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
+import {Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
@@ -69,19 +69,22 @@ export default class Header extends Component {
                       </NavItem>
                     : null
                 ))}
+                <NavItem>
+                  <button className="btn btn-secondary" onClick={()=>this.props.authMe()}>auth me</button>
+                </NavItem>
                 <NavItem className="auth-btn">
                   {isUserAuthorized(this.props.authUser)
-                    ? <ButtonDropdown isOpen={this.state.isOpenNavBtn} toggle={this.toggleNavBtn}>
-                        <DropdownToggle caret>
+                    ? <Dropdown isOpen={this.state.isOpenNavBtn} toggle={this.toggleNavBtn}>
+                        <DropdownToggle nav caret>
                           Profile
                         </DropdownToggle>
                         <DropdownMenu>
                           <DropdownItem>Profile settings</DropdownItem>
                           <DropdownItem>My team</DropdownItem>
                           <DropdownItem divider />
-                          <DropdownItem>Logout</DropdownItem>
+                          <DropdownItem onClick={()=>this.props.logout()}>Logout</DropdownItem>
                         </DropdownMenu>
-                      </ButtonDropdown>
+                      </Dropdown>
                     : <Link className="nav-link" to={routerUrls.login.url}>{routerUrls.login.name}</Link>
                   }
                 </NavItem>
@@ -96,5 +99,6 @@ export default class Header extends Component {
 }
 
 Header.propTypes = {
-  authUser: PropTypes.object.isRequired
+  authUser: PropTypes.object.isRequired,
+  authMe: PropTypes.func
 };

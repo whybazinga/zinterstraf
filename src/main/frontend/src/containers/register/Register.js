@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Row, Col, Form, FormGroup, Label} from 'reactstrap'
 import {Redirect} from 'react-router-dom'
-//import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import './register.css'
 import {FluidRowTitle} from '../../components/fluidRowTitle/FluidRowTitle'
@@ -11,9 +11,10 @@ import {countryTypes} from '../../constants/countryTypes'
 import {genderTypes} from "../../constants/genderTypes";
 import {fetchPostJsonResponse, appGlobal} from "../../constants/appGlobal";
 import {registerConst} from "../../constants/registerConst";
+import {isUserAuthorized} from "../../utils/authUtils";
 
 
-class Register extends Component {
+export default class Register extends Component {
   constructor(props) {
     super(props);
     this.onChangeElement = this.onChangeElement.bind(this);
@@ -110,7 +111,7 @@ class Register extends Component {
   }
 
   render() {
-    if(this.state.registerStatus.redirect) return <Redirect to='/' />;
+    if(this.state.registerStatus.redirect || isUserAuthorized(this.props.authUser)) return <Redirect to='/' />;
 
     return (
       <React.Fragment>
@@ -155,4 +156,6 @@ class Register extends Component {
   }
 }
 
-export default Register;
+Register.propTypes = {
+  authUser: PropTypes.object.isRequired
+};

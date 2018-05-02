@@ -38,13 +38,11 @@ export const appGlobal = (() => {
   });
 
   function _setCookie(cName,cValue,cExp) {
-    debugLogVar(cName + (cValue || ' is empty'));
+    debugLogVar(cName + cValue || ' is empty');
     if(cName && cValue && cExp) {
-      debugger;
       const expires = new Date();
       expires.setTime(expires.getTime() + cExp);
       document.cookie = cName + "=" + cValue + ";expires=" + expires.toUTCString() + ";path=/";
-      var test = _getCookie(cName);
     }
   }
 
