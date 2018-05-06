@@ -8,11 +8,15 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import com.vvopaa.zinterstraf.model.json.JsonMessage;
 import com.vvopaa.zinterstraf.service.UserService;
 import com.vvopaa.zinterstraf.service.converters.jackson.JsonMessageCreator;
+import org.springframework.web.client.RestTemplate;
 
 
 @RestController("/user")
@@ -65,6 +69,29 @@ public class UserController {
 
 		JsonMessage jsonReponse = JsonMessageCreator.createSimpleJsonMessage(data + " ez DONE");
 		return jsonReponse;
+	}
+
+	@RequestMapping(value = "/test1", produces={"application/json"}, method={RequestMethod.GET})
+	public JsonMessage testScheduler() {
+		RestTemplate template = new RestTemplate();
+
+		HttpHeaders headers = new HttpHeaders();
+		/*
+		headers.add("Content-Type", MediaType.APPLICATION_JSON.toString());
+		headers.add("Accept", MediaType.APPLICATION_JSON.toString());
+	*/
+		MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<String, String>();
+		/*
+		requestBody.add("message_id", "msgid");
+		requestBody.add("message", "qwerty");
+		requestBody.add("client_id", "111");
+		requestBody.add("secret_key", "222");
+	*/
+		HttpEntity formEntity = new HttpEntity<MultiValueMap<String, String>>(requestBody, headers);
+
+		ResponseEntity<String> response = template.exchange("http://www.dota2.com/procircuit", HttpMethod.GET, formEntity, String.class);
+
+		return JsonMessageCreator.createSimpleJsonMessage(response.toString());
 	}
 
 }
