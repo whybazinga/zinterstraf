@@ -15,7 +15,7 @@ import com.vvopaa.zinterstraf.repository.UserRoleDao;
 import com.vvopaa.zinterstraf.service.UserService;
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImp implements UserService, UserDetailsService {
 
 	@Autowired
 	private UserDao userDao;

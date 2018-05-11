@@ -13,10 +13,10 @@ import com.vvopaa.zinterstraf.service.RoleService;
 
 @Service("userRoleService")
 @Transactional
-public class UserRoleServiceImpl implements RoleService {
+public class UserRoleServiceImp implements RoleService {
 	
 	@Autowired
-    private UserRoleDao dao;
+	private UserRoleDao dao;
 	
 	@Override
 	public UserRoles findById(int id) {

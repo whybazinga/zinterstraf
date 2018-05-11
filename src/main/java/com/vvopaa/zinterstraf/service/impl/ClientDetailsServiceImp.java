@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("clientServiceImpl")
 @Transactional
-public class ClientDetailsServiceImpl implements ClientDetailsService {
+public class ClientDetailsServiceImp implements ClientDetailsService {
 
     @Autowired
     private ClientDao clientDao;

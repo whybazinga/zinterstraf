@@ -1,5 +1,6 @@
 package com.vvopaa.zinterstraf.scheduler;
 
+import com.vvopaa.zinterstraf.service.ProTeamService;
 import com.vvopaa.zinterstraf.service.UserService;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
