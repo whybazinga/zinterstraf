@@ -1,22 +1,19 @@
 package com.vvopaa.zinterstraf.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
+@Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name="client_scopes")
-public class ClientScopes extends AbstractEntity {
+class ClientScopes extends AbstractEntity {
 
     @Column(name = "scope", unique = true)
     private String scope;
-
-    public String getScope() {
-        return scope;
-    }
-
-    public void setScope(String scope) {
-        this.scope = scope;
-    }
 
 }

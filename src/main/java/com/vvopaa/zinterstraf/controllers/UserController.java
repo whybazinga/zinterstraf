@@ -80,7 +80,7 @@ public class UserController {
 		headers.add("Content-Type", MediaType.APPLICATION_JSON.toString());
 		headers.add("Accept", MediaType.APPLICATION_JSON.toString());
 	*/
-		MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<String, String>();
+		MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
 		/*
 		requestBody.add("message_id", "msgid");
 		requestBody.add("message", "qwerty");
