@@ -1,5 +1,7 @@
 package com.vvopaa.zinterstraf.service;
 
-public interface ProTeamService {
+import com.vvopaa.zinterstraf.model.ProTeam;
 
+public interface ProTeamService {
+  ProTeam saveProTeam(ProTeam proTeam);
 }
