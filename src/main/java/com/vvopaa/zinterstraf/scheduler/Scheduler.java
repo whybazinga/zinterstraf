@@ -77,5 +77,8 @@ public class Scheduler {
 
   }
 
-
+  private <T extends > T getReadyClassBuilder(Class<T> builderClass) throws IllegalAccessException, InstantiationException {
+    T test = builderClass.newInstance();
+    return null;
+  }
 }

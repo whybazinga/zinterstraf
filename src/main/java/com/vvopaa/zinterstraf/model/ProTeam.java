@@ -49,7 +49,7 @@ public class ProTeam extends AbstractEntity {
     this.points = builder.points;
   }
 
-  public static class ProTeamBuilder {
+  public static class ProTeamBuilder implements Builder {
     private String rank;
     private String img;
     private String name;
@@ -70,6 +70,8 @@ public class ProTeam extends AbstractEntity {
       }
     }
 
+
+    @Override
     public ProTeam build() {
       return new ProTeam(this);
     }
