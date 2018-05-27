@@ -11,9 +11,9 @@ public interface UserDao extends JpaRepository<User, Integer> {
 	
 	User findByUsername(String username);
 
-	@Query(value="SELECT ou FROM oauth_users ou " +
-			"INNER JOIN link_users_roles lur ON ou.id = lur.id_user " +
-			"INNER JOIN user_roles us ON us.id = lur.id_role " +
-			"WHERE us.role = :role", nativeQuery = true)
+	@Query(value="SELECT u FROM User u " +
+			"INNER JOIN u.userRoles as ulr ON ulr. = lur.id_user " +
+			"INNER JOIN UserRoles ur ON ur.id = lur.id_role " +
+			"WHERE ur.role = :role")
 	List<User> findUsersByRole(@Param("role") String role);
 }

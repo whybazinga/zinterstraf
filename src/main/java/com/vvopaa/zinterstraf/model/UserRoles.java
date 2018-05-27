@@ -14,8 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Table(name="user_roles")
-public class UserRoles extends AbstractEntity implements GrantedAuthority, Serializable {
-	private static final long serialVersionUID = 1L;
+public class UserRoles extends AbstractEntity implements GrantedAuthority {
 
 	@Column(name="role", unique = true)
 	private String role;
