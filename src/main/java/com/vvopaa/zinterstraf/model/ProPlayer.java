@@ -62,9 +62,8 @@ public class ProPlayer extends AbstractEntity {
           .runFunctionIfTrue(domEl.hasClass(CLASS_POINTS), () ->  this.points = Integer.parseInt(domEl.text()))
           .runFunctionIfTrue(domEl.hasClass(CLASS_TEAM_NAME), () ->  this.teamName = domEl.text());
       } catch (NullPointerException ex) {
-        LOGGER.info("Local param was written. Exit from function.");
+        LOGGER.info(DomBuilder.TXT_WRITTEN);
       }
-
       return this;
     }
 

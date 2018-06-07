@@ -69,14 +69,13 @@ public class ProTeam extends AbstractEntity {
       try {
         FunctionUtil.getInstance()
           .runFunctionIfTrue(domEl.hasClass(CLASS_RANK), () -> this.rank = Integer.parseInt(domEl.text()))
-          .runFunctionIfTrue(domEl.hasClass(CLASS_TEAM_LOGO), () -> this.img = domEl.firstElementSibling().attr("src"))
+          .runFunctionIfTrue(domEl.hasClass(CLASS_TEAM_LOGO), () -> this.img = domEl.firstElementSibling().attr(DomBuilder.SRC_ATTRIBUTE))
           .runFunctionIfTrue(domEl.hasClass(CLASS_TEAM_NAME), () -> this.name = domEl.text())
           .runFunctionIfTrue(domEl.hasClass(CLASS_EARNINGS), () ->  this.earnings = Integer.parseInt(domEl.text()))
           .runFunctionIfTrue(domEl.hasClass(CLASS_POINTS), () ->  this.points = Integer.parseInt(domEl.text()));
       } catch (NullPointerException ex) {
-        LOGGER.info("Local param was written. Exit from function.");
+        LOGGER.info(DomBuilder.TXT_WRITTEN);
       }
-
       return this;
     }
 
