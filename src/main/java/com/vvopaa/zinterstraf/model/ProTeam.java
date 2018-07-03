@@ -29,11 +29,11 @@ public class ProTeam extends AbstractEntity {
   @Column
   private String img;
 
-  @Column
+  @Column(unique = true)
   private String name;
 
   @Column
-  private Integer earnings;
+  private String earnings;
 
   @Column
   private Integer points;
@@ -49,6 +49,13 @@ public class ProTeam extends AbstractEntity {
     this.points = builder.points;
   }
 
+  @Override
+  public String toString() {
+    return "ProTeam{" +
+      "name='" + name + '\'' +
+      '}';
+  }
+
   public static class ProTeamBuilder implements DomBuilder {
     private static final String CLASS_RANK = "rankColumn";
     private static final String CLASS_TEAM_LOGO = "teamLogoColumn";
@@ -61,7 +68,7 @@ public class ProTeam extends AbstractEntity {
     private Integer rank;
     private String img;
     private String name;
-    private Integer earnings;
+    private String earnings;
     private Integer points;
 
     @Override
@@ -69,12 +76,14 @@ public class ProTeam extends AbstractEntity {
       try {
         FunctionUtil.getInstance()
           .runFunctionIfTrue(domEl.hasClass(CLASS_RANK), () -> this.rank = Integer.parseInt(domEl.text()))
-          .runFunctionIfTrue(domEl.hasClass(CLASS_TEAM_LOGO), () -> this.img = domEl.firstElementSibling().attr(DomBuilder.SRC_ATTRIBUTE))
+          .runFunctionIfTrue(domEl.hasClass(CLASS_TEAM_LOGO), () -> this.img = domEl.children().get(0).attr(DomBuilder.SRC_ATTRIBUTE))
           .runFunctionIfTrue(domEl.hasClass(CLASS_TEAM_NAME), () -> this.name = domEl.text())
-          .runFunctionIfTrue(domEl.hasClass(CLASS_EARNINGS), () ->  this.earnings = Integer.parseInt(domEl.text()))
+          .runFunctionIfTrue(domEl.hasClass(CLASS_EARNINGS), () ->  this.earnings = domEl.text())
           .runFunctionIfTrue(domEl.hasClass(CLASS_POINTS), () ->  this.points = Integer.parseInt(domEl.text()));
       } catch (NullPointerException ex) {
         LOGGER.info(DomBuilder.TXT_WRITTEN);
+      } catch (Exception e) {
+        LOGGER.info(e.getMessage());
       }
       return this;
     }

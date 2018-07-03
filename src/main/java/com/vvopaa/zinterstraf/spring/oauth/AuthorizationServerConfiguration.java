@@ -29,7 +29,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Autowired
     public AuthorizationServerConfiguration(
-            UserDetailsService userDetailsService,
+      @Qualifier("userServiceImp") UserDetailsService userDetailsService,
             @Qualifier("clientServiceImpl") ClientDetailsService clientDetailsService,
             TokenStore tokenStore,
             @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager) {

@@ -7,13 +7,15 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface UserDao extends JpaRepository<User, Integer> {
+public interface UserDao extends JpaRepository<User, Long> {
 	
 	User findByUsername(String username);
 
+	/*
 	@Query(value="SELECT u FROM User u " +
-			"INNER JOIN u.userRoles as ulr ON ulr. = lur.id_user " +
+			"INNER JOIN link_users_roles lur ON lur.id_user = u.id " +
 			"INNER JOIN UserRoles ur ON ur.id = lur.id_role " +
 			"WHERE ur.role = :role")
 	List<User> findUsersByRole(@Param("role") String role);
+	*/
 }

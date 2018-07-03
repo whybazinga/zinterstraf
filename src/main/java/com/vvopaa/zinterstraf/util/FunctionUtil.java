@@ -1,11 +1,6 @@
 package com.vvopaa.zinterstraf.util;
 
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.Callable;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.IntConsumer;
 
 public class FunctionUtil {
 

@@ -20,7 +20,7 @@ public class ProPlayer extends AbstractEntity {
   @Column
   private Integer rank;
 
-  @Column
+  @Column(unique = true)
   private String name;
 
   @ManyToOne
@@ -38,6 +38,14 @@ public class ProPlayer extends AbstractEntity {
     this.name = builder.name;
     this.points = builder.points;
     this.teamName = builder.teamName;
+  }
+
+  @Override
+  public String toString() {
+    return "ProPlayer{" +
+      "name='" + name + '\'' +
+      ", teamName='" + teamName + '\'' +
+      '}';
   }
 
   public static class ProPlayerBuilder implements DomBuilder {

@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import java.math.BigDecimal;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -18,7 +17,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class ProSchedule extends AbstractEntity {
 
-  @Column
+  @Column(unique = true)
   private String dateFromTo;
 
   @Column
@@ -28,10 +27,7 @@ public class ProSchedule extends AbstractEntity {
   private String country;
 
   @Column
-  private BigDecimal prize;
-
-  @Column
-  private String currency;
+  private String prize;
 
   @Column
   private Integer points;
@@ -44,9 +40,15 @@ public class ProSchedule extends AbstractEntity {
     this.status = builder.status;
     this.country = builder.country;
     this.prize = builder.prize;
-    this.currency = builder.currency;
     this.points = builder.points;
     this.organizerImgUrl = builder.organizerImgUrl;
+  }
+
+  @Override
+  public String toString() {
+    return "ProSchedule{" +
+      "status='" + status + '\'' +
+      '}';
   }
 
   public static class ProScheduleBuilder implements DomBuilder {
@@ -62,8 +64,7 @@ public class ProSchedule extends AbstractEntity {
     private String dateFromTo;
     private String status;
     private String country;
-    private BigDecimal prize;
-    private String currency;
+    private String prize;
     private Integer points;
     private String organizerImgUrl;
 
@@ -73,11 +74,11 @@ public class ProSchedule extends AbstractEntity {
       try {
         FunctionUtil.getInstance()
           .runFunctionIfTrue(domEl.hasClass(CLASS_DATE), () -> this.dateFromTo = domEl.text())
-          .runFunctionIfTrue(domEl.hasClass(CLASS_STATUS), () -> this.status = domEl.firstElementSibling().attr(DomBuilder.SRC_ATTRIBUTE))
+          .runFunctionIfTrue(domEl.hasClass(CLASS_STATUS), () -> this.status = domEl.text())
           .runFunctionIfTrue(domEl.hasClass(CLASS_COUNTRY), () -> this.country = domEl.text())
-          .runFunctionIfTrue(domEl.hasClass(CLASS_PRIZE), () ->  this.prize = new BigDecimal(domEl.text()))
+          .runFunctionIfTrue(domEl.hasClass(CLASS_PRIZE), () ->  this.prize = domEl.text())
           .runFunctionIfTrue(domEl.hasClass(CLASS_POINTS), () ->  this.points = Integer.parseInt(domEl.text()))
-          .runFunctionIfTrue(domEl.hasClass(CLASS_ORGANIZER), () ->  this.organizerImgUrl = domEl.firstElementSibling().attr(DomBuilder.SRC_ATTRIBUTE));
+          .runFunctionIfTrue(domEl.hasClass(CLASS_ORGANIZER), () ->  this.organizerImgUrl = domEl.children().get(0).attr(DomBuilder.SRC_ATTRIBUTE));
       } catch (NullPointerException ex) {
         LOGGER.info(DomBuilder.TXT_WRITTEN);
       }
@@ -85,7 +86,7 @@ public class ProSchedule extends AbstractEntity {
     }
 
     @Override
-    public Object build() {
+    public ProSchedule build() {
       return new ProSchedule(this);
     }
   }

@@ -15,19 +15,18 @@ import com.vvopaa.zinterstraf.repository.UserRoleDao;
 import com.vvopaa.zinterstraf.service.UserService;
 
 @Service
+@Transactional
 public class UserServiceImp implements UserService, UserDetailsService {
 
 	@Autowired
 	private UserDao userDao;
 
 	@Override
-	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		return userDao.findByUsername(username);
 	}
 
 	@Override
-	@Transactional
 	public User saveUser(String login, String pass) throws UsernameAlreadyExistsException {
 		User user = new User();
 		user.setUsername(login);

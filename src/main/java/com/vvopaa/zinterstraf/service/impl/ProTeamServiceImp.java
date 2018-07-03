@@ -5,18 +5,21 @@ import com.vvopaa.zinterstraf.repository.ProTeamDao;
 import com.vvopaa.zinterstraf.service.ProTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 
 @Service
+@Transactional
 public class ProTeamServiceImp implements ProTeamService {
 
   @Autowired
   private ProTeamDao proTeamdao;
 
   @Override
-  public ProTeam saveProTeamByBuilder(ProTeam.ProTeamBuilder teamBuilder) {
-    return proTeamdao.save(Optional.ofNullable(teamBuilder).orElseThrow(IllegalArgumentException::new).build());
+  public List<ProTeam> saveList(List<ProTeam> entityList) {
+    return Optional.ofNullable(entityList).isPresent() ? proTeamdao.saveAll(entityList) : null;
   }
 }

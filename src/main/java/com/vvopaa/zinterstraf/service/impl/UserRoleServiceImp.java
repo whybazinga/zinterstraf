@@ -16,21 +16,16 @@ import com.vvopaa.zinterstraf.service.RoleService;
 public class UserRoleServiceImp implements RoleService {
 	
 	@Autowired
-	private UserRoleDao dao;
-	
-	@Override
-	public UserRoles findById(int id) {
-		return dao.findOne(id);
-	}
+	private UserRoleDao userRoleDao;
 
 	@Override
 	public UserRoles findByRole(String role) {
-		return dao.findByRole(role);
+		return userRoleDao.findByRole(role);
 	}
 
 	@Override
 	public List<UserRoles> findAll() {
-		return dao.findAll();
+		return userRoleDao.findAll();
 	}
 
 }

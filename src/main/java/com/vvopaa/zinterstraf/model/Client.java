@@ -1,6 +1,5 @@
 package com.vvopaa.zinterstraf.model;
 
-import com.vvopaa.zinterstraf.util.ArrayUtil;
 import com.vvopaa.zinterstraf.util.StringUtil;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -71,7 +70,7 @@ public class Client extends AbstractEntity implements ClientDetails, Serializabl
     @Override
     public Set<String> getResourceIds() {
         Set<String> resources = new HashSet<>();
-        if(ArrayUtil.isNotEmptyCollection(resourceIds)) {
+        if(!resourceIds.isEmpty()) {
             resourceIds.forEach(item->resources.add(item.getResourceId()));
         }
         return resources;
@@ -89,13 +88,13 @@ public class Client extends AbstractEntity implements ClientDetails, Serializabl
 
     @Override
     public boolean isScoped() {
-        return ArrayUtil.isNotEmptyCollection(scope);
+        return !scope.isEmpty();
     }
 
     @Override
     public Set<String> getScope() {
         Set<String> scopes = new HashSet<>();
-        if(ArrayUtil.isNotEmptyCollection(scope)) {
+        if(!scope.isEmpty()) {
             scope.forEach(item->scopes.add(item.getScope()));
         }
         return scopes;
@@ -104,7 +103,7 @@ public class Client extends AbstractEntity implements ClientDetails, Serializabl
     @Override
     public Set<String> getAuthorizedGrantTypes() {
         Set<String> grantTypes = new HashSet<>();
-        if(ArrayUtil.isNotEmptyCollection(authGrantTypes)) {
+        if(!authGrantTypes.isEmpty()) {
             authGrantTypes.forEach(item->grantTypes.add(item.getGrantType()));
         }
         return grantTypes;

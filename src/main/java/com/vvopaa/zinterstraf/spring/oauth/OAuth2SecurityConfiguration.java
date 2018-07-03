@@ -1,5 +1,6 @@
 package com.vvopaa.zinterstraf.spring.oauth;
 
+import com.vvopaa.zinterstraf.service.impl.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -37,9 +38,7 @@ public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
     };
 
     @Autowired
-    public OAuth2SecurityConfiguration(
-            @Qualifier("userServiceImp") UserDetailsService userDetailsService,
-            @Qualifier("prodDataSource") DataSource dataSource) {
+    public OAuth2SecurityConfiguration(UserServiceImp userDetailsService, @Qualifier("dataSource") DataSource dataSource) {
         this.dataSource = dataSource;
         this.userDetailsService = userDetailsService;
     }

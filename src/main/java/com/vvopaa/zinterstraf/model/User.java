@@ -20,20 +20,19 @@ import javax.persistence.JoinColumn;
 public class User extends AbstractEntity implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
-	@Email
-	@Column(name="username", unique = true)
+	@Column(unique = true)
 	private String username;
 
-	@Column(name="password")
+	@Column
 	private String password;
 
-	@Column(name="created", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private Date created;
 
-	@Column(name="updated", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
 	private Date updated;
 
-	@Column(name="acc_status")
+	@Column
 	private int accStatus;
 
 	@ManyToMany(fetch = FetchType.EAGER)

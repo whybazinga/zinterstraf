@@ -1,4 +1,5 @@
 
+
 INSERT IGNORE INTO zinterdb.oauth_users (username, password, acc_status)
 VALUES ('t@t.t', '$2a$04$sJjk4.1ecL7I1NF3hFUZueq6LDBj2hIRLdo2U5GmYdoeA9XYpfREu', 1);
 
@@ -33,6 +34,7 @@ INSERT IGNORE INTO zinterdb.link_client_resource (id_client, id_resource)(
   where oauth_clients.id = 1
 );
 
+
 create table if not exists oauth_client_token (
   token_id VARCHAR(256),
   token long varbinary,
@@ -40,7 +42,6 @@ create table if not exists oauth_client_token (
   user_name VARCHAR(256),
   client_id VARCHAR(256)
 );
-
 
 create table if not exists oauth_access_token (
   token_id VARCHAR(256),
@@ -71,3 +72,4 @@ create table if not exists oauth_approvals (
   expiresAt TIMESTAMP,
   lastModifiedAt TIMESTAMP
 );
+
