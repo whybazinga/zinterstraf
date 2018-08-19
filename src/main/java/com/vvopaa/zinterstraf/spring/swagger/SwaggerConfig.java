@@ -1,4 +1,4 @@
-package com.vvopaa.zinterstraf.spring;
+package com.vvopaa.zinterstraf.spring.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

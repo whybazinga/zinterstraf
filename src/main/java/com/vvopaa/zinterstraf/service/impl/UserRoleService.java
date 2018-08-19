@@ -1,30 +1,26 @@
 package com.vvopaa.zinterstraf.service.impl;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
-
+import com.vvopaa.zinterstraf.model.UserRole;
 import com.vvopaa.zinterstraf.repository.UserRoleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.vvopaa.zinterstraf.model.UserRoles;
-import com.vvopaa.zinterstraf.service.RoleService;
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
 @Service("userRoleService")
 @Transactional
-public class UserRoleServiceImp implements RoleService {
+public class UserRoleService {
 	
 	@Autowired
 	private UserRoleDao userRoleDao;
 
-	@Override
-	public UserRoles findByRole(String role) {
+	public Optional<UserRole> findByRole(String role) {
 		return userRoleDao.findByRole(role);
 	}
 
-	@Override
-	public List<UserRoles> findAll() {
+	public List<UserRole> findAll() {
 		return userRoleDao.findAll();
 	}
 

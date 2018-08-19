@@ -1,5 +1,5 @@
 package com.vvopaa.zinterstraf.spring.oauth;
-
+/*
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -11,13 +11,11 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
-/**
- * Registers a client with client-id ‘my-trusted-client’ and password ‘secret’ and roles & scope he is allowed for.
- * Specifies that any generated access token will be valid for only 120 seconds
- * Specifies that any generated refresh token will be valid for only 600 seconds
- */
+
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
@@ -26,17 +24,21 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private final ClientDetailsService clientDetailsService;
     private final TokenStore tokenStore;
     private final AuthenticationManager authenticationManager;
+    private final JwtAccessTokenConverter jwtAccessTokenConverter;
+    private final DefaultTokenServices defaultTokenServices;
 
     @Autowired
     public AuthorizationServerConfiguration(
       @Qualifier("userServiceImp") UserDetailsService userDetailsService,
-            @Qualifier("clientServiceImpl") ClientDetailsService clientDetailsService,
-            TokenStore tokenStore,
-            @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager) {
+      @Qualifier("clientServiceImpl") ClientDetailsService clientDetailsService,
+      TokenStore tokenStore,
+      @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager, JwtAccessTokenConverter jwtAccessTokenConverter, DefaultTokenServices defaultTokenServices) {
         this.userDetailsService = userDetailsService;
         this.clientDetailsService = clientDetailsService;
         this.tokenStore = tokenStore;
         this.authenticationManager = authenticationManager;
+        this.jwtAccessTokenConverter = jwtAccessTokenConverter;
+        this.defaultTokenServices = defaultTokenServices;
     }
 
     @Override
@@ -48,12 +50,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
             .tokenStore(tokenStore) // Persist tokens to database
+            .tokenServices(defaultTokenServices)
             .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsService);
-            /*
-            .approvalStoreDisabled()
-            .userDetailsService(customUserDetailService);
-            */
+            .accessTokenConverter(jwtAccessTokenConverter)
+            .userDetailsService(userDetailsService);
+
     }
 
     @Override
@@ -61,8 +62,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         oauthServer
             .tokenKeyAccess("permitAll()")
             .checkTokenAccess("isAuthenticated()");
-        /*Don't allow tokens to be delivered from token access point as well as for tokens to be validated from this point*/
+        //Don't allow tokens to be delivered from token access point as well as for tokens to be validated from this point
     }
 
 }
 
+*/

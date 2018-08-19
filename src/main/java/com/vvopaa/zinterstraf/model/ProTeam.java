@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,6 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name="pro_team")
 public class ProTeam extends AbstractEntity {
 
   @Column

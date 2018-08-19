@@ -1,27 +1,23 @@
-package com.vvopaa.zinterstraf.scheduler;
+package com.vvopaa.zinterstraf.controllers;
 
-import com.vvopaa.zinterstraf.model.ProPlayer;
-import com.vvopaa.zinterstraf.model.ProSchedule;
-import com.vvopaa.zinterstraf.model.ProTeam;
+import com.vvopaa.zinterstraf.model.json.JsonMessage;
+import com.vvopaa.zinterstraf.service.converters.jackson.JsonMessageCreator;
 import com.vvopaa.zinterstraf.service.impl.ProPlayerService;
 import com.vvopaa.zinterstraf.service.impl.ProTeamService;
 import com.vvopaa.zinterstraf.service.impl.ProScheduleService;
-import org.jsoup.HttpStatusException;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.security.Principal;
 
-@Component
-public class Scheduler {
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(Scheduler.class);
+//@CrossOrigin(origins = "http://petstore.swagger.io", maxAge = 3600)
+@RestController("/tools")
+public class ToolsController {
+  private static final Logger LOGGER = LoggerFactory.getLogger(ToolsController.class);
   private static final String PRO_TEAMS_URL = "http://www.dota2.com/procircuit";
 
   private static final String ID_TEAMS_BODY = "teamsBody";
@@ -39,19 +35,18 @@ public class Scheduler {
   private final ProScheduleService proProScheduleService;
 
   @Autowired
-  public Scheduler(ProTeamService proTeamService, ProPlayerService proPlayerService, ProScheduleService proProScheduleService) {
+  public ToolsController(ProTeamService proTeamService, ProPlayerService proPlayerService, ProScheduleService proProScheduleService) {
     this.proTeamService = proTeamService;
     this.proPlayerService = proPlayerService;
     this.proProScheduleService = proProScheduleService;
   }
 
 
-  //@Scheduled(cron = "0 15 10 15 * ?")
-  public void cronProCircuit() {
+  @RequestMapping(value = "/wow", produces={"application/json"}, method={RequestMethod.POST})
+  public JsonMessage crawlProCircuit() {
+    /*
     try {
       Document doc = Jsoup.connect(PRO_TEAMS_URL).get();
-
-      Thread teamsThread = new Thread(() -> {
         List<ProTeam> teams = new ArrayList<>();
         doc.getElementById(ID_TEAMS_BODY).select(CLASS_TEAMS).forEach(teamElement-> {
           ProTeam.ProTeamBuilder teamBuilder = new ProTeam.ProTeamBuilder();
@@ -78,13 +73,9 @@ public class Scheduler {
             players.add(player);
           }
         });
-
         proTeamService.saveList(teams);
         proPlayerService.saveList(players);
-      });
-      teamsThread.start();
 
-      Thread scheduleThread = new Thread(() -> {
         List<ProSchedule> proScheduleList = new ArrayList<>();
         doc.getElementById(ID_SCHEDULE_BODY).select(CLASS_SCHEDULE).forEach(teamElement-> {
           ProSchedule.ProScheduleBuilder scheduleBuilder = new ProSchedule.ProScheduleBuilder();
@@ -94,10 +85,8 @@ public class Scheduler {
             proScheduleList.add(proScheduleEl);
           }
         });
-        proProScheduleService.saveList(proScheduleList);
-      });
+        proScheduleService.saveList(proScheduleList);
 
-      scheduleThread.start();
     } catch (HttpStatusException httpExc) {
       LOGGER.warn(httpExc.getMessage());
     } catch (IOException e) {
@@ -105,6 +94,13 @@ public class Scheduler {
     } finally {
       LOGGER.info(Scheduler.class.getName().concat(" parsed ").concat(PRO_TEAMS_URL));
     }
+    */
+    return JsonMessageCreator.createSimpleJsonMessage("Crawling has been done");
+  }
 
+  @RequestMapping(value = "/test", produces={"application/json"}, method={RequestMethod.POST})
+  public JsonMessage crawlProCircuit(Principal principal) {
+
+    return JsonMessageCreator.createSimpleJsonMessage(principal.toString());
   }
 }

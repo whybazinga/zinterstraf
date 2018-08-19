@@ -1,5 +1,5 @@
 package com.vvopaa.zinterstraf.spring.oauth;
-
+/*
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,3 +27,4 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
             .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
 }
+*/

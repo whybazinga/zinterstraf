@@ -1,10 +1,12 @@
 package com.vvopaa.zinterstraf.repository;
 
 
-import com.vvopaa.zinterstraf.model.UserRoles;
+import com.vvopaa.zinterstraf.model.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRoleDao extends JpaRepository<UserRoles, Long> {
+import java.util.Optional;
 
-    UserRoles findByRole(String role);
+public interface UserRoleDao extends JpaRepository<UserRole, Long> {
+
+    Optional<UserRole> findByRole(String role);
 }

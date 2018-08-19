@@ -1,5 +1,5 @@
 package com.vvopaa.zinterstraf.spring.oauth;
-
+/*
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -15,3 +15,4 @@ public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
         return new OAuth2MethodSecurityExpressionHandler();
     }
 }
+*/

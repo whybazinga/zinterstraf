@@ -1,22 +1,14 @@
 package com.vvopaa.zinterstraf.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vvopaa.zinterstraf.model.enums.UserStatuses;
-import org.hibernate.validator.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import java.util.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.JoinColumn;
-
 @Entity
-@Table(name="oauth_users")
 public class User extends AbstractEntity implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
@@ -24,6 +16,7 @@ public class User extends AbstractEntity implements UserDetails {
 	private String username;
 
 	@Column
+	@JsonIgnore
 	private String password;
 
 	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -37,11 +30,11 @@ public class User extends AbstractEntity implements UserDetails {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
-			name = "link_users_roles",
+			name = "link_user_role",
 			joinColumns = { @JoinColumn(name = "id_user") },
 			inverseJoinColumns = { @JoinColumn(name = "id_role") }
 	)
-	private Set<UserRoles> userRoles = new HashSet<>();
+	private Set<UserRole> userRoles = new HashSet<>();
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -110,11 +103,33 @@ public class User extends AbstractEntity implements UserDetails {
 		this.accStatus = accStatus;
 	}
 
-	public Set<UserRoles> getUserRoles() {
+	public Set<UserRole> getUserRoles() {
 		return userRoles;
 	}
 
-	public void setUserRoles(Set<UserRoles> userRoles) {
+	public void setUserRoles(Set<UserRole> userRoles) {
 		this.userRoles = userRoles;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof User)) return false;
+		if (!super.equals(o)) return false;
+		User user = (User) o;
+		return Objects.equals(username, user.username) &&
+			Objects.equals(userRoles, user.userRoles);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), username, userRoles);
+	}
+
+	public static User create(String username, String password) {
+		User user = new User();
+		user.setUsername(username);
+		user.setPassword(password);
+		return user;
 	}
 }

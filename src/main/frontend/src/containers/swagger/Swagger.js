@@ -7,7 +7,7 @@ class SwaggerTest extends Component {
   componentDidMount() {
       SwaggerUi({
         dom_id: '#swaggerContainer',
-        url: 'http://localhost:8080/v2/api-docs' //'http://' + window.location.host + '/v2/api-docs'
+        url: 'http://localhost/v2/api-docs' //'http://' + window.location.host + '/v2/api-docs'
       });
   }
 

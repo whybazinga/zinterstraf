@@ -17,7 +17,7 @@ export const appGlobal = (() => {
       date: 'date'
     },
     func: {
-      getFullUrlByPath: (path) => (window.location.protocol + '//localhost:8080' + path), //window.location.host
+      getFullUrlByPath: (path) => (window.location.protocol + '//localhost' + path), //window.location.host
       getFormEncodedParams: (json) => ( Object.keys(json).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(json[key])).join('&') ),
       setCookie: _setCookie,
       getCookie: _getCookie,

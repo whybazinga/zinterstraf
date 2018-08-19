@@ -23,4 +23,5 @@ B) Just do the following points step by step:
 5. Start the application:
  - mvn spring-boot:run
 
+(if java = 9 -> add to jvm: --add-modules java.xml.bind )
 
