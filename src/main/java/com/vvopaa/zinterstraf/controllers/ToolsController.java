@@ -99,8 +99,8 @@ public class ToolsController {
   }
 
   @RequestMapping(value = "/test", produces={"application/json"}, method={RequestMethod.POST})
-  public JsonMessage crawlProCircuit(Principal principal) {
+  public JsonMessage crawlProCircuit(String msg) {
 
-    return JsonMessageCreator.createSimpleJsonMessage(principal.toString());
+    return JsonMessageCreator.createSimpleJsonMessage(msg);
   }
 }

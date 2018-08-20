@@ -1,5 +1,5 @@
 package com.vvopaa.zinterstraf.spring.oauth2;
-
+/*
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.lang.annotation.*;
@@ -11,3 +11,4 @@ import java.lang.annotation.*;
 public @interface CurrentUser {
 
 }
+*/

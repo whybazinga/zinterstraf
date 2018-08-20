@@ -16,6 +16,8 @@ import java.util.Arrays;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+  private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
+    "classpath:/resources/", "classpath:/static/", "classpath:/public/" };
 
   @Bean(name = "appMessages")
   public MessageSource messageSource() {
@@ -41,18 +43,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
         .addResourceLocations("classpath:/global/")
         .setCachePeriod(4600);
     }
-    if (!registry.hasMappingForPattern("/resources/**")) {
-      registry
-        .addResourceHandler("/resources/**")
-        .addResourceLocations("/resources/");
-    }
     /*
-    if (!registry.hasMappingForPattern("/static/**")) {
-      registry.addResourceHandler("/static/**")
-        .addResourceLocations("classpath:/public/")
-        .setCachePeriod(4600);
+    if (!registry.hasMappingForPattern("/**")) {
+      registry.addResourceHandler("/**").addResourceLocations(
+        CLASSPATH_RESOURCE_LOCATIONS);
     }
-    */
+  */
   }
 
   @Bean

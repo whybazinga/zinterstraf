@@ -10,6 +10,7 @@ import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -42,7 +43,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
   private final JwtAuthenticationEntryPoint unauthorizedHandler;
 
   @Autowired
-  public WebSecurityConfiguration(@Qualifier("userService") UserDetailsService userDetailsService, JwtAuthenticationEntryPoint unauthorizedHandler) {
+  public WebSecurityConfiguration(@Qualifier("UserDetailsMain") UserDetailsService userDetailsService, JwtAuthenticationEntryPoint unauthorizedHandler) {
     this.userDetailsService = userDetailsService;
     this.unauthorizedHandler = unauthorizedHandler;
   }
@@ -65,6 +66,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
+    /*
     http
       .cors().and()
       .csrf()
@@ -78,6 +80,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         .anyRequest().permitAll(); //authenticated();
 
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+    */
+  }
+
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+    web.ignoring().antMatchers("/**");
   }
 
   @Override

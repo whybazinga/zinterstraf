@@ -65,19 +65,19 @@ public class AuthController {
     return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
   }
 
-  @RequestMapping(value = "/sign-up", produces={"application/json"}, method={RequestMethod.POST})
-  @ApiOperation(value = "Register new user", nickname = "sign-up user")
-  public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+  @RequestMapping(value = "/sign-up", method={RequestMethod.POST})
+  //@ApiOperation(value = "Register new user", nickname = "sign-up user")
+  public ResponseEntity<?> registerUser( @RequestBody SignUpRequest signUpRequest) {
     User user = User.create(signUpRequest.getEmail(),signUpRequest.getPassword());
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     UserRole userRole = roleService.findByRole(UserRoleTypes.USER.getValue()).orElseThrow(() -> new AppException("User Role not set."));
     user.setUserRoles(Collections.singleton(userRole));
 
-    User result = null;
+    User result;
     try {
       result = userService.save(user);
     } catch (UsernameAlreadyExistsException e) {
-      return new ResponseEntity(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
+      return ResponseEntity.ok(new ApiResponse(false, e.getMessage()));
     }
 
     URI location = ServletUriComponentsBuilder

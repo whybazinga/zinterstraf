@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@Service
+@Service("UserDetailsMain")
 @Transactional
 public class UserService implements UserDetailsService {
 
@@ -43,6 +43,6 @@ public class UserService implements UserDetailsService {
 
 	public User getUserByUsername(String username) {
 	  Optional<User> userOpt = userDao.findByUsername(username);
-		return userOpt.isPresent() ? userOpt.get() : null;
+		return userOpt.orElse(null);
 	}
 }
