@@ -66,7 +66,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
-    /*
     http
       .cors().and()
       .csrf()
@@ -76,11 +75,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
       .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
       .authorizeRequests()
-        //.antMatchers(commonUrls).permitAll()
-        .anyRequest().permitAll(); //authenticated();
+        .antMatchers(commonUrls).permitAll()
+        .anyRequest().authenticated();
 
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-    */
   }
 
   @Override
