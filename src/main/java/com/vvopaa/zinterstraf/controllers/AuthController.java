@@ -5,8 +5,7 @@ import com.vvopaa.zinterstraf.exception.UsernameAlreadyExistsException;
 import com.vvopaa.zinterstraf.model.User;
 import com.vvopaa.zinterstraf.model.UserRole;
 import com.vvopaa.zinterstraf.model.enums.UserRoleTypes;
-import com.vvopaa.zinterstraf.model.json.JsonMessage;
-import com.vvopaa.zinterstraf.payload.ApiResponse;
+import com.vvopaa.zinterstraf.payload.ApisResponse;
 import com.vvopaa.zinterstraf.payload.JwtAuthenticationResponse;
 import com.vvopaa.zinterstraf.payload.SignInRequest;
 import com.vvopaa.zinterstraf.payload.SignUpRequest;
@@ -15,6 +14,8 @@ import com.vvopaa.zinterstraf.service.impl.UserRoleService;
 import com.vvopaa.zinterstraf.service.impl.UserService;
 import com.vvopaa.zinterstraf.spring.oauth2.JwtTokenProvider;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,7 +33,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.Collections;
 
-@RestController("/auth")
+@RestController
+@RequestMapping("/auth")
 public class AuthController {
 
   private final AuthenticationManager  authenticationManager;
@@ -66,11 +68,16 @@ public class AuthController {
     return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
   }
 
-  //@ApiOperation(value = "Register new user", nickname = "sign-up user")
+  @RequestMapping(value = "/sign-test", produces={"text/plain"}, method={RequestMethod.POST})
+  public String getStr(String msg) {
+    return msg;
+  }
+
   @RequestMapping(value = "/sign-up", produces={"application/json"}, method={RequestMethod.POST})
-  public JsonMessage registerUser(String msg /*@RequestBody SignUpRequest signUpRequest*/) {
-    //User user = User.create(signUpRequest.getEmail(),signUpRequest.getPassword());
-    User user = User.create("s@s","1234");
+  @ApiOperation(value = "Register new user", nickname = "sign-up user",response = ApisResponse.class)
+  @ApiResponses(value = { @ApiResponse(code = 500, message = "Something went wrong during request") })
+  public ResponseEntity<?> signUpUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+    User user = User.create(signUpRequest.getEmail(),signUpRequest.getPassword());
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     UserRole userRole = roleService.findByRole(UserRoleTypes.USER.getValue()).orElseThrow(() -> new AppException("User Role not set."));
     user.setUserRoles(Collections.singleton(userRole));
@@ -79,16 +86,16 @@ public class AuthController {
     try {
       result = userService.save(user);
     } catch (UsernameAlreadyExistsException e) {
-      //return ResponseEntity.ok(new ApiResponse(false, e.getMessage()));
-      return JsonMessageCreator.createSimpleJsonMessage("error");
+      return ResponseEntity.ok(new ApisResponse(false, e.getMessage()));
+      //return JsonMessageCreator.createSimpleJsonMessage("error");
     }
 
     URI location = ServletUriComponentsBuilder
       .fromCurrentContextPath().path("/users/{username}")
       .buildAndExpand(result.getUsername()).toUri();
 
-    //return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
-    return JsonMessageCreator.createSimpleJsonMessage("abc");
+    return ResponseEntity.created(location).body(new ApisResponse(true, "User registered successfully"));
+    //return JsonMessageCreator.createSimpleJsonMessage("abc");
   }
 
 }

@@ -21,7 +21,7 @@ public class UserService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return userDao.findByUsername(username).get();
+		return userDao.findByUsername(username).orElse(null);
 	}
 
 	public User save(User user) throws UsernameAlreadyExistsException {

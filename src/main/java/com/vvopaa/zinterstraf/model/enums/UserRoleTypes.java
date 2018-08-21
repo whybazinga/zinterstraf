@@ -3,9 +3,9 @@ package com.vvopaa.zinterstraf.model.enums;
 import java.io.Serializable;
 
 public enum UserRoleTypes implements Serializable{
-    USER("USER"),
-    MODERATOR("MODERATOR"),
-    ADMIN("ADMIN");
+    USER("ROLE_USER"),
+    MODERATOR("ROLE_MODERATOR"),
+    ADMIN("ROLE_ADMIN");
 
 	private final String userProfileType;
 
