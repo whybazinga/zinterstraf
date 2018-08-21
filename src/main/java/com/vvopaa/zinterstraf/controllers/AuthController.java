@@ -5,10 +5,12 @@ import com.vvopaa.zinterstraf.exception.UsernameAlreadyExistsException;
 import com.vvopaa.zinterstraf.model.User;
 import com.vvopaa.zinterstraf.model.UserRole;
 import com.vvopaa.zinterstraf.model.enums.UserRoleTypes;
+import com.vvopaa.zinterstraf.model.json.JsonMessage;
 import com.vvopaa.zinterstraf.payload.ApiResponse;
 import com.vvopaa.zinterstraf.payload.JwtAuthenticationResponse;
 import com.vvopaa.zinterstraf.payload.SignInRequest;
 import com.vvopaa.zinterstraf.payload.SignUpRequest;
+import com.vvopaa.zinterstraf.service.converters.jackson.JsonMessageCreator;
 import com.vvopaa.zinterstraf.service.impl.UserRoleService;
 import com.vvopaa.zinterstraf.service.impl.UserService;
 import com.vvopaa.zinterstraf.spring.oauth2.JwtTokenProvider;
@@ -30,8 +32,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.Collections;
 
-@RestController
-@RequestMapping("/auth")
+@RestController("/auth")
 public class AuthController {
 
   private final AuthenticationManager  authenticationManager;
@@ -65,10 +66,11 @@ public class AuthController {
     return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
   }
 
-  @RequestMapping(value = "/sign-up", method={RequestMethod.POST})
   //@ApiOperation(value = "Register new user", nickname = "sign-up user")
-  public ResponseEntity<?> registerUser( @RequestBody SignUpRequest signUpRequest) {
-    User user = User.create(signUpRequest.getEmail(),signUpRequest.getPassword());
+  @RequestMapping(value = "/sign-up", produces={"application/json"}, method={RequestMethod.POST})
+  public JsonMessage registerUser(String msg /*@RequestBody SignUpRequest signUpRequest*/) {
+    //User user = User.create(signUpRequest.getEmail(),signUpRequest.getPassword());
+    User user = User.create("s@s","1234");
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     UserRole userRole = roleService.findByRole(UserRoleTypes.USER.getValue()).orElseThrow(() -> new AppException("User Role not set."));
     user.setUserRoles(Collections.singleton(userRole));
@@ -77,14 +79,16 @@ public class AuthController {
     try {
       result = userService.save(user);
     } catch (UsernameAlreadyExistsException e) {
-      return ResponseEntity.ok(new ApiResponse(false, e.getMessage()));
+      //return ResponseEntity.ok(new ApiResponse(false, e.getMessage()));
+      return JsonMessageCreator.createSimpleJsonMessage("error");
     }
 
     URI location = ServletUriComponentsBuilder
       .fromCurrentContextPath().path("/users/{username}")
       .buildAndExpand(result.getUsername()).toUri();
 
-    return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
+    //return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
+    return JsonMessageCreator.createSimpleJsonMessage("abc");
   }
 
 }

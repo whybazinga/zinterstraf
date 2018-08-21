@@ -16,5 +16,5 @@ export const isUserAuthorized = (authUser) => {
 
 export const isUserUnauthWithCookie = (authUser) => {
   if(typeof authUser !== 'object') throw new TypeError("authUser -> object");
-  return appGlobal.func.getCookie(loginConst.signInResponse.accessToken) && appGlobal.func.checkIfEmptyJson(authUser)
+  return (appGlobal.func.getCookie(loginConst.signInResponse.accessToken) || true) && appGlobal.func.checkIfEmptyJson(authUser)
 };

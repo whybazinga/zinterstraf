@@ -8,11 +8,7 @@ public class ViewController {
 
     @GetMapping("/")
     public String startPage() {
-        return "index";
+        return "index.html";
     }
 
-    @GetMapping("/new")
-    public String startPageNew() {
-        return "mine";
-    }
 }

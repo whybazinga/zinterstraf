@@ -13,9 +13,6 @@ import java.util.Arrays;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-  private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
-    "classpath:/resources/", "classpath:/static/", "classpath:/public/"
-  };
 
   @Bean(name = "appMessages")
   public MessageSource messageSource() {
@@ -32,17 +29,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
         .addResourceLocations("classpath:/global/")
         .setCachePeriod(4600);
     }
-
-  }
-
-  @Bean
-  CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://petstore.swagger.io","http://zinter.ega.com"));
-    configuration.setAllowedMethods(Arrays.asList("GET","POST","OPTIONS"));
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
-    return source;
   }
 
 }
