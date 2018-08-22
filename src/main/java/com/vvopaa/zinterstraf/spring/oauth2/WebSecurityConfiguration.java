@@ -35,10 +35,10 @@ import static java.util.Arrays.asList;
 )
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
   private final String[] commonUrls = {
-    "/" ,"/register", "/*.{(js|ico)$}",
+    "/" , "/*.{(js|ico)$}",
     "/static/**", "/auth/**", "/zinterstraf/**",
-    "/api/**", "/swagger-resources/**", "/swagger-resources",
-    "/webjars/**", "/webjars", "/v2/**", "/**","/auth/sign-up"
+    "/api/**", "/swagger-resources/**",
+    "/webjars/**", "/webjars", "/v2/**",
   };
 
   private final UserDetailsService userDetailsService;
@@ -78,7 +78,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
       .authorizeRequests()
         .antMatchers(commonUrls).permitAll()
-        .anyRequest().permitAll();
+        .anyRequest().authenticated();
 
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
   }
