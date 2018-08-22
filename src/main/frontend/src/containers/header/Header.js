@@ -70,6 +70,9 @@ export default class Header extends Component {
                     : null
                 ))}
                 <NavItem>
+                  <Link className="nav-link" to="/swagger-ui.html" target="_self">Java Swagger</Link>
+                </NavItem>
+                <NavItem>
                   <button className="btn btn-secondary" onClick={()=>this.props.authMe()}>auth me</button>
                 </NavItem>
                 <NavItem className="auth-btn">
