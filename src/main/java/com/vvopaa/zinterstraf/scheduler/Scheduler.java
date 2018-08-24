@@ -12,6 +12,7 @@ import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class Scheduler {
   }
 
 
-  //@Scheduled(cron = "0 15 10 15 * ?")
+  @Scheduled(cron = "0 15 10 15 * ?")
   public void cronProCircuit() {
     try {
       Document doc = Jsoup.connect(PRO_TEAMS_URL).get();

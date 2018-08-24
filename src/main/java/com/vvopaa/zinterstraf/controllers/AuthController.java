@@ -87,7 +87,6 @@ public class AuthController {
       result = userService.save(user);
     } catch (UsernameAlreadyExistsException e) {
       return ResponseEntity.ok(new ApisResponse(false, e.getMessage()));
-      //return JsonMessageCreator.createSimpleJsonMessage("error");
     }
 
     URI location = ServletUriComponentsBuilder
@@ -95,7 +94,6 @@ public class AuthController {
       .buildAndExpand(result.getUsername()).toUri();
 
     return ResponseEntity.created(location).body(new ApisResponse(true, "User registered successfully"));
-    //return JsonMessageCreator.createSimpleJsonMessage("abc");
   }
 
 }
