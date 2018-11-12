@@ -29,6 +29,10 @@ public class UserService implements UserDetailsService {
 		return userDao.save(user);
 	}
 
+	public User saveNew(User user) {
+		return userDao.save(user);
+	}
+
 	/**
 	 * This method is used by JWTAuthenticationFilter. It Gets user by id
 	 * @param id - user Id

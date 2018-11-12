@@ -132,4 +132,12 @@ public class User extends AbstractEntity implements UserDetails {
 		user.setPassword(password);
 		return user;
 	}
+
+	public static User create(String username, String password,Set<UserRole> userRoles) {
+		User user = new User();
+		user.setUsername(username);
+		user.setPassword(password);
+		user.setUserRoles(userRoles);
+		return user;
+	}
 }
