@@ -53,7 +53,7 @@ public class SecurityController {
     this.passwordEncoder = passwordEncoder;
   }
 
-  @PostMapping
+  @PostMapping("sign-in")
   public Mono<ResponseEntity> signInUser(@Valid @RequestBody SignInRequest signInRequest) {
     Authentication authentication = authenticationManager.authenticate(
       new UsernamePasswordAuthenticationToken(
@@ -66,4 +66,6 @@ public class SecurityController {
     String jwt = tokenProvider.generateToken(authentication);
     return Mono.just(ResponseEntity.ok(new JwtAuthenticationResponse(jwt)));
   }
+
+
 }

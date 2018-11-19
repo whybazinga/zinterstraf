@@ -2,13 +2,15 @@ package com.vvopaa.zinterstraf.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vvopaa.zinterstraf.model.enums.UserStatuses;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+
+import javax.persistence.Column;
 import java.util.*;
 
-@Entity
+@Document
 public class User extends AbstractEntity implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
@@ -18,12 +20,6 @@ public class User extends AbstractEntity implements UserDetails {
 	@Column
 	@JsonIgnore
 	private String password;
-
-	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	private Date created;
-
-	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-	private Date updated;
 
 	@Column
 	private int accStatus;
@@ -77,22 +73,6 @@ public class User extends AbstractEntity implements UserDetails {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public Date getCreated() {
-		return created;
-	}
-
-	public void setCreated(Date created) {
-		this.created = created;
-	}
-
-	public Date getUpdated() {
-		return updated;
-	}
-
-	public void setUpdated(Date updated) {
-		this.updated = updated;
 	}
 
 	public int getAccStatus() {
