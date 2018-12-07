@@ -18,7 +18,7 @@ public class SecurityService implements ReactiveUserDetailsService {
 
 
   @Override
-  public Mono<UserDetails> findByUsername(String s) {
-    return null;
+  public Mono<UserDetails> findByUsername(String name) {
+    return securityRep.findByUsername(name).cast(UserDetails.class);
   }
 }

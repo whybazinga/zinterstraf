@@ -1,39 +1,33 @@
 package com.vvopaa.zinterstraf.spring.oauth2;
 
-import com.vvopaa.zinterstraf.spring.oauth2.filter.JwtAuthenticationFilter;
+import com.vvopaa.zinterstraf.service.impl.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-import static java.util.Arrays.asList;
-
-@Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(
-  securedEnabled = true,
-  jsr250Enabled = true,
-  prePostEnabled = true
-)
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+@EnableWebFluxSecurity
+@EnableReactiveMethodSecurity
+public class WebSecurityConfiguration {
   private final String[] commonUrls = {
     "/" , "/*.{(js|ico)$}",
     "/static/**", "/auth/**", "/zinterstraf/**",
@@ -41,13 +35,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     "/webjars/**", "/webjars", "/v2/**",
   };
 
-  private final UserDetailsService userDetailsService;
-  private final JwtAuthenticationEntryPoint unauthorizedHandler;
+  private final AuthenticationManager authenticationManager;
+
+  private final SecurityContextRepository securityContextRepository;
 
   @Autowired
-  public WebSecurityConfiguration(@Qualifier("UserDetailsMain") UserDetailsService userDetailsService, JwtAuthenticationEntryPoint unauthorizedHandler) {
-    this.userDetailsService = userDetailsService;
-    this.unauthorizedHandler = unauthorizedHandler;
+  public WebSecurityConfiguration(AuthenticationManager authenticationManager, SecurityContextRepository securityContextRepository) {
+    this.authenticationManager = authenticationManager;
+    this.securityContextRepository = securityContextRepository;
   }
 
   @Bean
@@ -56,36 +51,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
   }
 
   @Bean
-  public JwtAuthenticationFilter jwtAuthenticationFilter() {
-    return new JwtAuthenticationFilter();
-  }
-
-  @Bean(BeanIds.AUTHENTICATION_MANAGER)
-  @Override
-  public AuthenticationManager authenticationManagerBean() throws Exception {
-    return super.authenticationManagerBean();
-  }
-
-  @Override
-  public void configure(HttpSecurity http) throws Exception {
-    http
-      .cors().and()
-      .csrf()
-        .disable()
-      .exceptionHandling()
-        .authenticationEntryPoint(unauthorizedHandler).and()
-      .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-      .authorizeRequests()
-        .antMatchers(commonUrls).permitAll()
-        .anyRequest().authenticated();
-
-    http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-  }
-
-  @Override
-  public void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+  public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+    return http.csrf().disable()
+      .formLogin().disable()
+      .httpBasic().disable()
+      .authenticationManager(authenticationManager)
+      .securityContextRepository(securityContextRepository)
+      .authorizeExchange()
+      .pathMatchers(commonUrls).permitAll()
+      .anyExchange().authenticated()
+      .and().build();
   }
 
   @Bean

@@ -6,18 +6,13 @@ import com.vvopaa.zinterstraf.model.User;
 import com.vvopaa.zinterstraf.model.UserRole;
 import com.vvopaa.zinterstraf.model.enums.UserRoleTypes;
 import com.vvopaa.zinterstraf.payload.ApisResponse;
-import com.vvopaa.zinterstraf.payload.JwtAuthenticationResponse;
+import com.vvopaa.zinterstraf.payload.JwtAuthResponse;
 import com.vvopaa.zinterstraf.payload.SignInRequest;
 import com.vvopaa.zinterstraf.payload.SignUpRequest;
-import com.vvopaa.zinterstraf.service.converters.jackson.JsonMessageCreator;
 import com.vvopaa.zinterstraf.service.impl.UserRoleService;
 import com.vvopaa.zinterstraf.service.impl.UserService;
 import com.vvopaa.zinterstraf.spring.oauth2.JwtTokenProvider;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,9 +23,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.server.RouterFunction;
-import org.springframework.web.reactive.function.server.ServerResponse;
-import reactor.core.publisher.Mono;
 
 
 import javax.validation.Valid;
@@ -38,10 +30,7 @@ import java.net.URI;
 import java.util.Collections;
 
 import static org.springframework.web.reactive.function.BodyExtractors.toMono;
-import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
-import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
-import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
 @RestController
 @RequestMapping("/auth")
@@ -75,7 +64,7 @@ public class AuthController {
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
     String jwt = tokenProvider.generateToken(authentication);
-    return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+    return ResponseEntity.ok(new JwtAuthResponse(jwt));
   }
 
   @RequestMapping(value = "/sign-test", produces = {"text/plain"}, method = {RequestMethod.POST})

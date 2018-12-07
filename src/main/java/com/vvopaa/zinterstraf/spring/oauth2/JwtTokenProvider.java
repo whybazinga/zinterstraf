@@ -8,13 +8,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import java.util.Date;
+
+import java.util.*;
 
 @Component
 public class JwtTokenProvider {
-
   private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenProvider.class);
+  static final String CLAIMS_ROLE_KEY = "role";
 
   private final Options options;
 
@@ -23,27 +25,26 @@ public class JwtTokenProvider {
     this.options = appOptions.getOptions();
   }
 
-  public String generateToken(Authentication authentication) {
+  private Map<String, Object> generateClaims(UserDetails user) {
+    Map<String, Object> claims = new HashMap<>();
+    claims.put(CLAIMS_ROLE_KEY, Set.of(user.getAuthorities()));
+    return claims;
+  }
 
-    User userPrincipal = (User) authentication.getPrincipal();
+  Claims getClaimsFromToken(String token) {
+    return Jwts.parser().setSigningKey(options.getJwtSecret()).parseClaimsJws(token).getBody();
+  }
 
-    Date expiryDate = new Date(new Date().getTime() + options.getJwtExpirationMs());
-
+  public String generateToken(UserDetails userPrincipal) {
+    final Date createdDate = new Date();
+    final Date expiryDate = new Date(createdDate.getTime() + options.getJwtExpirationMs());
     return Jwts.builder()
-      .setSubject(Long.toString(userPrincipal.getId()))
-      .setIssuedAt(new Date())
+      .setClaims(generateClaims(userPrincipal))
+      .setSubject(userPrincipal.getUsername())
+      .setIssuedAt(createdDate)
       .setExpiration(expiryDate)
       .signWith(SignatureAlgorithm.HS512, options.getJwtSecret())
       .compact();
-  }
-
-  public Long getUserIdFromJWT(String token) {
-    Claims claims = Jwts.parser()
-      .setSigningKey(options.getJwtSecret())
-      .parseClaimsJws(token)
-      .getBody();
-
-    return Long.parseLong(claims.getSubject());
   }
 
   public boolean validateToken(String authToken) {
