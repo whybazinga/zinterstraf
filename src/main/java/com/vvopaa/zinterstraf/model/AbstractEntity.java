@@ -5,7 +5,6 @@ import org.springframework.data.annotation.Id;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-
 import java.io.Serializable;
 
 @Data

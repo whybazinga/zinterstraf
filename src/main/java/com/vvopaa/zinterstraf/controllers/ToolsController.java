@@ -3,16 +3,14 @@ package com.vvopaa.zinterstraf.controllers;
 import com.vvopaa.zinterstraf.model.json.JsonMessage;
 import com.vvopaa.zinterstraf.service.converters.jackson.JsonMessageCreator;
 import com.vvopaa.zinterstraf.service.impl.ProPlayerService;
-import com.vvopaa.zinterstraf.service.impl.ProTeamService;
 import com.vvopaa.zinterstraf.service.impl.ProScheduleService;
+import com.vvopaa.zinterstraf.service.impl.ProTeamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.security.Principal;
 
 //@CrossOrigin(origins = "http://petstore.swagger.io", maxAge = 3600)
 @RestController("/tools")

@@ -11,4 +11,14 @@ public class ApisResponse {
     this.success = success;
     this.message = message;
   }
+
+  public ApisResponse(String message) {
+    this.success = true;
+    this.message = message;
+  }
+
+  public ApisResponse() {
+    this.success = true;
+    this.message = "Operation is done Successfully!";
+  }
 }

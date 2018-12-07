@@ -4,23 +4,27 @@ import com.vvopaa.zinterstraf.model.UserRole;
 import com.vvopaa.zinterstraf.repository.UserRoleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
 
 @Service("userRoleService")
 @Transactional
 public class UserRoleService {
 	
-	@Autowired
-	private UserRoleDao userRoleDao;
+	private final UserRoleDao userRoleDao;
 
-	public Optional<UserRole> findByRole(String role) {
+	@Autowired
+	public UserRoleService(UserRoleDao userRoleDao) {
+		this.userRoleDao = userRoleDao;
+	}
+
+	public Mono<UserRole> findByRole(String role) {
 		return userRoleDao.findByRole(role);
 	}
 
-	public List<UserRole> findAll() {
+	public Flux<UserRole> findAll() {
 		return userRoleDao.findAll();
 	}
 

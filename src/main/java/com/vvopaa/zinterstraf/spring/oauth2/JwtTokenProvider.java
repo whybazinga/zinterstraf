@@ -1,17 +1,18 @@
 package com.vvopaa.zinterstraf.spring.oauth2;
 
 import com.vvopaa.zinterstraf.configuration.AppOptions;
-import com.vvopaa.zinterstraf.model.User;
 import com.vvopaa.zinterstraf.model.special.Options;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 @Component
 public class JwtTokenProvider {

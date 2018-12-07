@@ -2,11 +2,10 @@ package com.vvopaa.zinterstraf.repository;
 
 
 import com.vvopaa.zinterstraf.model.UserRole;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+import reactor.core.publisher.Mono;
 
-import java.util.Optional;
 
-public interface UserRoleDao extends JpaRepository<UserRole, Long> {
-
-    Optional<UserRole> findByRole(String role);
+public interface UserRoleDao extends ReactiveMongoRepository<UserRole, Long> {
+    Mono<UserRole> findByRole(String role);
 }
