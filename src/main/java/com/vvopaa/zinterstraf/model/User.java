@@ -17,72 +17,72 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 public class User extends AuditEntity implements UserDetails {
-	private String username;
+  private String username;
 
-	private String password;
+  private String password;
 
-	private int accStatus;
+  private int accStatus;
 
-	private boolean enabled;
+  private boolean enabled;
 
-	private Set<UserRole> roles = new HashSet<>();
+  private Set<UserRole> roles = new HashSet<>();
 
-	public User(String username) {
-		this.username = username;
-	}
+  public User(String username) {
+    this.username = username;
+  }
 
-	public User(String username, String password) {
-		this.username = username;
-		this.password = password;
-	}
+  public User(String username, String password) {
+    this.username = username;
+    this.password = password;
+  }
 
-	public User(String username, String password, Set<UserRole> roles) {
-		this.username = username;
-		this.password = password;
-		this.roles = roles;
-	}
+  public User(String username, String password, Set<UserRole> roles) {
+    this.username = username;
+    this.password = password;
+    this.roles = roles;
+  }
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return roles.stream().map(authority -> new SimpleGrantedAuthority(authority.getRole())).collect(Collectors.toSet());
-	}
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return roles.stream().map(authority -> new SimpleGrantedAuthority(authority.getRole())).collect(Collectors.toSet());
+  }
 
-	@JsonIgnore
-	@Override
-	public String getPassword() {
-		return password;
-	}
+  @JsonIgnore
+  @Override
+  public String getPassword() {
+    return password;
+  }
 
-	@Override
-	public String getUsername() {
-		return username;
-	}
+  @Override
+  public String getUsername() {
+    return username;
+  }
 
-	@Override
-	public boolean isAccountNonExpired() {
-		return false;
-	}
+  @Override
+  public boolean isAccountNonExpired() {
+    return false;
+  }
 
-	@Override
-	public boolean isAccountNonLocked() {
-		return false;
-	}
+  @Override
+  public boolean isAccountNonLocked() {
+    return false;
+  }
 
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return false;
-	}
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return false;
+  }
 
-	@Override
-	public boolean isEnabled() {
-		return enabled;
-	}
+  @Override
+  public boolean isEnabled() {
+    return enabled;
+  }
 
-	public int getAccStatus() {
-		return accStatus;
-	}
+  public int getAccStatus() {
+    return accStatus;
+  }
 
-	public Set<UserRole> getRoles() {
-		return roles;
-	}
+  public Set<UserRole> getRoles() {
+    return roles;
+  }
 }

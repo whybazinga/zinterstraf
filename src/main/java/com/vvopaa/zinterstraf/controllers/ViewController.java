@@ -7,9 +7,9 @@ import reactor.core.publisher.Mono;
 @Controller
 public class ViewController {
 
-    @GetMapping("/")
-    public Mono<String> startPage() {
-        return Mono.just("index.html");
-    }
+  @GetMapping("/")
+  public Mono<String> startPage() {
+    return Mono.just("index.html");
+  }
 
 }

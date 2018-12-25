@@ -2,22 +2,19 @@ package com.vvopaa.zinterstraf.service.impl;
 
 import com.vvopaa.zinterstraf.model.ProSchedule;
 import com.vvopaa.zinterstraf.repository.ProScheduleDao;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
-@Transactional
+@RequiredArgsConstructor
 public class ProScheduleService {
+  private final ProScheduleDao proScheduleDao;
 
-  @Autowired
-  private ProScheduleDao proScheduleDao;
-
-  public List<ProSchedule> saveList(List<ProSchedule> entityList) {
-    return Optional.ofNullable(entityList).isPresent() ? proScheduleDao.saveAll(entityList) : null;
+  public Flux<ProSchedule> saveList(List<ProSchedule> entityList) {
+    return proScheduleDao.saveAll(entityList);
   }
 }

@@ -1,4 +1,4 @@
-
+/*
 
 INSERT IGNORE INTO zinterdb.user (username, password, acc_status)
 VALUES ('t@t.t', '$2a$04$sJjk4.1ecL7I1NF3hFUZueq6LDBj2hIRLdo2U5GmYdoeA9XYpfREu', 1);
@@ -10,7 +10,7 @@ INSERT IGNORE INTO zinterdb.link_user_role (id_user, id_role)(
   where user.id = 1
 );
 
-
+*/
 /*
 INSERT IGNORE INTO zinterdb.client (client_id, client_secret) VALUES ('clientIdPassword', 'secret');
 

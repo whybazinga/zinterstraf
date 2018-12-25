@@ -24,7 +24,7 @@ public class ProPlayer extends AbstractEntity {
   private String name;
 
   @ManyToOne
-  @JoinColumn(name="pro_team_id")
+  @JoinColumn(name = "pro_team_id")
   private ProTeam proTeam;
 
   @Column
@@ -62,17 +62,16 @@ public class ProPlayer extends AbstractEntity {
     private String teamName;
 
     @Override
-    public ProPlayerBuilder buildByDomElements(Element domEl) {
+    public void buildByDomElements(Element domEl) {
       try {
         FunctionUtil.getInstance()
           .runFunctionIfTrue(domEl.hasClass(CLASS_RANK), () -> this.rank = Integer.parseInt(domEl.text()))
           .runFunctionIfTrue(domEl.hasClass(CLASS_PLAYER_NAME), () -> this.name = domEl.text())
-          .runFunctionIfTrue(domEl.hasClass(CLASS_POINTS), () ->  this.points = Integer.parseInt(domEl.text()))
-          .runFunctionIfTrue(domEl.hasClass(CLASS_TEAM_NAME), () ->  this.teamName = domEl.text());
+          .runFunctionIfTrue(domEl.hasClass(CLASS_POINTS), () -> this.points = Integer.parseInt(domEl.text()))
+          .runFunctionIfTrue(domEl.hasClass(CLASS_TEAM_NAME), () -> this.teamName = domEl.text());
       } catch (NullPointerException ex) {
         LOGGER.info(DomBuilder.TXT_WRITTEN);
       }
-      return this;
     }
 
 

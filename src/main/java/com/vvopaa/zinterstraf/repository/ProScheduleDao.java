@@ -1,8 +1,8 @@
 package com.vvopaa.zinterstraf.repository;
 
 import com.vvopaa.zinterstraf.model.ProSchedule;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 
-public interface ProScheduleDao extends JpaRepository<ProSchedule, Long> {
+public interface ProScheduleDao extends ReactiveMongoRepository<ProSchedule, Long> {
 
 }

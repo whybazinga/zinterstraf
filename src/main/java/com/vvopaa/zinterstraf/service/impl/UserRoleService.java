@@ -12,20 +12,20 @@ import reactor.core.publisher.Mono;
 @Service("userRoleService")
 @Transactional
 public class UserRoleService {
-	
-	private final UserRoleDao userRoleDao;
 
-	@Autowired
-	public UserRoleService(UserRoleDao userRoleDao) {
-		this.userRoleDao = userRoleDao;
-	}
+  private final UserRoleDao userRoleDao;
 
-	public Mono<UserRole> findByRole(String role) {
-		return userRoleDao.findByRole(role);
-	}
+  @Autowired
+  public UserRoleService(UserRoleDao userRoleDao) {
+    this.userRoleDao = userRoleDao;
+  }
 
-	public Flux<UserRole> findAll() {
-		return userRoleDao.findAll();
-	}
+  public Mono<UserRole> findByRole(String role) {
+    return userRoleDao.findByRole(role);
+  }
+
+  public Flux<UserRole> findAll() {
+    return userRoleDao.findAll();
+  }
 
 }

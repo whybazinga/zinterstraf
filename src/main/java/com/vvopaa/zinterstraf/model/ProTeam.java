@@ -70,20 +70,19 @@ public class ProTeam extends AbstractEntity {
     private Integer points;
 
     @Override
-    public ProTeamBuilder buildByDomElements(Element domEl) {
+    public void buildByDomElements(Element domEl) {
       try {
         FunctionUtil.getInstance()
           .runFunctionIfTrue(domEl.hasClass(CLASS_RANK), () -> this.rank = Integer.parseInt(domEl.text()))
           .runFunctionIfTrue(domEl.hasClass(CLASS_TEAM_LOGO), () -> this.img = domEl.children().get(0).attr(DomBuilder.SRC_ATTRIBUTE))
           .runFunctionIfTrue(domEl.hasClass(CLASS_TEAM_NAME), () -> this.name = domEl.text())
-          .runFunctionIfTrue(domEl.hasClass(CLASS_EARNINGS), () ->  this.earnings = domEl.text())
-          .runFunctionIfTrue(domEl.hasClass(CLASS_POINTS), () ->  this.points = Integer.parseInt(domEl.text()));
+          .runFunctionIfTrue(domEl.hasClass(CLASS_EARNINGS), () -> this.earnings = domEl.text())
+          .runFunctionIfTrue(domEl.hasClass(CLASS_POINTS), () -> this.points = Integer.parseInt(domEl.text()));
       } catch (NullPointerException ex) {
         LOGGER.info(DomBuilder.TXT_WRITTEN);
       } catch (Exception e) {
         LOGGER.info(e.getMessage());
       }
-      return this;
     }
 
     @Override

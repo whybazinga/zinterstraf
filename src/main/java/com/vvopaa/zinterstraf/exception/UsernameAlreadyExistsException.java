@@ -5,4 +5,9 @@ public class UsernameAlreadyExistsException extends Exception {
   public UsernameAlreadyExistsException(String name, Throwable cause) {
     super("Username with username " + name + " already exists.", cause);
   }
+
+  public UsernameAlreadyExistsException(String name) {
+    super("Username with username " + name + " already exists.");
+  }
+
 }

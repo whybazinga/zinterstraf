@@ -7,5 +7,5 @@ import reactor.core.publisher.Mono;
 
 
 public interface UserRoleDao extends ReactiveMongoRepository<UserRole, Long> {
-    Mono<UserRole> findByRole(String role);
+  Mono<UserRole> findByRole(String role);
 }

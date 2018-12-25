@@ -70,19 +70,18 @@ public class ProSchedule extends AbstractEntity {
 
 
     @Override
-    public DomBuilder buildByDomElements(Element domEl) {
+    public void buildByDomElements(Element domEl) {
       try {
         FunctionUtil.getInstance()
           .runFunctionIfTrue(domEl.hasClass(CLASS_DATE), () -> this.dateFromTo = domEl.text())
           .runFunctionIfTrue(domEl.hasClass(CLASS_STATUS), () -> this.status = domEl.text())
           .runFunctionIfTrue(domEl.hasClass(CLASS_COUNTRY), () -> this.country = domEl.text())
-          .runFunctionIfTrue(domEl.hasClass(CLASS_PRIZE), () ->  this.prize = domEl.text())
-          .runFunctionIfTrue(domEl.hasClass(CLASS_POINTS), () ->  this.points = Integer.parseInt(domEl.text()))
-          .runFunctionIfTrue(domEl.hasClass(CLASS_ORGANIZER), () ->  this.organizerImgUrl = domEl.children().get(0).attr(DomBuilder.SRC_ATTRIBUTE));
+          .runFunctionIfTrue(domEl.hasClass(CLASS_PRIZE), () -> this.prize = domEl.text())
+          .runFunctionIfTrue(domEl.hasClass(CLASS_POINTS), () -> this.points = Integer.parseInt(domEl.text()))
+          .runFunctionIfTrue(domEl.hasClass(CLASS_ORGANIZER), () -> this.organizerImgUrl = domEl.children().get(0).attr(DomBuilder.SRC_ATTRIBUTE));
       } catch (NullPointerException ex) {
         LOGGER.info(DomBuilder.TXT_WRITTEN);
       }
-      return this;
     }
 
     @Override

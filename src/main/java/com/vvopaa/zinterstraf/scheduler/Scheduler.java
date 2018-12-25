@@ -51,54 +51,51 @@ public class Scheduler {
   public void cronProCircuit() {
     try {
       Document doc = Jsoup.connect(PRO_TEAMS_URL).get();
-
-      Thread teamsThread = new Thread(() -> {
-        List<ProTeam> teams = new ArrayList<>();
-        doc.getElementById(ID_TEAMS_BODY).select(CLASS_TEAMS).forEach(teamElement-> {
-          ProTeam.ProTeamBuilder teamBuilder = new ProTeam.ProTeamBuilder();
-          teamElement.children().forEach(teamBuilder::buildByDomElements);
-          ProTeam currentTeam = teamBuilder.build();
-          if(teams.stream().noneMatch(team -> team.getName().equals(currentTeam.getName()))) {
-            teams.add(currentTeam);
-          }
-        });
-
-        List<ProPlayer> players = new ArrayList<>();
-        doc.getElementById(ID_PLAYERS_BODY).select(CLASS_PLAYERS).forEach(playerElement-> {
-          ProPlayer.ProPlayerBuilder playerBuilder = new ProPlayer.ProPlayerBuilder();
-          playerElement.children().forEach(playerBuilder::buildByDomElements);
-          ProPlayer player = playerBuilder.build();
-          if(players.stream().noneMatch(proPlayer -> proPlayer.getName().equals(player.getName()))) {
-            teams.stream().filter(team->team.getName().equals(player.getTeamName())).findFirst()
-              .ifPresent(
-                team -> {
-                  player.setProTeam(team);
-                  team.getPlayers().add(player);
-                }
-              );
-            players.add(player);
-          }
-        });
-
-        proTeamService.saveList(teams);
-        proPlayerService.saveList(players);
-      });
-      teamsThread.start();
-
-      Thread scheduleThread = new Thread(() -> {
-        List<ProSchedule> proScheduleList = new ArrayList<>();
-        doc.getElementById(ID_SCHEDULE_BODY).select(CLASS_SCHEDULE).forEach(teamElement-> {
-          ProSchedule.ProScheduleBuilder scheduleBuilder = new ProSchedule.ProScheduleBuilder();
-          teamElement.children().forEach(scheduleBuilder::buildByDomElements);
-          ProSchedule proScheduleEl = scheduleBuilder.build();
-          if(proScheduleList.stream().noneMatch(proSchedule -> proSchedule.getDateFromTo().equals(proScheduleEl.getDateFromTo()))) {
-            proScheduleList.add(proScheduleEl);
-          }
-        });
-        proProScheduleService.saveList(proScheduleList);
+      List<ProTeam> teams = new ArrayList<>();
+      doc.getElementById(ID_TEAMS_BODY).select(CLASS_TEAMS).forEach(teamElement -> {
+        ProTeam.ProTeamBuilder teamBuilder = new ProTeam.ProTeamBuilder();
+        teamElement.children().forEach(teamBuilder::buildByDomElements);
+        ProTeam currentTeam = teamBuilder.build();
+        if (teams.stream().noneMatch(team -> team.getName().equals(currentTeam.getName()))) {
+          teams.add(currentTeam);
+        }
       });
 
-      scheduleThread.start();
+      List<ProPlayer> players = new ArrayList<>();
+      doc.getElementById(ID_PLAYERS_BODY).select(CLASS_PLAYERS).forEach(playerElement -> {
+        ProPlayer.ProPlayerBuilder playerBuilder = new ProPlayer.ProPlayerBuilder();
+        playerElement.children().forEach(playerBuilder::buildByDomElements);
+        ProPlayer player = playerBuilder.build();
+        if (players.stream().noneMatch(proPlayer -> proPlayer.getName().equals(player.getName()))) {
+          teams.stream().filter(team -> team.getName().equals(player.getTeamName())).findFirst()
+            .ifPresent(
+              team -> {
+                player.setProTeam(team);
+                team.getPlayers().add(player);
+              }
+            );
+          players.add(player);
+        }
+      });
+      proTeamService.saveList(teams).subscribe();
+
+      proPlayerService.saveList(players).doOnEach(proPlayerSignal -> {
+        ProPlayer player = proPlayerSignal.hasValue() ? proPlayerSignal.get() : null;
+        teams.stream().filter(team -> team.getName().equals(player != null ? player.getName() : null))
+          .findFirst().ifPresent(team -> team.getPlayers().add(player));
+      }).subscribe();
+
+      List<ProSchedule> proScheduleList = new ArrayList<>();
+      doc.getElementById(ID_SCHEDULE_BODY).select(CLASS_SCHEDULE).forEach(teamElement -> {
+        ProSchedule.ProScheduleBuilder scheduleBuilder = new ProSchedule.ProScheduleBuilder();
+        teamElement.children().forEach(scheduleBuilder::buildByDomElements);
+        ProSchedule proScheduleEl = scheduleBuilder.build();
+        if (proScheduleList.stream().noneMatch(proSchedule -> proSchedule.getDateFromTo().equals(proScheduleEl.getDateFromTo()))) {
+          proScheduleList.add(proScheduleEl);
+        }
+      });
+      proProScheduleService.saveList(proScheduleList).subscribe();
+
     } catch (HttpStatusException httpExc) {
       LOGGER.warn(httpExc.getMessage());
     } catch (IOException e) {

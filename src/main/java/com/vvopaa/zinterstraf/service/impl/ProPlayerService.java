@@ -2,21 +2,18 @@ package com.vvopaa.zinterstraf.service.impl;
 
 import com.vvopaa.zinterstraf.model.ProPlayer;
 import com.vvopaa.zinterstraf.repository.ProPlayerDao;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@Transactional
+@RequiredArgsConstructor
 public class ProPlayerService {
+  private final ProPlayerDao proPlayerDao;
 
-  @Autowired
-  private ProPlayerDao proPlayerDao;
-
-  public List<ProPlayer> saveList(List<ProPlayer> entityList) {
-    return Optional.ofNullable(entityList).isPresent() ? proPlayerDao.saveAll(entityList) : null;
+  public Flux<ProPlayer> saveList(List<ProPlayer> entityList) {
+    return proPlayerDao.saveAll(entityList);
   }
 }

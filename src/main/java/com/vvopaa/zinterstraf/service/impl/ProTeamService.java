@@ -2,22 +2,23 @@ package com.vvopaa.zinterstraf.service.impl;
 
 import com.vvopaa.zinterstraf.model.ProTeam;
 import com.vvopaa.zinterstraf.repository.ProTeamDao;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
-@Transactional
+@RequiredArgsConstructor
 public class ProTeamService {
+  private final ProTeamDao proTeamdao;
 
-  @Autowired
-  private ProTeamDao proTeamdao;
+  public Flux<ProTeam> saveList(List<ProTeam> entityList) {
+    return proTeamdao.saveAll(entityList);
+  }
 
-  public List<ProTeam> saveList(List<ProTeam> entityList) {
-    return Optional.ofNullable(entityList).isPresent() ? proTeamdao.saveAll(entityList) : null;
+  public Flux<ProTeam> getAllProTeams() {
+    return proTeamdao.findAll();
   }
 }
