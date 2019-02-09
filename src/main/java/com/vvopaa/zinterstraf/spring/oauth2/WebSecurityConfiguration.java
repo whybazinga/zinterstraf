@@ -22,7 +22,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class WebSecurityConfiguration {
   private final String[] commonUrls = {
-    "/", "/*.{(js|ico)$}",
+    "/", "/*.js$","/*.ico$","/index.html",
     "/static/**", "/auth/**", "/zinterstraf/**",
     "/api/**", "/swagger-resources/**",
     "/webjars/**", "/webjars", "/v2/**",
@@ -46,8 +46,8 @@ public class WebSecurityConfiguration {
       .authenticationManager(authenticationManager)
       .securityContextRepository(securityContextRepository)
       .authorizeExchange()
-      .pathMatchers("/").permitAll()
-      .anyExchange().authenticated()
+      .pathMatchers(commonUrls).permitAll()
+      .anyExchange().permitAll() //later authenticated
       .and().build();
   }
 /*

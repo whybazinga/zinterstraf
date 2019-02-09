@@ -35,8 +35,14 @@ public class SecurityService implements ReactiveUserDetailsService {
       .flatMap(user ->
         user == null ?
           userRoleService.findByRole(UserRoleTypes.USER.getValue())
-            .flatMap(userRole -> userRep.save(new User(email, password, Collections.singleton(userRole)))) :
+            .flatMap(userRole ->
+              userRep.save(new User(email, password, Collections.singleton(userRole)))) :
           Mono.error(new UsernameAlreadyExistsException(user.getUsername()))
       );
+      // flatmap doesn't go if nothing is found
+  }
+
+  public Mono<User> saveUserTest(String email, String password) {
+    return userRep.save(new User(email, password));
   }
 }

@@ -4,6 +4,6 @@ import com.vvopaa.zinterstraf.model.ProPlayer;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 
 
-public interface ProPlayerDao extends ReactiveMongoRepository<ProPlayer, Long> {
+public interface ProPlayerDao extends ReactiveMongoRepository<ProPlayer, String> {
 
 }
